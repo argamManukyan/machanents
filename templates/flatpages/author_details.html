@@ -1,0 +1,117 @@
+{% load static %}{% load i18n %}<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+  <head>
+      {% include 'includes/tagmanager.html' %}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>{% if author.meta_title %}{{ author.meta_title }}{% else %}{{ author.name }} | {{ request.get_host|title }}{% endif %}</title>
+    <meta name="Description" content="{% if author.meta_description %}{{author.meta_description}}{% endif %}" />
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/color.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <style> .product-item {margin-bottom: 20px;} </style>
+  </head>
+  <body>
+    {% include 'includes/header.html' %}
+    <!-- Main content -->
+    <main id="content">
+      <section class="section main-top main-top">
+        <!-- Breadcrumbs -->
+        <div class="bread-bg anot-breadcrumbs bot-prods">
+          <div class="cnt">
+            <div class="row">
+              <div class="col">
+                <div id="breadcrumbs">
+                  <ul class="breadcrumbs-list align-items-center">
+                    <li class="b-list-item">
+                      <a href="{% url 'home' %}" class="b-list-link">{% trans "Գլխավոր" %}</a>
+                    </li>
+                    <span class="bread-arrow">→</span>
+                    <li class="b-list-item">
+                      <a href="{% url 'authors' %}" class="b-list-link">{% trans "Արտիստներ" %}</a>
+                    </li>
+                      {% if author.category.count %}
+                      <span class="bread-arrow">→</span>
+                          <li class="b-list-item">
+                            <a href="{{ author.category.first.get_absolute_url }}" class="b-list-link">{{ author.category.first.name }}</a>
+                          </li>
+                      {% endif %}
+                    <span class="bread-arrow">→</span>
+                    <li class="b-list-item">
+                      <span>{{ author.name}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Artists  -->
+        <div class="cnt">
+          <div class="row">
+            <div class="col">
+              <div class="two-version-title">
+                <h1><span>{{ author.name }}</span></h1>
+              </div>
+            </div>
+          </div>
+
+          <!--  full -->
+          <div class="row">
+              <div class="col">
+                  <div class="full-artist-desc">
+                     {% if author.image %}
+                      <div class="artist-img text-center">
+                          <figure>
+                              <img src="{{ author.image.url }}" alt="">
+                          </figure>
+                      </div>
+                      {% endif %}
+                        {% if author.text %}
+                          <div class="all-paragraphs-styles">
+                              {{ author.text|safe }}
+                          </div>
+                        {% endif %}
+                  </div>
+              </div>
+          </div>
+          <!-- full end -->
+          
+          
+        </div>
+        <!-- Artists end-->
+     </section>
+        {% if items %}
+      <section class="section prod-section">
+        <div class="cnt">
+            <div class="row">
+                <div class="col">
+                    <div class="section-title">
+                        <h2 class="text-center">
+                            <a href="javascript:void(0)">{% trans 'Ընտրանի' %}</a>
+                        </h2>
+                    </div>
+                </div>
+                {% for product in items %}
+                <div class="col col-4">
+                   {% include 'includes/product.html' %}
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        
+      </section>
+      {% endif %}
+    </main>
+    {% include 'includes/footer.html' %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/addToCart.js' %}"></script>
+    <script src="{% static 'js/wish.js' %}"></script>
+  </body>
+</html>

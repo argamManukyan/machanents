@@ -1,0 +1,16 @@
+{% load i18n %}
+{% if page_obj.paginator.count  %}
+    <div class="row full-ban">     
+        {% for product in page_obj %}    
+        <div class="col col-3">
+            {% include 'includes/product.html' %}
+        </div>         
+        {% endfor %}                           
+    </div>
+    {% if page_obj.paginator.num_pages > 1 %}
+
+    {% include 'includes/pagination.html' %}
+    {% endif %}
+{% else %}
+  {% trans 'Որոնման արդյունքում ոչինչ չգտնվեց' %}
+{% endif %}

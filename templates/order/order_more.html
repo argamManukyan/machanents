@@ -1,0 +1,260 @@
+{% load static %}{% load i18n %}{% load unique %}{% load currency %}{% currency_context %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset='utf-8'/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>{% if is_request %}{% trans 'Հարցում' %}{% else %}{% trans 'Պատվեր' %}{% endif %} № {{ order.id }} |
+        {{ request.get_host }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://mdbcdn.b-cdn.net/wp-content/themes/mdbootstrap4/docs-app/css/dist/mdb5/standard/core.min.css">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+{% include 'includes/header.html' %}
+<!-- Main content -->
+<main id="content">
+    <section class="main-top">
+
+        <!-- Breadcrumbs -->
+        <div class="bread-bg anot-breadcrumbs bot-prods">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div id="breadcrumbs">
+                            <ul class="breadcrumbs-list align-items-center">
+                                <li class="b-list-item">
+                                    <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                </li>
+                                <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon"
+                                     alt="{% trans 'Տեսականի' %}">
+                                <li class="b-list-item">
+                                    <span>{% if is_request %}{% trans 'Հարցում' %}{% else %}
+                                        {% trans 'Պատվեր' %}{% endif %} № {{ order.id }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Order more-->
+        <div class="order-more-page bot-prods">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <!-- error + success -->
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %}">
+                                    {{ message|safe }}
+                                </div>
+                            {% endfor %}
+                            {% if request.session.is_req %}
+                                <div class="alert alert-warning" role="alert" data-mdb-color="warning">
+                                    <i class="fas fa-exclamation-triangle me-3"></i>
+                                    {% trans 'ՈՒՇԱԴՐՈՒԹՅՈՒՆ։ Բոլոր ներկայացված գումարային տվյալները ներկայացված են նախնական հաշվարկով։ Վերջնական արդյունքը կլինի Ձեզ ուղարկվող էլ. նմակում' %}
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                        {% if order.bank_message %}
+                            <div class="alert alert-{% if order.bank_order_status == 2 %}success{% else %}danger{% endif %}">
+                                {{ order.bank_message|safe }}
+                            </div>
+                        {% endif %}
+                        <div class="alert alert-warning text-center" role="alert" data-mdb-color="warning">
+                            <i class="fas fa-exclamation-triangle me-3"></i>
+                            {% trans 'ՈՒՇԱԴՐՈՒԹՅՈՒՆ։ Բոլոր ներկայացված գումարային տվյալները ներկայացված են նախնական հաշվարկով։ Վերջնական արդյունքը կլինի Ձեզ ուղարկվող էլ. նամակում:' %}
+                        </div>
+                        <!-- error + success end -->
+
+                        <div class="two-version-title">
+                            <h1><span>{% if is_request %}{% trans 'Հարցում' %}{% else %}{% trans 'Պատվեր' %}{% endif %} № {{ order.id }}</span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="full-cart-items">
+                    <div class="row">
+                        <div class="col">
+                            <div id="order-table">
+                                <table id="cartTableALL">
+                                    <thead>
+                                    <tr class="order-head">
+                                        <th class="order-item-nom" width="1%">№</th>
+                                        <th class="order-head-img" width="2%">{% trans 'Նկար' %}</th>
+                                        <th class="order-head-name">{% trans 'Անվանում' %}</th>
+                                        <th class="order-head-price" width="3%">{% trans 'Գին' %}</th>
+                                        <th class="order-head-cnt nowrap">{% trans 'Քանակ' %}</th>
+                                        <th class="order-head-sum">{% trans 'Գումար' %}</th>
+                                        <th class="order-head-sum">{% trans 'Ապրանքի ID' %}</th>
+                                        <th class="order-head-sum">{% trans 'Առաքանու համար' %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for item in items %}
+                                        <tr id="#" class="order-item ">
+                                            <td class="order-item-nom"><b>{{ forloop.counter }}</b></td>
+                                            <td class="order-item-img" align="center">
+                                                <img src="
+                                                        {% if item.product_image %}{{ item.product_image.url }}{% else %}{{ item.product.main_photo.url }}{% endif %}">
+                                            </td>
+                                            <td class="order-item-name">
+                                                <a href="{{ item.product.get_absolute_url }}">{{ item.product_name }}</a>
+
+                                            </td>
+                                            <td class="order-item-price nowrap" width="2%">
+                                                <span class="wh-point">{{ item.product_price|currency:order.curr_code|floatformat:0 }}</span>
+                                                <span class="valyuta">{{ order.curr_code }}</span>
+                                            </td>
+                                            <td class="order-item-cnt" width="4%">
+                                                <div class="order-qty-mn">
+                                                    <div class="prod-qty">
+                                                        <div class="number flex-content-center">
+                                                            <b>{{ item.qty|floatformat:0 }}</b>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="order-item-sum nowrap" width="2%">
+                                                <span id="item-total_99"
+                                                      class="wh-point">{{ item.item_total_price|currency:order.curr_code|floatformat:0 }}</span>
+                                                <span class="valyuta">{{ order.curr_code }}</span>
+                                            </td>
+                                            <td class="order-item-sum nowrap" width="2%">
+                                                <span id="item-total_99">{{ item.product.product_id }}</span>
+                                            </td>
+                                            <td class="order-item-sum nowrap" width="2%">
+                                                <span id="item-total_99">{% if item.tracking_number %}
+                                                    <a style="text-decoration: dashed" href="https://www.haypost.am/am/track-trace#{{ item.tracking_number }}">{{ item.tracking_number }}</a>
+                                                {% else %}{% trans 'Բացակայում է' %}{% endif %}</span>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="show-pay-details-one">
+                                <div class="totlacart-amount text-center">
+                                    <div class="am-del-ship">
+                                        <div class="all-w flex-center-evenly ">
+                                            {% if is_request %}
+                                                <div class="adsh-one pay-adsh">
+                                                    <span>{% trans 'Գումար' %}</span>
+                                                    <span class="wh-point">{{ order.total_price|currency:order.curr_code|check_total:order|floatformat:0 }} {{ order.curr_code }}</span>
+                                                </div>
+                                            {% else %}
+                                                <div class="adsh-one pay-adsh">
+                                                    <span>{% trans 'Գումար' %}</span>
+                                                    <span class="wh-point">{{ order.total_price|currency:order.curr_code|floatformat:0 }} {{ order.curr_code }}</span>
+                                                </div>
+                                            {% endif %}
+                                            <div class="dsh-atr">
+                                                <img src="{% static 'img/icons/atr-one.svg' %}"
+                                                     alt="{% trans 'Գումար' %}">
+                                            </div>
+                                            <div class="adsh-two pay-adsh">
+                                                <span>{% trans 'Առաքում' %}</span>
+                                                <span class="wh-point">{{ order.delivery_price|currency:order.curr_code|floatformat:0 }} {{ order.curr_code }}</span>
+                                            </div>
+                                            <div class="dsh-atr">
+                                                <img src="{% static 'img/icons/atr-two.svg' %}" class="dsh-atr-two"
+                                                     alt="{% trans 'Առաքում' %}">
+                                            </div>
+                                            {% if is_request %}
+                                                <div class="adsh-three pay-adsh">
+                                                    <span>{% trans 'Ընդհանուր' %}</span>
+                                                    <span class="wh-point">{{ order.all_total|currency:order.curr_code|check_all_total:order|floatformat:0 }} {{ order.curr_code }}</span>
+                                                </div>
+                                            {% else %}
+                                                <div class="adsh-three pay-adsh">
+                                                    <span>{% trans 'Ընդհանուր' %}</span>
+                                                    <span class="wh-point">{{ order.all_total|currency:order.curr_code|floatformat:0 }} {{ order.curr_code }}</span>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="show-pay-details-two">
+                                <div class="only-order-details">
+                                    <ul>
+                                        <li class="flex-center-between">
+                                            <span><b>{% if is_request %}{% trans 'Հարցման ամսաթիվ' %}{% else %}
+                                                {% trans 'Պատվիրման ամսաթիվ' %}{% endif %}</b></span>
+                                            <span>{{ order.created_at|date:"d-m-Y H:i" }}</span>
+                                        </li>
+                                        {% if order.delivery %}
+                                            <li class="flex-center-between">
+                                                <span><b>{% trans 'Առաքման եղանակ' %}</b></span>
+                                                <span>{{ order.delivery }}</span>
+                                            </li>
+                                        {% endif %}
+                                        {% if order.payments %}
+                                            <li class="flex-center-between">
+                                                <span><b>{% trans 'Վճարման եղանակ' %}</b></span>
+                                                <span>{{ order.payments }}</span>
+                                            </li>
+                                        {% endif %}
+                                        <li class="flex-center-between">
+                                            <span><b>{% trans 'Հեռախոսահամար' %}</b></span>
+                                            <span>{{ order.phone }}</span>
+                                        </li>
+                                        <li class="flex-center-between">
+                                            <span><b>{% trans 'Առաքման հասցե' %}</b></span>
+                                            <span>{% if order.country_name %}{{ order.country_name }}, {% endif %}
+                                            {% if order.city_name %}{{ order.city_name }}
+                                                , {% endif %}{{ order.address }}</span>
+                                        </li>
+                                        {% if order.order_status %}
+                                            <li class="flex-center-between">
+                                                <span><b>{% if is_request %}{% trans 'Հարցման Կարգավիճակ' %}{% else %}
+                                                    {% trans 'Պատվերի Կարգավիճակ' %}{% endif %}</b></span>
+                                                <span>{{ order.order_status }}</span>
+                                            </li>
+                                        {% endif %}
+                                        <li class="">
+                                            <p style="margin-bottom: 20px;"><b>{% trans 'Նշումներ' %}</b></p>
+                                            <p>{{ order.notes }}</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {% if is_request and not order.is_expired and order.is_exists %}
+                                <!-- if request ok show pay button -->
+                                <div class="request-pay-now flex-content-center">
+                                    <button type="submit"
+                                            class="button big green-pay"
+                                    >{% trans 'Վճարել' %}</button>
+                                </div>
+                            {% endif %}
+                            <!-- if request ok show pay button end -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Order more end-->
+
+    </section>
+</main>
+{% include 'includes/footer.html' %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

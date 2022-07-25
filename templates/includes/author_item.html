@@ -1,0 +1,18 @@
+{% load i18n %}
+{% load static %}
+<article class="authors-item">
+    <div class="authors-header">
+        <a href="{{ author.get_absolute_url }}">
+            <figure>
+                <img src="{% if author.image %}{{ author.image.url }}{% else %}https://armtmm.com/media/1234-min.jpg{% endif %}" class="cover" loading="lazy"
+                     alt="{{ author.name }}">
+            </figure>
+        </a>
+    </div>
+    <div class="authors-footer">
+        <h2 class="line-clamp2">{{ author.name }}</h2>
+        <a href="{{ author.get_absolute_url }}" class="button transparent normal">{% trans 'Մանրամասն' %}
+            <img src="{% static 'img/icons/butt-art.svg' %}" alt="{% trans 'Մանրամասն' %}">
+        </a>
+    </div>
+</article>

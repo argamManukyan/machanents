@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load static %}
+{% load unique %}
+<div class="swiper-slide">
+    <div class="rev-block">
+        <div class="rev-block-header text-center">
+            <figure>
+                <img src="{% if not review_item.image %}{% static 'img/test-icons/rev.jpg' %}{% else %}
+                            {{ review_item.image.url }}{% endif %}" alt="Name Surname">
+            </figure>
+            <div class="rev-stars">
+                {% for i in review_item.rating|range %}★{% endfor %}
+            </div>
+            <div class="rev-writer">{{ review_item.sender.first_name }}</div>
+        </div>
+        <div class="rev-block-content">
+            {% if review_item.sender.profile.country  %}
+            <div class="rev-location">
+                <img src="{% static 'img/icons/place.svg' %}" alt="Armenia, Yerevan">
+                <span>{{ review_item.sender.profile.country}}{% if review_item.sender.profile.region %}, {{ review_item.sender.profile.region }}{% endif %}</span>
+            </div>
+            {% endif %}
+            <div class="rev-short-desc">
+                <p>{{ review_item.text }}</p>
+            </div>
+            <a href="{{ review_item.product.get_absolute_url }}" class="button normal trans">{% trans 'Տեսնել ավելին' %}</a>
+        </div>
+    </div>
+
+</div>

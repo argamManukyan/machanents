@@ -1,0 +1,31 @@
+<!-- Categories list for category page -->
+
+   <nav class="block-content">
+      <ul id="cat-names">
+          {% if categories.first.parent %}
+          {% for categ in categories %}
+               <li class="">
+                   <a href="{{categ.get_absolute_url}}" class="sub-tit {% if categ.get_absolute_url in request.get_full_path %}active{% endif %}">{{ categ.title }}</a>
+                </li>
+            {% endfor %}
+          {% else %}
+          
+         {% for categ in categories %}
+
+            <li class="">
+               <a href="{{categ.get_absolute_url}}" class="sub-tit {% if categ.get_absolute_url in request.get_full_path %}active{% endif %}">{{ categ.title }}</a>
+               {% if categ.children.count %}
+               <ul>
+                   {% for ct in categ.children.all %}
+                  <li class="sub-menu">
+                     <a href="{{ ct.get_absolute_url }}" class="{% if ct.get_absolute_url in request.get_full_path %}active{% endif %}">{{ ct.title }}</a>
+                  </li>
+                  {% endfor %}
+               </ul>
+               {% endif %}
+            </li>
+         {% endfor %}
+         {% endif %}
+
+      </ul>
+   </nav>

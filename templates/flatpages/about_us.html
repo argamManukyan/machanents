@@ -1,0 +1,190 @@
+{% load static %}{% load i18n %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset='utf-8'/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>{% if about_us.meta_title %}{{ about_us.meta_title }}{% else %}{% trans 'Մեր մասին' %} |
+        {{ request.get_host|title }}{% endif %}</title>
+    <meta name="Description" content="{% if about_us.meta_description %}{{ about_us.meta_description }}{% endif %}">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+{% include 'includes/header.html' %}
+
+<!-- Main content -->
+<main id="content">
+    <section class="section main-top">
+
+        <!-- Breadcrumbs -->
+        <div class="bread-bg bot-prods"
+             style="background-image:url({% if about_us.breadcrumbs_image %}{{ about_us.breadcrumbs_image.url }}
+             {% else %}{% static 'img/bread.jpg' %}{% endif %})">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div id="breadcrumbs" class="anothers-bread text-center">
+                            <div class="tit-page bread-page">
+                                <h1>{% if request.resolver_match.url_name == 'about_us' %}
+                                    {% trans 'Մեր մասին' %}{% else %}{{ about_us.title }}{% endif %}</h1>
+                                {% if about_us.breadcrumbs_text %}
+                                    <p>{{ about_us.breadcrumbs_text|safe }}</p>
+                                {% endif %}
+                            </div>
+                            <ul class="breadcrumbs-list flex-content-center">
+                                <li class="b-list-item">
+                                    <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                </li>
+                                <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon">
+                                {% if request.resolver_match.url_name == 'about_us' %}
+                                <li class="b-list-item">
+                                    <span>{% trans 'Մեր մասին' %}</span>
+                                </li>
+                                {% else %}
+                                <li class="b-list-item">
+                                    <a href="{% url 'about_us' %}" class="b-list-link">{% trans 'Մեր մասին' %}</a>
+                                </li>
+                                <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon">
+                                <li class="b-list-item">
+                                    <span>{{ about_us.title }}</span>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- About Us -->
+        <div class="main-about-page">
+            <div class="cnt">
+
+
+                <!-- About Us slider -->
+                <div class="row">
+                    <div class="col">
+                        <div class="home-ab-slider">
+                            <div class="swiper-container hab-slider">
+                                <div class="swiper-wrapper">
+
+                                    <div class="swiper-slide
+                                                {% if request.resolver_match.url_name == 'about_us' %}active{% endif %}">
+                                        <div class="hab-block text-center">
+                                            <a href="{% url 'about_us' %}">
+                                                <figure>
+                                                    <img src="{% if about_us.logo %}{{ about_us.logo.url }}{% else %}{% static 'img/test-icons/hab-1.png' %}{% endif %}"
+                                                         alt="">
+                                                </figure>
+                                                <div class="hab-name">
+                                                    <h3>{{ about_us.title|safe }}</h3>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    {% for item in about_us_items %}
+                                        {% include 'includes/about_category_item.html' %}
+                                    {% endfor %}
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- About Us slider end -->
+
+
+                <!-- About Us text -->
+                <div class="row">
+
+
+                    <!-- Active category title -->
+                    <div class="col">
+                        <h2 class="tit-act-ab"><span>{{ about_us.title }}</span></h2>
+                    </div>
+                    <!-- Active category title end -->
+
+
+                    <!-- CK editor -->
+                    <div class="col">
+                        <div class="all-paragraphs-styles">{{ about_us.text|safe }}</div>
+                    </div>
+                    <!-- CK editor end -->
+                    {% if about_us_social_icons %}
+                        <!-- social links -->
+                        <div class="col">
+                            <ul class="align-items-center ab-page-social">
+                                {% for ab_icon in about_us_social_icons %}
+                                    <li>
+                                        <a href="
+                                                {% if ab_icon.url %}{{ ab_icon.url }}{% else %}javascript: void(0){% endif %}"
+                                           class="align-items-center" target="_blank">
+                                            <img src="
+                                                    {% if ab_icon.icon %}{{ ab_icon.icon.url }}{% else %}https://armtmm.com/media/c-fb.svg{% endif %}"
+                                                 alt="Machanents">
+                                            {% if ab_icon.text %}<span>{{ ab_icon.text|safe }}</span>{% endif %}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <!-- social links end -->
+                    {% endif %}
+                </div>
+                <!-- About Us text end -->
+            </div>
+        </div>
+        <!-- About Us end -->
+    </section>
+</main>
+<!-- Main content end -->
+{% include 'includes/footer.html' %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/swiper.min' %}.js"></script>
+<script src="{% static 'js/swiper-express' %}.js"></script>
+<script>
+    // hab slider   
+    const swipper = new Swiper('.hab-slider', {
+        slidesPerView: 2.3,
+        spaceBetween: 15,
+        navigation: {
+            nextEl: '.swiper-next',
+            prevEl: '.swiper-prev',
+        },
+        breakpoints: {
+            340: {
+                slidesPerView: 2.7,
+                spaceBetween: 15,
+            },
+            568: {
+                slidesPerView: 3.7,
+                spaceBetween: 20,
+            },
+            768: {
+                slidesPerView: 4.7,
+                spaceBetween: 20,
+            },
+            992: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+            },
+            1200: {
+                slidesPerView: 6,
+                spaceBetween: 20,
+            },
+        }
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% load my_url %}
+{% load i18n %}
+{% if page_obj.paginator.num_pages > 1 %}
+<div class="align-items-center">
+    <div class="number-show-pagination m-none">
+        <span>{% trans 'էջ' %} <b>{{page_obj.number}}</b> {% trans 'ից' %} {{page_obj.paginator.num_pages }}</span>
+    </div>
+
+    <nav class="pagination">
+        <ul class="page-numbers">
+        
+            {% if page_obj.has_previous %}
+                <li><a class="prev page-numbers" href="{% my_url 1 'page' request.GET.urlencode %}">←</a>
+                </li>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if num == page_obj.number %}
+                    <li><span aria-current="page"
+                              class="page-numbers current">{{ num }}</span></li>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <li><a class="page-numbers" href="{% my_url num 'page' request.GET.urlencode %}">{{ num }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <li>
+                    <a class="next page-numbers" href="{% my_url page_obj.next_page_number 'page' request.GET.urlencode %}">→</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endif %}

@@ -1,0 +1,163 @@
+{% load static %}{% load i18n %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+  <head>
+   {% include 'includes/tagmanager.html' %}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>
+      {% if service.meta_title %}{{service.meta_title}}{% else %}{{service.title}} | .com{% endif %}
+    </title>
+    <meta name="Description" content="{% if LANGUAGE_CODE == 'ru' %}{% elif LANGUAGE_CODE == 'en' %}{% else %}{% endif %}" />
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/color.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    {% include 'includes/header.html' %}
+    <main id="content">
+      <section class="main-top">
+        <!-- Breadcrumbs -->
+        <div class="bread-bg anot-breadcrumbs bot-prods">
+          <div class="cnt">
+            <div class="row">
+              <div class="col">
+                <div id="breadcrumbs">
+                  <ul class="breadcrumbs-list align-items-center">
+                    <li class="b-list-item">
+                      <a href="{% url 'home' %}" class="b-list-link">{% trans "Գլխավոր" %}</a>
+                    </li>
+                    <img
+                      src="{% static 'img/icons/bread-right.svg' %}"
+                      class="right-icon"
+                      alt="{% trans 'Ծառայություններ' %}"
+                    />
+                    <li class="b-list-item">
+                      <a href="{% url 'service_list' %}" class="b-list-link">{% trans 'Ծառայություններ' %}</a>
+                    </li>
+                    <img
+                        src="{% static 'img/icons/bread-right.svg' %}"
+                       class="right-icon"
+                      alt="{% trans 'Ծառայություններ' %}"
+                    />
+                    <li class="b-list-item">
+                      <span>{{ service.title }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Srevices full -->
+        <div class="bot-prods services-full-page">
+          <div class="cnt">
+            <div class="row">
+              <div class="col">
+                <div class="two-version-title">
+                  <h1>{{ service.title }}</h1>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <div class="all-paragraphs-styles">
+                  {{ service.large_description|safe }}
+                </div>
+                <div class="form-call text-center">
+                  <!-- error + success -->
+                  {% if messages %}
+                  {% for message in messages  %}
+                  {% if message.tags == 'success' %}
+                  <div class="alert alert-success">
+                     {{message|safe}}
+                  </div>
+                  {% else %}
+                  <div class="alert alert-danger">
+                     {{message|safe}}
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                  {% endif %}
+                  <!-- error + success end -->
+
+                  <form id="CallBack" method="post" novalidate="novalidate">
+                  {% csrf_token %}
+                    <div class="phone-number-order">
+                      <h2 class="text-center">
+                        {% trans 'Գրեք Ձեր անունը և հեռախոսահամարը և մեր մասնագետը կկապվի Ձեզ հետ:' %}
+                      </h2>
+                      <input
+                        type="hidden"
+                        name="title"
+                        value="{{ service.id }}"
+                        id="id_service"
+                      />
+                      <div class="input-fields">
+                        <input
+                          type="text"
+                          class="another-field"
+                          id="first_name"
+                          name="name"
+                          placeholder="{% trans 'Անուն Ազգանուն' %} *"
+                        />
+                      </div>
+                      <div class="input-fields">
+                        <input
+                          type="number"
+                          class="another-field"
+                          name="phone"
+                          maxlength=""
+                          value=""
+                          id="recphoneNumber"
+                          placeholder="{% trans 'Հեռախոսահամար' %}"
+                        />
+                      </div>
+                      <div class="input-fields">
+                        <div class="butt-sign">
+                          <input
+                            type="submit"
+                            class="button big dark"
+                            name="submit"
+                            value="{% trans 'Ուղարկել' %}"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Srevices full end -->
+      </section>
+    </main>
+    {% include 'includes/footer.html' %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+    <script>
+      //Validate
+      $(function () {
+        $("#CallBack").validate({
+          rules: {
+            name: "required",
+            phone: "required",
+          },
+          messages: {
+            name: "{% trans 'Դաշտը պարտադիր է լրացման համար' %}",
+            phone: "{% trans 'Դաշտը պարտադիր է լրացման համար' %}",
+          },
+          submitHandler: function (form) {
+            form.submit();
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

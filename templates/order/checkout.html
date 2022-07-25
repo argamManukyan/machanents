@@ -1,0 +1,530 @@
+{% load static %}{% load i18n %}
+{% load currency %}{% currency_context %}
+{% load unique %}
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset='utf-8'/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>{% if cart|check_request %}{% trans 'Ուղարկել Հարցում' %}{% else %}{% trans 'Պատվերի ձևակերպում' %}{% endif %} | {{ request.get_host|title }}</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+{% include 'includes/header.html' %}
+<main id="content">
+    <section class="main-top">
+
+        <!-- Breadcrumbs -->
+        <div class="bread-bg anot-breadcrumbs bot-prods">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div id="breadcrumbs">
+                            <ul class="breadcrumbs-list align-items-center">
+                                <li class="b-list-item">
+                                    <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                </li>
+                                <span class="bread-arrow">→</span>
+                                <li class="b-list-item">
+                                    <span>{% if cart|check_request %}{% trans 'Ուղարկել Հարցում' %}{% else %}{% trans 'Պատվերի ձևակերպում' %}{% endif %}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Checkout-->
+        <div class="bot-prods checkout-page">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div class="two-version-title">
+                            <h1><span>{% if cart|check_request %}{% trans 'Ուղարկել Հարցում' %}{% else %}{% trans 'Պատվերի ձևակերպում' %}{% endif %}</span></h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-checkout-page">
+                    <form id="checkout-form" method="POST">
+                        {% csrf_token %}
+                        {% if cart|check_request %}
+                            <input type="hidden" name="send_request" value="true">
+                        {% endif %}
+                        <div class="row">
+
+                            <div class="col col-2">
+                                <div class="delivery-types">
+                                    {% if not request.session.send_request %}
+                                    <div class="del-pay-lists b-both">
+                                        <div class="del-list-pay">
+                                            <h3 class="order-page-title">{% trans 'Առաքման եղանակ' %}</h3>
+                                            <table id="delivery-list" class="methods-list">
+                                                <tbody class="align-items-center">
+                                                {% for del_type in delivery_types %}
+                                                    <tr valign="top" class="dlp-tr"
+                                                        id="delivery-block-{{ forloop.counter }}">
+                                                        <td>
+                                                            <label class="label"
+                                                                   for="del-type-{{ forloop.counter }}">{{ del_type.title }}</label>
+                                                        </td>
+                                                        <th>
+                                                            <input type="radio" id="del-type-{{ forloop.counter }}"
+                                                                   class="del-item"
+                                                                   name="delivery" value="{{ del_type.id }}"
+                                                                   {% if forloop.first %}checked{% endif %}>
+                                                        </th>
+                                                    </tr>
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            <img src="{% static 'img/icons/del-type-icon.svg' %}" class="del-type-icon"
+                                                 alt="{% trans 'Առաքման եղանակ' %}">
+                                        </div>
+                                    </div>
+                                    <div class="pay-list-pay b-both">
+                                        <h3 class="order-page-title">{% trans 'Վճարման եղանակ' %}
+                                        </h3>
+                                        <table id="payments-list" class="methods-list">
+                                            <tbody>
+                                            <tr valign="top" id="payment-block-0" style="display:none;">
+                                                <th>
+                                                    <input type="radio" id="pay-type-0" class="payment-item"
+                                                           name="payments" value="3">
+                                                </th>
+                                                <td>
+                                                    <label class="label" for="pay-type-0">
+                                                        <b>{% trans 'Կանխիկ տեղում' %}</b>
+                                                    </label>
+                                                    <div class="delivery-description">
+                                                        <p>{% trans 'Վճարումը իրականացվում է Machanents ցուցասրահում:' %}</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr valign="top" id="payment-block-1">
+                                                <th>
+                                                    <input type="radio" id="pay-type-1" class="payment-item"
+                                                           name="payments" value="1">
+                                                </th>
+                                                <td>
+                                                    <label class="label" for="pay-type-1"><b>
+                                                        {% trans 'Կանխիկ առաքման պահին' %}</b></label>
+                                                    <div class="delivery-description">
+                                                        <p>{% trans 'Կարող եք վճարել առաքչին հենց առաքման ժամանակ:' %}
+                                                            <br>
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr valign="top" id="payment-block-2">
+                                                <th>
+                                                    <input type="radio" id="pay-type-2" class="payment-item"
+                                                           name="payments" value="2"
+                                                           checked="true">
+                                                </th>
+                                                <td>
+                                                    <label class="label" for="pay-type-2">
+                                                        <b>{% trans 'Անկանխիկ (ARCA/ VISA/ MASTERCARD)' %}</b>
+                                                    </label>
+                                                    <div class="delivery-description">
+                                                        <p>{% trans 'Կարող եք վճարել բանկային քարտի միջոցով (ARCA/VISA/MASTERCARD)' %}</p>
+                                                        <ul class="pay-icons flex-content-center">
+                                                            <li><img src="{% static 'img/icons/visa-pay.svg' %}"
+                                                                     alt="{% trans 'Վճարման եղանակ' %}">
+                                                            </li>
+                                                            <li><img src="{% static 'img/icons/master-pay.svg' %}"
+                                                                     alt="{% trans 'Վճարման եղանակ' %}"></li>
+                                                            <li><img src="{% static 'img/icons/arca-pay.svg' %}"
+                                                                     alt="{% trans 'Վճարման եղանակ' %}">
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    {% endif %}
+                                    <!-- Order total sum desktop version -->
+                                    <div class="delivery-total-sum mob-clone m-none">
+                                        <h4 class="text-center">{% trans 'Ընդհանուր վճարման ենթակա գումար' %}</h4>
+                                        <div class="amount-sum flex-center-between">
+                                            <p class="money-tit">{% trans 'Գումար:' %}</p>
+                                            <p class="money-qty">
+                                                <span class="amount-p wh-point cart-amount"
+                                                      id="">{{ cart.cart_total|currency:request.session.currency|floatformat:0}}</span>
+                                                <span class="valyuta">{{ request.session.currency }}</span>
+                                            </p>
+                                        </div>
+                                        <div class="deliver-sum flex-center-between">
+                                            <p class="money-tit">{% trans 'Առաքում:' %}</p>
+                                            <p class="money-qty">
+                                                <span class="delivery-p wh-point delivery-price"
+                                                      id="">{{ del_price }}</span>
+                                                <span class="valyuta">{{ request.session.currency }}</span>
+                                            </p>
+                                        </div>
+                                        <div class="total-cost-sum flex-center-between">
+                                            <p>{% trans 'Ընդհանուր:' %}</p>
+                                            <p>
+                                                <span class="total-cost-p wh-point cart-total" id=""></span>
+                                                <span class="valyuta">{{ request.session.currency }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <!-- Order total sum desktop version end -->
+                                </div>
+                            </div>
+
+                            <div class="col col-2">
+                                <div class="form-order">
+                                    <h3 class="order-page-title">
+                                        {% if cart|check_request %}{% trans 'Հարցման մանրամասներ' %}{% else %}{% trans 'Պատվերի մանրամասներ' %}{% endif %}</h3>
+                                    <div class="order-only-form">
+                                        <div class="two-inputs flex-center-between">
+                                            <div class="input-fields">
+                                                <label for="first_name"
+                                                       class="label-ord-in">{% trans 'Անուն Ազգանուն' %} *</label>
+                                                <input type="text" id="username" name="first_name"
+                                                       value="{% if request.user and user.first_name %}{{ user.first_name }}{% endif %}">
+                                            </div>
+
+                                            <div class="input-fields">
+                                                <label for="email" class="label-ord-in">{% trans 'էլ․հասցե' %}</label>
+                                                <input type="email" id="email" name="email"
+                                                       value="{% if request.user and  user.email %}{{ user.email }}{% endif %}">
+                                            </div>
+                                        </div>
+                                        <div class="two-inputs flex-center-between">
+                                            <div class="input-fields">
+                                                <label for="phone" class="label-ord-in">{% trans 'Հեռախոսահամար' %}
+                                                    *</label>
+                                                <input type="tel" name="phone" maxlength="150" id="phoneNumber"
+                                                       value="{% if user and user.profile.phone_number %}{{ user.profile.phone_number }}{% endif %}">
+                                            </div>
+                                            <div class="input-fields">
+                                                <label for="zip_code" class="label-ord-in">{% trans 'Փոստային դասիչ' %}
+                                                    *</label>
+                                                <input type="text" name="zip_code" id="postIndex"
+                                                       value="{% if user.profile.zip_code %}{{ user.profile.zip_code }}{% endif %}"
+                                                       class="valid">
+                                            </div>
+                                        </div>
+
+                                        <div class="two-inputs flex-center-between changes-blocks">
+                                            <div class="input-fields">
+                                                <label for="state_name" class="label-ord-in">{% trans 'Երկիր' %}
+                                                    *</label>
+                                                <select id="id_country" class="js-select2" name="country_name">
+                                                    {% if user and not user.profile.country_id %}<option>{{ user.profile.county_id }}{% trans 'Երկիր' %}</option>{% endif %}
+                                                    {% for country in countries %}
+                                                        <option data-id="{{ country.id }}" value="{{ country.id }}"
+                                                                {% if user and user.profile.country_id == country.id %}selected{% endif %}>{{ country.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="input-fields" id="selectedCountry">
+                                                <label for="city_name" class="label-ord-in">{% trans 'Մարզ/Ռեգիոն' %} *</label>
+                                                <select id="id_region" class="js-select2" name="city_name">
+                                                    <option>{% trans 'Բնակավայր' %}</option>
+                                                    {% for region in regions %}
+                                                        <option value="{{ region.id }}"
+                                                                {% if user and user.profile.region_id == region.id %}selected{% endif %}>{{ region.name }}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="input-fields changes-blocks">
+                                            <label for="address" class="label-ord-in">{% trans 'Հասցե' %} *</label>
+                                            <textarea name="address" cols="20" rows="2" id="address_text">{% if user and user.profile.address %}{{ user.profile.address }}{% endif %}</textarea>
+                                        </div>
+                                        <div class="input-fields">
+                                            <label for="otes" class="label-ord-in">{% trans 'Նշումներ' %}</label>
+                                            <textarea name="notes" cols="20" rows="3" id="otes"></textarea>
+                                        </div>
+
+                                        <!-- Order total sum clone div -->
+                                        <div class="delivery-total-sum d-none b-both">
+                                            <h4 class="text-center">{% trans 'Ընդհանուր վճարման ենթակա գումար' %}</h4>
+                                            <div class="amount-sum flex-center-between">
+                                                <p class="money-tit">{% trans 'Գումար:' %}</p>
+                                                <p class="money-qty">
+                                                    <span class="amount-p wh-point cart-amount"
+                                                          id="">{{ cart.cart_total|currency:request.session.currency|floatformat:0}}</span>
+                                                    <span class="valyuta">{{ request.session.currency }}</span>
+                                                </p>
+                                            </div>
+                                            <div class="deliver-sum flex-center-between">
+                                                <p class="money-tit">{% trans 'Առաքում:' %}</p>
+                                                <p class="money-qty">
+                                                    <span class="delivery-p wh-point delivery-price"
+                                                          id="">{{ del_price}}</span>
+                                                    <span class="valyuta">{{ request.session.currency }}</span>
+                                                </p>
+                                            </div>
+                                            <div class="total-cost-sum flex-center-between">
+                                                <p>{% trans 'Ընդհանուր:' %}</p>
+                                                <p>
+                                                    <span class="total-cost-p wh-point cart-total" id=""></span>
+                                                    <span class="valyuta">{{ request.session.currency }}</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <!-- Order total sum clone div end -->
+
+                                        <div class="input-fields">
+                                            <input type="submit" id="order-button"
+                                                   {% if cart|check_request %}value="{% trans 'Ուղարկել հարցում' %}"
+                                                    {% else %}value="{% trans 'Ձևակերպել պատվերը' %}"{% endif %}
+                                                   class="button big dark">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <!-- Checkout end -->
+
+    </section>
+</main>
+{% include 'includes/footer.html' %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script>
+    //select2
+    $(".js-select2").select2();
+
+    // Changes
+    $('body').on('change', 'input:radio[name="delivery"]', function () {
+        if ($(this).is(':checked') && $(this).attr('id') === 'del-type-2') {
+            $('#checkout-form').attr('action', '');
+            $('#payment-block-1').hide();
+            $('#payment-block-0').show();
+            $('.changes-blocks').hide();
+            const cartTotPrice = document.querySelector('.cart-amount').textContent.replace('.', '')
+            $('.delivery-price').html(0)
+            $('#takeDate').css('display', 'block')
+            $('#takeTime').css('display', 'block')
+            $('#delDate').css('display', 'none')
+            $('#delTime').css('display', 'none')
+
+            $('.cart-total').html((cartTotPrice).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+        } else {
+            $('#payment-block-1').show();
+            ;
+            $('#payment-block-0').hide();
+            $('.changes-blocks').show();
+            $('#takeDate').css('display', 'none')
+            $('#takeTime').css('display', 'none')
+            $('#delDate').css('display', 'block')
+            $('#delTime').css('display', 'block')
+            window.location.reload()
+
+        }
+    });
+</script>
+
+<script>
+    // Validate datepicker
+    $(function () {
+        $('#checkout-form').validate({
+            rules: {
+                first_name: "required",
+                email: {
+                    required: true,
+                    email: true
+                },
+                country_name: "required",
+                city_name: "required",
+                address: "required",
+                phone: "required",
+                zip_code: "required"
+            },
+
+            messages: {
+                first_name: "{% trans 'Դաշտը պարտադիր է' %}",
+                email: {
+                    required: "{% trans 'Դաշտը պարտադիր է լրացման համար' %}",
+                    email: "{% trans 'Մուտքագրեք Ձեր Էլ. Փոստի հասցեն' %}"
+                },
+                address: "{% trans 'Դաշտը պարտադիր է' %}",
+                country_name: "{% trans 'Դաշտը պարտադիր է' %}",
+                city_name: "{% trans 'Դաշտը պարտադիր է' %}",
+                phone: {
+                    required: "{% trans 'Դաշտը պարտադիր է' %}"
+                },
+                zip_code: {
+                    required: "{% trans 'Դաշտը պարտադիր է' %}"
+                }
+            },
+
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    });
+     const country = document.querySelector('#id_country')
+       {% if request.user and request.user.profile.region %}
+        document.querySelector('#selectedCountry').style.display = 'block'
+        {% elif request.user and request.user.profile.country.id == 1 and not request.user.profile.region %}
+         document.querySelector('#selectedCountry').style.display = 'block'
+       {% else %}
+       document.querySelector('#selectedCountry').style.display = 'none'
+       {% endif %}
+
+       $('#id_country').on('change', function (e){
+           if(e.target.value === '1'){
+               document.querySelector('#selectedCountry').style.display = 'block'
+           }else{
+               document.querySelector('#selectedCountry').style.display = 'none'
+           }
+       })
+
+    if (document.querySelector('.delivery-price').textContent.length) {
+        const cartTotPrice = document.querySelector('.cart-amount').textContent.replace('.', '')
+        const delPrice = document.querySelector('.delivery-price').textContent.replace('.', '')
+        $('.cart-total').html((parseFloat(delPrice) + parseFloat(cartTotPrice)).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+    }
+
+    
+    const countryHandler = (event) => {
+        let url = `${window.location.href}?country_id=${event.target.value}`
+        if (event.target.value === "1") {
+            const region_id = $('#id_region').val()
+            url = `${window.location.href}?country_id=${event.target.value}&region_id=${region_id}`
+        }
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(response => {
+            return response.json()
+        })
+            .then(data => {
+
+                if (data && data.delivery_price === 'dont_delivery') {
+                        document.querySelector('.regiosDeliveryNotif').style.display = 'block'
+                        document.querySelector('#checkout-form').style.display = 'none'
+                        document.querySelector('#araqman-gumar').innerHTML = 0
+                        document.querySelector('#delivery_price').value = 0
+                        document.querySelector('#cart_total').innerHTML = document.querySelector('#cart-total').textContent
+                    } else if (data && data.delivery_price !== 'dont_delivery') {
+                        const cartTotal = $('.cart-amount').html()
+                        $('.delivery-price').html(parseFloat(data.delivery_price).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+                        $('.cart-total').html((parseFloat(data.delivery_price) + parseFloat(cartTotal.replace(/[\s.,%]/g, ''))).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+                    }
+            })
+    }
+    $('#id_country').on('change', countryHandler)
+    ///Country change functionality
+
+    //Region change func
+    const region = document.querySelector('#id_region')
+    const regionHandler = (event) => {
+
+        fetch(`${window.location.href}?region_id=${event.target.value}`, {
+            method: 'GET',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        }).then(response => {
+            return response.json()
+        }).then(data => {
+
+                if (data && data.delivery_price === 'dont_delivery') {
+                        document.querySelector('.regiosDeliveryNotif').style.display = 'block'
+                        document.querySelector('#checkout-form').style.display = 'none'
+                        document.querySelector('#araqman-gumar').innerHTML = 0
+                        document.querySelector('#delivery_price').value = 0
+                        document.querySelector('#cart_total').innerHTML = document.querySelector('#cart-total').textContent
+                    } else if (data && data.delivery_price !== 'dont_delivery') {
+                        const cartTotal = $('.cart-amount').html()
+                        $('.delivery-price').html(parseFloat(data.delivery_price).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+                        $('.cart-total').html((parseFloat(data.delivery_price) + parseFloat(cartTotal.replace(/[\s.,%]/g, ''))).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+                    }
+        })
+    }
+
+    $('#id_region').on('change', regionHandler)
+
+    // Set delivery price for registered users
+
+     // Set default delivery price
+    {% if request.user.is_authenticated %}
+        const country_id = {% if request.user.profile.country %}{{request.user.profile.country.id}}{% else %}1
+        {% endif %}
+        const state_id =  {% if request.user.profile.region %}
+            [`{{request.user.profile.region.id}}`, `{{request.user.profile.region.name}}`]{% else %} '' {% endif %}
+        if(state_id.length > 0) {
+            fetch(`${window.location.href}?region_id=${state_id[0]}`, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            }).then(response => {
+                return response.json()
+            }).then(data => {
+
+                if (data && data.delivery_price === 'dont_delivery') {
+                    document.querySelector('.regiosDeliveryNotif').style.display = 'block'
+                    document.querySelector('#checkout-form').style.display = 'none'
+                    document.querySelector('#araqman-gumar').innerHTML = 0
+                    document.querySelector('#delivery_price').value = 0
+                    document.querySelector('#cart_total').innerHTML = document.querySelector('#cart-total').textContent
+
+                } else if (data && data.delivery_price !== 'dont_delivery') {
+                    const cartTotal = $('.cart-amount').html()
+                    $('.delivery-price').html(parseFloat(data.delivery_price).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+                    $('.cart-total').html((parseFloat(data.delivery_price) + parseFloat(cartTotal.replace(/[\s.,%]/g, ''))).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+                    document.querySelector('.regiosDeliveryNotif').style.display = 'none'
+                }
+            })
+
+        }else {
+            
+                fetch(`${window.location.href}?country_id=${country_id}`, {
+                    method: 'GET',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                }).then(response => {
+                    return response.json()
+                }).then(data => {
+                    if (data && data.delivery_price === 'dont_delivery') {
+                        document.querySelector('.regiosDeliveryNotif').style.display = 'block'
+                        document.querySelector('#checkout-form').style.display = 'none'
+                        document.querySelector('#araqman-gumar').innerHTML = 0
+                        document.querySelector('#delivery_price').value = 0
+                        document.querySelector('#cart_total').innerHTML = document.querySelector('#cart-total').textContent
+                    } else if (data && data.delivery_price !== 'dont_delivery') {
+                        const cartTotal = $('.cart-amount').html()
+                        $('.delivery-price').html(parseFloat(data.delivery_price).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+                        $('.cart-total').html((parseFloat(data.delivery_price) + parseFloat(cartTotal.replace(/[\s.,%]/g, ''))).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."))
+                    }
+                })
+        }
+
+    {% endif %}
+
+</script>
+
+</body>
+</html>

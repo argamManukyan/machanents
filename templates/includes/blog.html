@@ -1,0 +1,32 @@
+{% load static %}
+{% load i18n %}
+<div class="col col-3">
+    <article class="blog-item">
+        <div class="blog-article-header">
+            <figure>
+                <a href="{{ blog.get_absolute_url }}">
+                    <img src="{% if blog.image %}{{blog.image.url}}
+                                {% else %}{% static 'defaults/blog_default.jpg' %}{% endif %}"
+                         alt="{{ blog.title }}"></a>
+            </figure>
+            <div class="blog-views calendars align-items-center">
+                <div class="calendar-on align-items-center">
+                    <span>{{blog.created_at|date:"Y-m-d H:i"}}</span>
+                </div>
+                <div class="views-on align-items-center">
+                    <img src="{% static 'img/icons/eye.svg' %}" class="view-icon" alt="{% trans 'Դիտումների քանակ' %}">
+                    <span>{{ blog.views_count }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="blog-article-footer">
+            <h4 class="blog-art-heading align-items-center">
+                <a href="{{ blog.get_absolute_url }}" class="line-clamp2">{{blog.title}}</a>
+            </h4>
+            {% if blog.short_description %}
+                {{ blog.short_description|safe }}
+            {% endif %}
+            <a href="{{ blog.get_absolute_url }}" class="button transparent normal">{% trans 'Մանրամասն' %}</a>
+        </div>
+    </article>
+</div>

@@ -1,0 +1,218 @@
+{% load i18n %}
+{% load currency %}
+{% currency_context %}
+<table align="center" width="100%" style="background:#eeeeee;font-family:'arial'; width:750px;max-width: 750px;">
+    <tbody>
+    <tr>
+        <td>
+            <table border="0" cellpadding="0" cellspacing="0" style="background:#fff;margin:0 auto 0 auto;max-width:100%;width:100%">
+                <tbody>
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background:#4A0701;margin:0 auto 0 auto;padding:5px 15px 5px 15px;text-align:center">
+                            <tbody>
+                            <tr>
+                                <td width="13%" style="text-align:center">
+                                    <img border="0" style="display:block;width:50px" src="https://giostest.xyz/static/img/logo-md.svg">
+                                </td>
+                                <td style="text-align:right">
+                                    <span style="color:#fff;display:block;font-size:12px;font-weight:600;padding:3px 10px 3px 15px">Էլ․ Փոստ:
+                                        <span style="color:#fff !important;font-weight:normal">
+                                            <a href="mailto:info@machanents.com" style="color:#fff !important">info@machanents.com</a>
+                                        </span>
+                                    </span>
+                                    <span style="color:#fff;display:block;font-size:12px;font-weight:600;padding:3px 10px 3px 15px">Հեռախոսահամար: <span style="font-weight:normal">
+                                            <span>
+                                                <a href="tel:+37498738077" style="color:#fff !important">
+                                                    +374 (98)73 80 77
+                                                </a>
+                                            </span></span>
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0" width="96%" style="margin:0 auto 0 auto">
+                            <tbody>
+                            <tr>
+                                <td style="color:#000;font-size:16px;margin:0 5px 0 5px;padding-top:25px;text-align:center">Դուք ստացել եք պատվերի հարցում {{ order.first_name }} -ի կողմից։</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0" width="96%"
+                               style="margin:8px auto 8px auto;padding:0 5px 0 5px">
+                            <tbody>
+                            <tr>
+                                <td style="color:#9c9c9c;padding-bottom:20px"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr style="background:#EFEFEF;display:block;">
+                    <td style="color:#000;display:inline-block;font-size:16px;font-weight:600;padding:10px;width:45%">
+                        Հարցումի կոդ: #<strong> {{ order.id }}</strong>
+                    </td>
+                    <td style="display:inline-block;float:right;font-size:15px;font-weight:600;padding:10px;text-align:right">
+                        <strong>
+                            <span>{{ order.created|date:"d-m-Y | H:i" }}</span>
+                        </strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p style="color:#000;margin:20px 30px 20px 30px;text-align:center">
+                            <strong>Պատվերի հարցման մանրամասներ</strong>
+                        </p>
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%"
+                               style="margin:0 auto 0 auto;text-align:center">
+                            <tbody>
+                            <tr>
+                                <th style="background:#d9d9d9;border:1px solid #dedede;padding:10px;text-align:center;width:2%">№</th>
+                                <th style="background:#d9d9d9;border:1px solid #dedede;color:#000;font-size:14px;padding:10px;text-align:center">Նկար</th>
+                                <th style="background:#d9d9d9;border:1px solid #dedede;color:#000;font-size:14px;padding:10px;text-align:center">Անվանում</th>
+                                <th style="background:#d9d9d9;border:1px solid #dedede;color:#000;font-size:14px;padding:10px;text-align:center;width:15%">Գին</th>
+                                <th style="background:#d9d9d9;border:1px solid #dedede;color:#000;font-size:14px;padding:10px;text-align:center;width:15%">Քանակ</th>
+                                <th style="background:#d9d9d9;border:1px solid #dedede;color:#000;font-size:14px;padding:10px;text-align:center;width:15%">Գումար</th>
+                                <th style="background:#d9d9d9;border:1px solid #dedede;color:#000;font-size:14px;padding:10px;text-align:center;width:15%">Ապրանքի ID</th>
+                            </tr>
+                            {% for item in items %}
+                                <tr>
+                                    <td style="border:1px solid #dedede;padding:10px">{{ forloop.counter }}</td>
+                                    <td style="border:1px solid #dedede;padding:10px">
+                                        <img style="height:60px"
+                                             src="https://{{ request.get_host }}{{ item.product_image.url }}">
+                                    </td>
+                                    <td style="border:1px solid #dedede;font-size:13px;padding:10px">{{ item.product.title }}
+                                    </td>
+                                    <td style="border:1px solid #dedede;font-size:14px;padding:10px 15px 10px 15px">
+                                        {{ item.product_price|currency:order.curr_code|floatformat:0 }}
+                                        <span>{{ order.curr_code }}</span></td>
+                                    <td style="border:1px solid #dedede;font-size:14px;padding:10px 15px 10px 15px">{{ item.qty }}
+                                    </td>
+                                    <td style="border:1px solid #dedede;font-size:14px;padding:10px 15px 10px 15px">
+                                        {{ item.item_total_price|currency:order.curr_code|floatformat:0 }}<span> {{ order.curr_code }}</span>
+                                    </td>
+                                    <td style="border:1px solid #dedede;font-size:14px;padding:10px 15px 10px 15px">
+                                        <span>{{ item.product.product_id }}</span></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0" width="96%"
+                               style="margin:15px auto 15px auto;padding:0 5px 0 5px;text-align:right">
+                            <tbody>
+                            <tr>
+                                <td style="color:#000;font-size:15px;font-weight:600">
+                                    {% if order.delivery_price %}
+                                        <p>Առաքման վճար:
+                                            {{ order.delivery_price|currency:request.session.currency|floatformat:0 }}<span> {{ order.curr_code }}</span>
+                                        </p>
+                                    {% endif %}
+                                    <p>Ընդհանուր գումար:
+                                        {{ order.all_total|currency:request.session.currency|floatformat:0 }}
+                                        <span>{{ order.curr_code }}</span>
+                                    </p>
+                                    <br> <br>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding:0 10px 25px 10px">
+                            <tbody>
+                            <tr>
+                                <td style="color:#000;font-size:14px;padding:5px 10px 5px 10px;vertical-align:top">
+
+                                    <div style="border-bottom-color:#555d4c;border-bottom-style:solid;border-bottom-width:2px;color:#000;display:block;font-size:15px;overflow:hidden;padding:10px 0 10px 0">
+                                        <div style="float:left;font-weight:bold;margin-right:7px">Հեռախոսահամար:</div>
+                                        <div style="float:right"><span>{{ order.phone }}</span></div>
+                                    </div>
+
+                                    {% if order.email %}
+                                        <div style="border-bottom-color:#555d4c;border-bottom-style:solid;border-bottom-width:2px;color:#000;display:block;font-size:15px;overflow:hidden;padding:10px 0 10px 0">
+                                            <div style="float:left;font-weight:bold;margin-right:7px">E-mail:</div>
+                                            <div style="float:right">{{ order.email }}</div>
+                                        </div>
+                                    {% endif %}
+                                    <div style="border-bottom-color:#555d4c;border-bottom-style:solid;border-bottom-width:2px;color:#000;display:block;font-size:15px;overflow:hidden;padding:10px 0 10px 0">
+                                        <div style="float:left;font-weight:bold;margin-right:7px"> Առաքման հասցե:</div>
+                                        <div style="float:right">
+                                            {% if order.country_name %}{{ order.country_name }}, {% endif %}{% if order.city_name %}{{ order.city_name }}, {% endif %}{{ order.address }}
+                                        </div>
+                                    </div>
+
+                                    <div style="border-bottom-color:#555d4c;border-bottom-style:solid;border-bottom-width:2px;color:#000;display:block;font-size:15px;overflow:hidden;padding:10px 0 10px 0">
+                                        <div style="float:left;font-weight:bold;margin-right:7px"> Փստային դասիչ:</div>
+                                        <div style="float:right">
+                                            {{ order.zip_code }}
+                                        </div>
+                                    </div>
+
+                                    {% if order.notes %}
+                                    <div style="border-bottom-color:#555d4c;border-bottom-style:solid;border-bottom-width:2px;color:#000;display:block;font-size:15px;overflow:hidden;padding:10px 0 10px 0">
+                                        <div style="float:left;font-weight:bold;margin-right:7px">Նշումներ:
+                                        </div>
+                                        <div style="float:right">
+                                            {{ order.notes }}
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table width="100%"
+                               style="background:#fff;border-top-color:#cdc0ec;border-top-style:solid;border-top-width:2px;margin:0 auto 0 auto;padding:5px 25px 0 25px">
+                            <tbody>
+                            <tr>
+                                <td style="padding:20px 50px 5px 50px;text-align:center">
+                                    <a href="https://www.facebook.com/machanentshouse/" target="_blank" style="display:inline-block;height:35px;width:35px">
+                                        <img style="margin-top:8px" src="https://giostest.xyz/static/img/icons/f-facebook.svg">
+                                    </a>
+                                    <a href="https://www.instagram.com/machanents/" target="_blank"
+                                       style="display:inline-block;height:35px;width:35px;margin: 0 10px;">
+                                        <img style="margin-top:8px" src="https://giostest.xyz/static/img/icons/f-insta.svg">
+                                    </a>
+                                    <a href="https://www.youtube.com/channel/UC5eSZp4GvUx4-WWol2eg4-w" target="_blank" style="display:inline-block">
+                                        <img style="margin-top:8px;width:45px" src="https://giostest.xyz/static/img/icons/f-youtube.svg">
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <table width="60%"
+                               style="background:#fff;margin:0 auto 0 auto;padding:8px 8px 15px 8px;text-align:center">
+                            <tbody>
+                            <tr>
+                                <td style="font-size:12px">© 2022 Machanents Worldwide Shopping</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    </tbody>
+</table>

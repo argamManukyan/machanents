@@ -1,0 +1,81 @@
+{% load static %}{% load i18n %}<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+   <head>
+       {% include 'includes/tagmanager.html' %}
+      <meta charset='utf-8'/>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+      <title>Machanents: {% trans "Հաճախակի Տրվող Հարցեր" %}</title>
+      <meta name="Description" content="">
+      <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+      <link rel="stylesheet" href="{% static 'css/color.css' %}">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+   </head>
+   <body>
+   
+  {% include 'includes/header.html' %}
+      <!-- Main content -->
+      <main id="content">
+       <section class="main-top">
+          
+           <!-- Breadcrumbs -->
+           <div class="bread-bg anot-breadcrumbs bot-prods">
+               <div class="cnt">
+                   <div class="row">
+                       <div class="col">
+                           <div id="breadcrumbs">
+                             <ul class="breadcrumbs-list align-items-center">
+                                 <li class="b-list-item">
+                                     <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                 </li>
+                                <span class="bread-arrow">→</span>
+                                 <li class="b-list-item">
+                                     <span>{% trans 'Հաճախակի Տրվող Հարցեր' %}</span>
+                                 </li>
+                             </ul>
+                            </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <!-- Breadcrumbs end-->
+           
+           <!-- Faq-->
+           <div class="faq-page bot-prods">
+              <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                     <div class="two-version-title">
+                         <h1>{% trans 'Հաճախակի Տրվող Հարցեր' %}</h1>
+                         {{ bread_content.breadcrumb_text|safe }}
+                     </div>
+                   </div>
+                </div>
+               <div class="row">
+                   <div class="col">
+                       <div class="faq-list">
+                            {% for item in items %}
+                            <div class="nav-item">
+                                <h2 class="nav-item-inner-heading">
+                                    <p>{{item.question}}</p>
+                                </h2>
+                                <div class="nav-sub-list">
+                                    <p>{{ item.answer }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                   </div>
+               </div>
+              </div>
+           </div>
+           <!-- Faq end-->
+           
+       </section>
+      </main>
+      <!-- Main content end -->
+      {% include "includes/footer.html" %}
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="{% static 'js/script.js' %}"></script>
+   </body>
+</html>

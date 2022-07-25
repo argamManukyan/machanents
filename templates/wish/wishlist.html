@@ -1,0 +1,98 @@
+{% load static %} {% load i18n %}<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+<head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset='utf-8'/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>{% trans 'Ցանկությունների Ցուցակ' %}| Machanents.com</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+{% include 'includes/header.html' %}
+<main id="content">
+    <section class="main-top" id="shop-page-content">
+
+        <!-- Breadcrumbs -->
+        <div class="bread-bg bot-prods"
+             style="background-image:url({% if bread_content.breadcrumb_image %}{{ bread_content.breadcrumb_image.url }}
+                 {% else %}{% static 'img/bread.jpg' %}{% endif %})">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div id="breadcrumbs" class="anothers-bread text-center">
+                            <div class="tit-page bread-page">
+                                <h1>{% trans 'Ցանկությունների Ցուցակ' %}</h1>
+                                {% if bread_content.breadcrumbs_text %}
+                                    {{ bread_content.breadcrumbs_text|safe }}
+                                {% endif %}
+                            </div>
+                            <ul class="breadcrumbs-list flex-content-center">
+                                <li class="b-list-item">
+                                    <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                </li>
+
+                                <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon">
+                                <li class="b-list-item">
+                                    <span>{% trans 'Ցանկությունների Ցուցակ' %}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Wishlist -->
+        <div class="section all-shop-cnt">
+            <div class="cnt">
+                <!-- If Cart is empty -->
+                {% if not wish_items.count %}
+                <div class="in-cart-no-items">
+                    <div class="row">
+                        <div class="col text-center">
+                            <div class="empt-c">
+                                <h3>{% trans 'ՁԵՐ ՑԱՆԿՈՒԹՅՈՒՆՆԵՐԻ ՑՈՒՑԱԿԸ ԴԱՏԱՐԿ Է' %}</h3>
+                                <div class="conts-or-check">
+                                    <a href="{% url 'catalog' %}" class="button dark normal">← {% trans 'Շարունակել գնումները' %}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- If Cart is empty end -->
+                {% else %}
+                <div class="row">
+                    <div class="col">
+                       
+                        <div id="products-cont">
+                            <div class="row full-ban">
+                                {% for item in wish_items %}
+                                {% with item.product as product %}
+                                <div class="col col-3" id="item-{{ product.id }}">
+                                    {% include 'includes/product.html' %}
+                                </div>
+                                {% endwith %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Wishlist end -->
+
+    </section>
+</main>
+{% include 'includes/footer.html' %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/wish.js' %}"></script>
+<script src="{% static 'js/addToCart.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,657 @@
+{% load static %}{% load i18n %}{% load currency %}{% load unique %}{% currency_context %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset='utf-8'/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>{% if obj.meta_title %}{{ obj.meta_title|safe }}{% else %}{{ obj.title|title }} |
+        Machanents.com{% endif %}</title>
+    <meta name="Description" content="{% if obj.meta_title %}{{ obj.meta_title|safe }}{% endif %}">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.1/jquery.fancybox.min.css">
+</head>
+<body>
+{% include 'includes/header.html' %}
+<main id="content">
+    <section class="main-top">
+
+        <!-- Breadcrumbs -->
+        <div class="bread-bg anot-breadcrumbs bot-prods">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div id="breadcrumbs">
+                            <ul class="breadcrumbs-list align-items-center">
+                                <li class="b-list-item">
+                                    <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                </li>
+                                <span class="bread-arrow">→</span>
+                                <li class="b-list-item">
+                                    <a href="{% url 'catalog' %}" class="b-list-link">{% trans 'Տեսականի' %}</a>
+                                </li>
+                                <span class="bread-arrow">→</span>
+                                <li class="b-list-item">
+                                    <a href="{{ bred_category.get_absolute_url }}"
+                                       class="b-list-link">{{ bred_category.title }}</a>
+                                </li>
+                                <span class="bread-arrow">→</span>
+                                <li class="b-list-item">
+                                    <span>{{ obj.title|safe }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Product page-->
+        <div class="all-product-cnt section">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col col-2">
+                        <div class="all-full-pictures">
+                            <div class="swiper-container gallery-top">
+                                {% if obj.get_sale_percent %}
+                                    <span class="pr-page-sale-icon">-{{ obj.get_sale_percent }} %</span>
+                                {% endif %}
+                                <div class="swiper-wrapper">
+                                    {% for images in obj.productimage_set.all %}
+                                        {% if forloop.first %}
+                                            <div class="swiper-slide">
+                                                <a data-fancybox="images" href="{{ images.image.url }}">
+                                                    <figure>
+                                                        <img data-src="{{ images.image.url }}" class="swiper-lazy cover"
+                                                             alt="product-name">
+                                                        <div class="swiper-lazy-preloader swiper-lazy-preloader-white">
+                                                        </div>
+                                                        <div class="pr-page-zoom">
+                                                            <img src="{% static 'img/icons/pr-zoom.svg' %}"
+                                                                 class="alert-img" alt="zoom">
+                                                        </div>
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                        {% else %}
+                                            <div class="swiper-slide">
+                                                <a data-fancybox="images" href="{{ images.image.url }}">
+                                                    <figure>
+                                                        <img data-src="{{ images.image.url }}" class="swiper-lazy cover"
+                                                             alt="product-name">
+                                                        <div class="swiper-lazy-preloader swiper-lazy-preloader-white">
+                                                        </div>
+                                                        <div class="pr-page-zoom">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                                <path d="M6.3,14.3H4V20h5.7v-2.3H6.3V14.3z M4,9.7h2.3V6.3h3.4V4H4V9.7z M17.7,17.7h-3.4V20H20v-5.7h-2.3V17.7z M14.3,4v2.3h3.4v3.4 H20V4H14.3z"></path>
+                                                            </svg>
+                                                        </div>
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <div class="swiper-button-next swiper-button-white"></div>
+                                <div class="swiper-button-prev swiper-button-white"></div>
+                            </div>
+
+                            <div class="swiper-container gallery-thumbs">
+                                <div class="swiper-wrapper">
+                                    {% for images in obj.productimage_set.all %}
+                                        {% if forloop.first %}
+                                            <div class="swiper-slide">
+                                                <figure>
+                                                    <img data-src="{{ images.image.url }}" class="swiper-lazy cover"
+                                                         alt="product-name">
+                                                    <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                                                </figure>
+                                            </div>
+                                        {% else %}
+                                            <div class="swiper-slide">
+                                                <figure>
+                                                    <img data-src="{{ images.image.url }}" class="swiper-lazy cover"
+                                                         alt="product-name">
+                                                    <div class="swiper-lazy-preloader swiper-lazy-preloader-white"></div>
+                                                </figure>
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-2">
+                        <div class="all-right-desc">
+                            <div class="pr-name-rating flex-center-between">
+                                <h1>{{ obj.title }}</h1>
+                                <div class="pr-rating">
+                                    <p>{% trans "Գնահատական" %} : <span id="MiddleScore">{{ middle }}</span></p>
+                                    <form id="ratingForm" method="post">
+                                        <input type="hidden" name="product" value="{{ obj.id }}">
+                                        <div class="star-rating">
+                                            {% for r in ratings %}
+                                                <input type="radio" class="addRatings" id="{{ r.id }}-stars"
+                                                       name="rating" value="{{ r.value }}"
+                                                       {% if user_block %}disabled{% endif %}>
+                                                <label for="{{ r.id }}-stars" class="star
+                                                        {% if user_block %}{% if r.value <= user_rating.value %}starActive{% endif %}{% elif r.value <= middle %}starActive{% endif %}"
+                                                       id="id-{{ r.value }}">★</label>
+                                            {% endfor %}
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="pr-page-price">
+                                {% if obj.sale > 0 %}
+                                    <span class="pr-pice">
+                                 <span id="salePrice"
+                                       class="wh-point">{{ obj.sale|currency:request.session.currency|floatformat:0 }}</span>
+                                    <span class="vlyuta">{{ request.session.currency }}</span>
+                              </span>
+
+                                    <span class="pr-old-pice">
+                                 <s>
+                                    <span id="natPrice"
+                                          class="wh-point">{{ obj.price|currency:request.session.currency|floatformat:0 }}</span>
+                                    <span class="vlyuta">{{ request.session.currency }}</span>
+                                 </s>
+                              </span>
+                                {% else %}
+                                    <span class="pr-pice">
+                                 <span id="natPrice"
+                                       class="wh-point">{{ obj.price|currency:request.session.currency|floatformat:0 }}</span>
+                                    <span class="vlyuta">{{ request.session.currency }}</span>
+                              </span>
+                                {% endif %}
+                            </div>
+                            {% if obj.short_description %}
+                                <div class="pr-page-short-desc">
+                                    <p>{{ obj.short_description|safe }}</p>
+                                </div>
+                            {% endif %}
+                            <div class="pr-page-details">
+                                <ul class="shop-options">
+                                    {% if obj.allowed_buying %}
+                                    <li>
+                                        <span class="opt"><b>{% trans 'Առկայություն' %}:</b></span>
+                                        <span class="val">{% trans 'Առկա է' %} ({{ obj.stored_quantity }} {% trans 'հատ' %})</span>
+                                    </li>
+                                    {% endif %}
+                                    {% if obj.author %}
+                                    <li>
+                                        <span class="opt"><b>{% trans 'Հեղինակ' %}:</b></span>
+                                        <a href="{{ obj.author.get_absolute_url }}" class="linkcolor">
+                                            <span class="val">{{ obj.author.name }}</span>
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                    {% if obj.color %}
+                                    <li>
+                                        <span class="opt"><b>{% trans 'Գույն' %}:</b></span>
+                                        <span class="val" id="color-select">{{ obj.color.title }}</span>
+                                    </li>
+                                    {% endif %}
+                                    <li>
+                                        <span class="opt"><b>{% trans 'Բաժնի անվանում' %}:</b></span>
+                                        <a href="{{ bred_category.get_absolute_url }}" class="linkcolor">
+                                            <span class="val">{{ bred_category.title }}</span>
+                                        </a>
+                                    </li>
+                                    {% if obj.product_code %}
+                                    <li>
+                                        <span class="opt"><b>{% trans 'Ապրանքի կոդ' %}:</b></span>
+                                        <span class="val">{{ obj.product_code }}</span>
+                                    </li>
+                                    {% endif %}
+                                    {% if obj.product_id %}
+                                    <li>
+                                        <span class="opt"><b>{% trans 'Ապրանքի ID' %}:</b></span>
+                                        <span class="val">{{ obj.product_id }}</span>
+                                    </li>
+                                    {% endif %}
+                                    <li class="align-items-center">
+                                        <span class="opt" id="prod-code"><b>{% trans 'Նախընտրածներ' %}:</b></span>
+                                        <a href="javascript:void(0)" id="add-wish-active"
+                                           data-url="{% url 'add_to_wish' %}" data-product="{{ obj.id }}"
+                                           class="wish align-items-center wishlistAdd addTOWISH-{{ obj.id }} {% if obj.id  in wish_ids %}active{% endif %} ">
+                                            <svg class="default-color addTOWISH-{{ obj.id }} {% if obj.id  in wish_ids %}active{% endif %} "
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 xmlns:xlink="http://www.w3.org/1999/xlink"
+                                                 xmlns:svgjs="http://svgjs.com/svgjs" version="1.1" width="512"
+                                                 height="512" x="0" y="0"
+                                                 viewBox="0 0 168.1 168.1" style="enable-background:new 0 0 512 512"
+                                                 xml:space="preserve">
+                                          <g>
+                                             <g xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M143.558,20.077c-6.823-3.625-14.633-5.699-22.954-5.699c-14.66,0-27.832,6.438-36.526,16.515   C75.325,20.815,62.197,14.378,47.5,14.378c-8.313,0-16.141,2.068-22.957,5.699C9.913,27.83,0,42.774,0,60.033   c0,4.944,0.835,9.639,2.349,14.082c8.125,35.202,60.155,79.606,81.733,79.606c20.982,0,73.512-44.404,81.672-79.606   c1.514-4.443,2.346-9.138,2.346-14.082C168.107,42.774,158.185,27.83,143.558,20.077z M152.812,70.102   c-0.472,1.313-1.695,2.132-3.043,2.132c-0.338,0-0.679,0-1.028-0.118c-1.691-0.571-2.567-2.377-2.003-4.074   c0.91-2.684,1.378-5.373,1.378-8.008c0-9.565-5.444-18.378-14.153-22.949c-4.16-2.25-8.632-3.379-13.358-3.379   c-1.779,0-3.185-1.378-3.185-3.195c0-1.749,1.405-3.182,3.185-3.182c5.744,0,11.261,1.378,16.352,4.073   c10.827,5.748,17.547,16.692,17.547,28.632C154.502,63.407,153.949,66.791,152.812,70.102z"
+                                                      style="" class=""></path>
+                                             </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                              <g xmlns="http://www.w3.org/2000/svg"> </g>
+                                          </g>
+                                       </svg>
+                                            <b class="addToWish-{{ obj.id }}">{% trans 'Ավելացնել ցուցակին' %}</b>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Features select -->
+
+                            <form id="addToCartForm"
+                                  onchange='featureForm(this,`{{ obj.id }}`,`{{ obj.price|currency:request.session.currency|floatformat:"0" }}`,`{{ obj.sale|currency:request.session.currency|floatformat:"0" }}`)'>
+                                {% for field in variant_fields %}
+                                    <div class="pr-options-select">
+
+                                        <div class="pr-filed-select align-items-center">
+                                            <div class="pr-select-field-title">{{ field.title }}:
+                                                {% for val in variant_values %}
+                                                    {{ val.productfeature_set.first }}
+                                                {% endfor %}
+                                            </div>
+                                            <select name="{{ field.filter_key }}">
+
+                                                {% for val in field.productfeature_set.all|features:obj.id %}
+                                                    {% if forloop.first and val.price != 0 %}
+                                                        <option value="0" id="pr_id-0" data-price="0"
+                                                                selected>{% trans "Ընտրել" %}</option>{% endif %}
+                                                    <option
+                                                            {% if val.price == 0 %}selected{% endif %}
+                                                            id="pr_id-{{ val.id }}"
+                                                            value="{{ val.id }}"
+                                                            data-price="{{ val.price|currency:request.session.currency|floatformat:0 }}">
+                                                        {{ val.value.title }}
+                                                        {% if val.price > 0 %}
+                                                            (+
+                                                            {{ val.price|currency:request.session.currency|floatformat:0 }}
+                                                            <span>{{ request.session.currency }}</span>)
+                                                        {% endif %}
+                                                    </option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </form>
+                            <!-- Features select -->
+
+                            <div class="pr-page-prod-qty">
+                                {% if obj.allowed_buying %}
+                                <div class="number align-items-center">
+                                    <div class="pr-select-field-title"><b>{% trans 'Քանակ' %}:</b></div>
+                                    <div class="only_qty align-items-center prod-qty">
+                                        <img src="{% static 'img/icons/minus.svg' %}" class="minus"
+                                             alt="{% trans 'Նվազեցնել' %}">
+                                        <input type="number"
+                                               class="qty-input"
+                                               value="1"
+                                               min="1"
+                                               max="{{ obj.stored_quantity }}"
+                                               onchange="changePrice(this.value, `{{ obj.price|currency:request.session.currency|floatformat:'0' }}`, `{{ obj.sale|currency:request.session.currency|floatformat:'0' }}`)"
+                                               id="qty-{{ obj.id }}">
+                                        <img src="{% static 'img/icons/plus.svg' %}" class="plus"
+                                             alt="{% trans 'Ավելացնել' %}">
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% if obj.allowed_buying %}
+                                <div class="alert-min alert-danger" id="warningQuantity">
+                                    <div class="align-items-center">
+                                        <img src="{% static 'img/icons/alert-warning.svg' %}" class="alert-img"
+                                             alt="{% trans 'Ծանուցում' %}">
+                                        <span>{% trans 'Պահեստում առկա է' %} <strong>{{ obj.stored_quantity }}</strong> {% trans 'հատ։' %}</span>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="pr-wish-basket flex-center-between">
+                                <button type="button" class="button dark normal addtocart-but flex-content-center"
+                                        data-product_id="{{ obj.id }}" onclick="addToCart({{ obj.id }})">
+                                    <img src="{% static 'img/icons/cart-prod.svg' %}"
+                                         alt="{% trans 'Գցել զամբյուղը' %}">{% trans 'Գցել զամբյուղը' %}
+                                </button>
+
+                                <!-- Request button -->
+
+{#                                {% if not obj.allowed_buying %}#}
+{#                                <a href="javascript:void(0);"#}
+{#                                   class="button dark normal addtocart-but flex-content-center"#}
+{#                                   onclick="sendRequest(`{{ obj.id }}`)"#}
+{#                                >{% trans 'Ուղարկել հարցում' %}</a>#}
+                                <!-- Request button end -->
+                                {% if obj.allowed_buying %}
+                                <button type="button" class="button normal buynow-but flex-content-center buy_now"
+                                        data-product_id="{{ obj.id }}"
+                                        onclick="buyNow({{ obj.id }})">
+                                    {% trans 'Պատվիրել հիմա' %}
+                                    <img src="{% static 'img/icons/buy-now.svg' %}"
+                                                                     alt="{% trans 'Պատվիրել հիմա' %}">
+                                </button>
+                                {% endif %}
+                            </div>
+                            <div class="pr-info-del">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if  obj.large_description or features.count %}
+                        <div class="col">
+                            <div class="product-page-largetdesc">
+                                <div class="full-desc-payments">
+                                    <ul class="tabs align-items-center">
+                                        {% if obj.large_description %}
+                                            <li class="col-auto active" rel="tab1">
+                                                <span>{% trans 'Նկարագրություն' %}</span>
+                                            </li>
+                                        {% endif %}
+                                        {% if features %}
+                                            <li class="col-auto" rel="tab2">
+                                                <span>{% trans 'Բնութագիր' %}</span>
+                                            </li>
+                                        {% endif %}
+                                    <li class="col-auto" rel="tab3">
+                                            <span>{% trans 'Կարծիքներ' %}</span>
+                                    </li>
+                                    </ul>
+
+                                    <div class="tab_container">
+                                        <!-- #tab1 -->
+                                        {% if obj.large_description %}
+                                            <div id="tab1" class="tab_content" style="display: none;">
+                                                <div class="prod-desc-large only_desc">
+                                                    {{ obj.large_description|safe }}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                        <!-- #tab2 -->
+                                        {% if features %}
+                                            <div id="tab2" class="tab_content">
+                                                <div class="prod-desc-large characteristics">
+                                                    {% for feature in features %}
+                                                        <div class="card-character-block flex-center-between">
+                                                            <div class="card-character-name">
+                                                                <span><b>{{ feature.field.title }}:</b></span>
+                                                            </div>
+                                                            <div class="card-character-value">
+                                                                <span>{{ feature.value.title }}</span>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                         <!-- #tab3 -->
+                                        <div id="tab3" class="tab_content">
+                                            <div class="prod-desc-large reviews-prod">
+                                                <div class="product-reviews">
+                                                    <form
+                                                            method="post"
+                                                            id="only_review"
+                                                            class="align-items-center"
+                                                            enctype="multipart/form-data"
+                                                    >
+                                                        <div class="prod-review_image">
+                                                            <div class="image-previewer user_img-all">
+                                                                <div class="image-wrapper img_only_div">
+                                                                    <span class="preview-loader"></span>
+                                                                    <img src="{% static 'img/logo-md.svg' %}" class="default-user-img" alt="Username">
+                                                                    <a class="delete-btn delete-avatar" href="javascript:void(0);">
+                                                                        <img src="{% static 'img/icons/delete-avatar.svg' %}"
+                                                                             alt="{% trans 'Հեռացնել նկարը' %}">
+                                                                    </a>
+                                                                    <div class="choose_on flex-content-center">
+                                                                        <input type="file"
+                                                                               id="file-input"
+                                                                               name="avatar"
+                                                                               accept="image/png,image/jpeg,image/jpg,">
+                                                                        <img src="{% static 'img/icons/type-fille.svg' %}" class="choose_img" alt="Username">
+                                                                        <span>{% trans 'Բեռնել Նկար' %}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="prod-review_text">
+                                                            <div class="review-rating align-items-center">
+                                                                <div class="review-rating-label">
+                                                                    <p>{% trans 'Գնահատական' %}:</p>
+                                                                </div>
+                                                                <div class="star-rating">
+                                                                    {% for i in 5|range %}
+                                                                    <input type="radio" class="addRatings commentRating"
+                                                                           id="{{ i }}-starsComment"
+                                                                           name="rating" value="{{ i }}">
+                                                                    <label for="{{ i }}-starsComment"
+                                                                           class="star setCommentRating"
+                                                                           onclick="setCommentRating({{ i }})"
+                                                                           id="id-{{ i }}">★</label>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                            <div class="review-textarea">
+                                                                <div class="input-fields">
+                                                                    <label for="review">{% trans 'Գրեք Ձեր Կարծիքը' %} *</label>
+                                                                    <textarea name="review" id="review" rows="4" required></textarea>
+                                                                    <div class="butt-sign">
+                                                                        <input type="submit"
+                                                                               class="button big dark"
+                                                                               name="submit"
+                                                                               value="{% trans 'Ուղարկել' %}">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- #tab3 end -->
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- Product page end -->
+
+        {% if related_items %}
+            <!-- Related products -->
+            <div class="section related-prods">
+                <div class="cnt">
+                    <div class="row">
+                        <div class="col">
+                            <div class="swiper-container slider-4">
+                                <div class="section-title pr-sec-tit">
+                                    <h3 class="text-center">
+                                        <a href="javascript:void(0)">{% trans 'Առաջարկվող ապրանքներ' %}</a>
+                                    </h3>
+                                    <div class="swiper-button-next swiper-next"></div>
+                                    <div class="swiper-button-prev swiper-prev"></div>
+                                </div>
+                                <div class="swiper-wrapper">
+
+                                    {% for item in related_items %}
+                                        <div class="swiper-slide">
+                                            {% with item as product %}
+                                                {% include 'includes/product.html' %}
+                                            {% endwith %}
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Related products end -->
+        {% endif %}
+        <!-- Recently viewed -->
+        {% if last_seen %}
+            <div class="section recently-prods">
+                <div class="cnt">
+                    <div class="row">
+                        <div class="col">
+                            <div class="swiper-container slider-4">
+                                <div class="section-title pr-sec-tit">
+                                    <h3 class="text-center">
+                                        <a href="javascript:void(0)">{% trans 'Նախկինում դիտվածներ' %}</a>
+                                    </h3>
+                                    <div class="swiper-button-next swiper-next"></div>
+                                    <div class="swiper-button-prev swiper-prev"></div>
+                                </div>
+                                <div class="swiper-wrapper">
+
+                                    {% for item in last_seen %}
+                                        <div class="swiper-slide">
+                                            {% with item as product %}
+                                                {% include 'includes/product.html' %}
+                                            {% endwith %}
+                                        </div>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+        <!-- Recently viewed end -->
+
+    </section>
+</main>
+{% include 'includes/footer.html' %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/swiper.min.js' %}"></script>
+<script src="{% static 'js/swiper-express.js' %}"></script>
+<script src="{% static 'js/addToCart.js' %}"></script>
+<script src="{% static 'js/wish.js' %}"></script>
+<script src="{% static 'js/comments.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+<script>
+
+
+    function getFormTotal(form) {
+        //  Generic function for calculation total price of selected variants
+        let featuresTotal = 0;
+        const prices = Object.fromEntries(new FormData(form));
+        Object.values(prices).forEach(pr => featuresTotal += parseFloat(document.getElementById(`pr_id-${pr}`).getAttribute('data-price')));
+        return Math.floor(featuresTotal)
+    }
+
+    function featureForm(form, id, price, discount) {
+        // Features select calculation
+        const totalPrice = getFormTotal(form);
+
+        const quantity = document.getElementById(`qty-{{ obj.id }}`);
+        const qty = quantity ? quantity.value : 1
+
+        const fPrice = parseInt(price) * parseFloat(qty) + parseFloat(totalPrice);
+        console.log(qty)
+        document.getElementById('natPrice').innerText = fPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        if (discount && discount > 0) {
+            document.getElementById('salePrice').innerText = (parseFloat(discount) * parseFloat(qty) + parseFloat(totalPrice)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+    }
+
+    function changePrice(qty, price, discount) {
+
+        const inp = document.getElementById(`qty-{{ obj.id }}`)
+        const maxValue = inp.getAttribute('max')
+
+        if(qty < 0){
+            inp.value = 1
+            return
+        }
+        const attr = document.getElementById('warningQuantity')
+        if(maxValue && +qty > +maxValue){
+            inp.value = maxValue
+            inp.setAttribute('disabled', 'true')
+            attr.style.display = 'block'
+            return;
+        }else{
+            if(inp.hasAttribute('disabled')) {
+                inp.removeAttribute('disabled')
+            }
+            attr.style.display = 'none'
+        }
+
+        // Calculation price on time change quantity
+        const formEl = document.getElementById('addToCartForm');
+        const featurePrice = getFormTotal(formEl);
+        const fPrice = parseFloat(price) * parseFloat(qty) + parseFloat(featurePrice);
+        document.getElementById('natPrice').innerText = fPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        if (discount) {
+            document.getElementById('salePrice').innerText = (parseFloat(discount) * parseFloat(qty) + parseFloat(featurePrice)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+    }
+    const ratingForm = document.getElementById('ratingForm')
+    ratingForm.addEventListener('change', async function (event) {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(this));
+        try {
+            const resp = await fetch(`${window.location.protocol}//${window.location.host}/add-rating/`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                },
+                body: JSON.stringify(data)
+            })
+            const {rating} = await resp.json();
+            document.getElementById('MiddleScore').innerText = parseFloat(rating).toFixed(1);
+            const ratingInputs = document.getElementsByClassName('addRatings')
+
+            for (let k = 1; k <= 5; k++) {
+
+                if (k <= data.rating) {
+                    if (!document.getElementById(`id-${k}`).classList.contains('starActive')) {
+                        document.getElementById(`id-${k}`).classList.add('starActive')
+                    }
+                } else {
+                    if (document.getElementById(`id-${k}`).classList.contains('starActive')) {
+                        document.getElementById(`id-${k}`).classList.remove('starActive')
+                    }
+                }
+
+            }
+            for (let index = 0; index < ratingInputs.length; index++) {
+                const element = ratingInputs[index];
+                element.setAttribute('disabled', true)
+
+            }
+        } catch (e) {
+            throw e
+        }
+    })
+
+</script>
+</body>
+</html>

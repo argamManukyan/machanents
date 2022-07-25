@@ -1,0 +1,123 @@
+{% load static %}{% load i18n %}<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+   <head>
+       {% include 'includes/tagmanager.html' %}
+      <meta charset='utf-8'/>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+      <title>{% if obj.meta_title %}{{ obj.meta_title }}{% else %}{{ obj.title }}{% endif %}</title>
+      <meta name="Description" content="{% if obj.meta_description %}{{meta_description|safe}}{% endif %}">
+      <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+      <link rel="stylesheet" href="{% static 'css/swiper.css' %}">
+      <link rel="stylesheet" href="{% static 'css/color.css' %}">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.1/jquery.fancybox.min.css">
+      <style>
+       .fancybox-button.fancybox-button--share { display: none;}
+      </style>
+   </head>
+   <body>
+    {% include 'includes/header.html' %}
+      <main id="content">
+       <section class="main-top" id="shop-page-content">
+          
+           <!-- Breadcrumbs -->
+           <div class="bread-bg bot-prods" style="background-image:url({% if obj.breadcrumb_image %}{{ obj.breadcrumb_image.url }}
+           {% else %}{% static 'img/bread.jpg' %}{% endif %})">    
+               <div class="cnt">
+                   <div class="row">
+                       <div class="col">
+                           <div id="breadcrumbs" class="anothers-bread text-center">
+                             <div class="tit-page bread-page">
+                                 <h1>{{obj.title}}</h1>
+                                 {{obj.breadcrumb_text|safe }}
+                             </div>
+                             <ul class="breadcrumbs-list flex-content-center">
+                                 <li class="b-list-item">
+                                     <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                 </li>
+                                 <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon" alt="{% trans 'Տեսադարան' %}">
+                                 <li class="b-list-item">
+                                     <a href="{% url 'gallery_list' %}" class="b-list-link">{% trans 'Տեսադարան' %}</a>
+                                </li>
+                                <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon" alt="{% trans 'Տեսադարան' %}">
+                                <li class="b-list-item">
+                                    <span>{{obj.title}}</span>
+                                </li>
+                                
+                             </ul>
+                            </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <!-- Breadcrumbs end-->
+           
+           <!-- Gallery -->
+           <div class="section gallery-page">
+              <div class="cnt">
+                 <div class="row">
+                    <div class="col">
+                      <div class="swiper-container gallery-cats">
+                        
+                        <div class="swiper-wrapper">
+                            
+                           <div class="swiper-slide">
+                              <a href="{% url 'gallery_list' %}" class="gal-cat-but button small">{% trans 'Բոլորը' %}</a>
+                           </div>
+                           {% for cat in categories %}
+                           <div class="swiper-slide">
+                              <a href="{{cat.get_absolute_url}}" class="gal-cat-but button small {% if cat.slug in request.get_full_path %}active{% endif %}">{{cat.title}}</a>
+                           </div>
+                          {% endfor %}
+                        </div>
+                        
+                     </div>
+                      </div>
+                    
+                 </div>
+                  <div class="row">
+                      {% if images.count %}
+                        {% for gal in page_obj %}
+                        <div class="col col-4">
+                            <a href="{{ gal.image.url }}" data-fancybox="images">
+                                <div class="gallery-block">
+                                <figure>
+                                    <img src="{{ gal.image.url }}" alt="{{obj.title}}" class="cover">
+                                    <figcaption>{{obj.title}}</figcaption>
+                                </figure>
+                                </div>
+                            </a>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <p>{% trans 'Տեսադարանում նկարներ չկան' %}</p>
+                        {% endif %}
+                        {% if page_obj.paginator.num_pages > 1%}
+                      <div class="col">
+                        {% include 'includes/pagination.html' %}
+                    </div>
+                    {% endif %}
+                  </div>
+              </div> 
+           </div>
+           <!-- Gallery end -->
+       </section>
+      </main>
+      {% include 'includes/footer.html' %}
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="{% static 'js/script.js' %}"></script>
+      <script src="{% static 'js/swiper.min.js' %}"></script>
+      <script src="{% static 'js/swiper-express.js' %}"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+      <script>
+      $(".gallery-cats .swiper-slide a").each(function(){
+           if( $(this).attr('href').indexOf( window.location.pathname ) !== -1 ){
+       $(this).addClass('active');
+           return false; 
+        }
+     }); 
+      </script>
+      
+   </body>
+</html>

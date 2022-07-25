@@ -1,0 +1,107 @@
+{% load static %}
+{% load linkfilter %}
+{% load i18n %}
+<footer>
+    <div class="only-footer">
+        <div class="cnt">
+            <div class="row foot-flex">
+                <div class="col col-auto">
+                    <div class="footer-item">
+                        <h4>{% trans 'Contacts' %}</h4>
+                        <div class="items-all">
+                            {% if footer_messengers %}
+                                <ul class="social_footer align-items-center">
+                                    <li>
+                                        {% for i in footer_messengers %}
+                                            <a href="{% if i.url %}{{ i.url }}{% else %}javascript:void(0);{% endif %}"
+                                               target="_blank">
+                                                <img src="{{ i.icon.url }}">
+                                            </a>
+                                        {% endfor %}
+                                    </li>
+                                </ul>
+                            {% endif %}
+                            {% if company_information %}
+                                <ul class="fc-info">
+                                    {% for i in company_information %}
+                                        <li>
+                                            <span class="cf_name">{{ i.name }}</span>
+                                            <a href="{% if i.url %}{{ i.url }}{% else %}javascript:void(0);{% endif %}">
+                                                {{ i.text }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% for categ in footer_categories %}
+                    <div class="col col-auto">
+                        <div class="footer-item">
+                            <h4>{{ categ.name }}</h4>
+                            <div class="items-all">
+                                <ul>
+                                    {% for link in categ.footeritems_set.all|filter_links:trigger %}
+                                        <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <div class="col col-auto">
+                    <div class="footer-item">
+                        <h4>{% trans 'Payment methods' %}</h4>
+                        <div class="items-all">
+                            <ul class="f-pay-icons align-items-center">
+                                {% for card_icon in card_icons %}
+                                    <li><img src="{{ card_icon.icon.url }}" alt="visa"></li>
+                                {% endfor %}
+                            </ul>
+                            <p class="foot_p-one">Machanents.com {% trans 'website represents Armenia' %}</p>
+                            <h5>{% trans 'Follow us' %}</h5>
+                            {% if footer_follow_icons %}
+                                <ul class="soc-icons d-flex">
+                                    {% for ff in footer_follow_icons %}
+                                    <li>
+                                        <a target="_blank" href="{{ ff.url }}">
+                                            <img src="{{ ff.icon.url }}" alt="{{ ff.name }}">
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+                            {% if info_text %}
+                                <p class="foot_p-two">{{ info_text.text }}</p>
+                            {% endif %}
+                            {% if footer_partners %}
+                                <ul class="partners align-items-center">
+                                    {% for p in footer_partners %}
+                                        <li><img src="{{ p.icon.url }}" alt="1"></li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="footer-bot text-center">
+            <div class="logo-create">
+                <div class="d-none footer-logo">
+                    <img src="{% static 'img/f-logo.svg' %}" alt="Machanents.com">
+                </div>
+                <p>© {{ year }} Machanents Worldwide Shopping| {% trans ' All Rights Reserved' %}
+                    <br>{% trans 'Design and Development by' %} <a href="javascript:void(0);">{% trans '"GIOS" LLC' %}</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+<div class="message-container">
+    <div class="message success hidden" id="Messagebasket">
+        <p>{% trans "Selected products added into cart" %}</p>
+    </div>
+</div>

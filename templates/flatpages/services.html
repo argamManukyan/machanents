@@ -1,0 +1,97 @@
+{% load static %} {% load i18n %}<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+  <head>
+      {% include 'includes/tagmanager.html' %}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>
+      {% if LANGUAGE_CODE == 'ru' %}Услуги{% elif LANGUAGE_CODE == 'en' %}Services{% else %}Ծառայություններ
+      {% endif %}
+    </title>
+    <meta
+      name="Description"
+      content="
+        {% if LANGUAGE_CODE == 'ru' %}
+        {% elif LANGUAGE_CODE == 'en' %}
+        {% else %}
+        {% endif %}
+      "
+    />
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/color.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    {% include 'includes/header.html' %}
+    <!-- Main content -->
+    <main id="content">
+      <section class="main-top">
+        <!-- Breadcrumbs -->
+        <div class="bread-bg bot-prods" style="background-image:url({% if bread_content.breadcrumb_image %}{{ bread_content.breadcrumb_image.url }}
+           {% else %}{% static 'img/bread.jpg' %}{% endif %})">
+          <div class="cnt">
+            <div class="row">
+              <div class="col">
+                <div id="breadcrumbs" class="anothers-bread text-center">
+                  <div class="tit-page bread-page">
+                    <h1>{% trans "Ծառայություններ" %}</h1>
+                    {{ bread_content.breadcrumb_text|safe }}
+                  </div>
+                  <ul class="breadcrumbs-list flex-content-center">
+                    <li class="b-list-item">
+                      <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                    </li>
+                    <img
+                      src="{% static 'img/icons/bread-right.svg' %}"
+                      class="right-icon"
+                      alt="{% trans 'Տեսականի' %}"
+                    />
+                    <li class="b-list-item">
+                      <span>{% trans 'Ծառայություններ' %}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Blog -->
+        <div class="bot-prods services-page">
+          <div class="cnt">
+            <div class="row flex-center-between">
+            {% for service in services %}
+              <div class="col col-3">
+                <div class="services-block">
+                  <a href="{{service.get_absolute_url}}">
+                    <figure>
+                      <img
+                        src="{{ service.image.url }}"
+                        alt="{{ service.title }}"
+                      />
+                    </figure>
+                  </a>
+                  <div class="service-desc text-center">
+                    <h2 class="line-clamp2 flex-content-center">
+                      <a href="{{service.get_absolute_url}}">{{ service.title }}</a>
+                    </h2>
+                    {{ service.short_description|safe }}
+                    <a href="{{service.get_absolute_url}}" class="service-more">{% trans 'Մանրամասն' %}</a>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+            </div>
+          </div>
+        </div>
+        <!-- Blog end-->
+      </section>
+    </main>
+    {% include 'includes/footer.html' %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+  </body>
+</html>

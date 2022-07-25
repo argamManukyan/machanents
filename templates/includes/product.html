@@ -1,0 +1,83 @@
+{% load currency %}
+{% currency_context %}
+{% load static %}
+{% load i18n %}
+{% load unique %}
+<div class="product-item">
+    <div class="prod-item-img">
+        <!-- New Sale icon -->
+            {% if product.is_new and product.sale < 1 %}
+            <span class="ns-prod prod-sale">{% trans 'Նորույթ' %}</span>
+            {% elif not product.is_new and product.sale > 0 %}
+            <span class="ns-prod prod-new">{% trans 'Խնայել' %} {{product.get_sale_percent}}%</span>
+            {% elif product.sale > 0 and product.is_new %}
+            <span class="ns-prod prod-new">{% trans 'Խնայել' %} {{product.get_sale_percent}}%</span>
+            <span class="ns-prod prod-sale">{% trans 'Նորույթ' %}</span>
+            {% endif %}
+        <!-- New Sale icon end -->
+
+        <!-- Wish list -->
+        {% if not '/wishlist/' in  request.get_full_path %}
+
+        <button  data-product="{{ product.id }}" data-url="{% url 'add_to_wish' %}" class="wish-list-icon flex-content-center wishlistAdd {% if product.id  in wish_ids %}active{% endif %} addTOWISH-{{ product.id }}">
+            <svg class="{% if product.id  in wish_ids %}active{% endif %}" xmlns="http://www.w3.org/2000/svg" width="19" height="18" viewBox="0 0 19 18" fill="none">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M9.52645 16.8528C7.62716 15.6839 5.86029 14.3082 4.25744 12.7503C3.13057 11.6284 2.27269 10.2606 1.74952 8.75174C0.808066 5.82479 1.90775 2.474 4.98529 1.48235C6.60273 0.961654 8.36921 1.25926 9.73214 2.28207C11.0956 1.2605 12.8615 0.963004 14.479 1.48235C17.5565 2.474 18.6641 5.82479 17.7227 8.75174C17.1995 10.2606 16.3416 11.6284 15.2148 12.7503C13.6119 14.3082 11.845 15.6839 9.94575 16.8528L9.74006 16.9808L9.52645 16.8528Z" stroke="#181202" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </button>
+        {% else %}
+
+        <button data-product="{{product.id}}" data-url="{% url 'add_to_wish' %}" class="wish-list-icon wish-page flex-content-center wishlistAdd active addTOWISH-{{product.id}}">
+            <span class="delete_prod_wish">×</span>
+        </button>
+        {% endif %}
+        <a href="{{ product.get_absolute_url }}">
+            <img src="{{product.main_photo.url}}" class="cover swiper-lazy main-prb-img">
+        </a>
+      </div>
+    <div class="prod-item-desc">
+        <div class="prod-item-name align-items-center">
+            <a href="{{ product.get_absolute_url }}" class="line-clamp2">{{product.title|title}}</a>
+        </div>
+        <div class="prod-item-price">
+            {% if product.sale > 0 %}
+            <span class="new-price">
+                <span class="wh-point">{{ product.sale|currency:request.session.currency|floatformat:0 }}</span>
+                <span class="valyuta">{{request.session.currency}}</span>
+                {% if request.session.currency != 'USD' %}
+                    <span class="valyuta-dollar wh-point">($ {{ product.sale|usdconverter }})</span>
+                {% endif %}
+            </span>
+            <s>
+                <span class="old-price">
+                    <span class="wh-point">{{ product.price|currency:request.session.currency|floatformat:0 }}</span>
+                    <span class="valyuta">{{request.session.currency}}</span>
+                </span>
+            </s>
+            {% else %}
+            <span class="new-price">
+                <span class="wh-point">{{ product.price|currency:request.session.currency|floatformat:0 }}</span>
+                <span class="valyuta">{{request.session.currency}}</span>
+                {% if request.session.currency != 'USD' %}
+                    <span class="valyuta-dollar wh-point">($ {{ product.price|usdconverter }})</span>
+                {% endif %}
+            </span>
+            {% endif %}
+        </div>
+        <div class="prod-add-cart">
+            {% if not  product.productfeature_set.all|filter_feature %}
+            <button type="button" class="flex-content-center button dark addcart" onclick="addToCart({{product.id}})">
+                <img src="{% static 'img/icons/cart-prod.svg' %}" alt="{% trans 'Ավելացնել զամբյուղը' %}" >{% trans 'Ավելացնել' %}
+            </button>
+            {% else %}
+            <a href="{{ product.get_absolute_url }}" class="flex-content-center button dark addcart">
+                {% trans 'Ընտրել' %}
+            </a>
+            {% endif %}
+{#            {% if not product.allowed_buying %}#}
+{#            <a href="{{ product.get_absolute_url }}" class="flex-content-center button dark addcart" style="display: none;">#}
+{#                {% trans 'Հարցում' %}#}
+{#            </a>#}
+{#            {% endif %}#}
+        </div>
+    </div>
+</div>

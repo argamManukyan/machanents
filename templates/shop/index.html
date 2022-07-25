@@ -1,0 +1,587 @@
+{% load static %}{% load i18n %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset='utf-8'/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>{{ request.get_host|title }}</title>
+    <meta name="Description" content="Machanents.com">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+{% include 'includes/header.html' %}
+<main id="content">
+    <div id="fixedTv" class="align-items-center">
+        <div class="fixedtv-head align-items-center">
+            <div class="all-head align-items-center">
+                <img src="{% static 'img/icons/fix-arrow.svg' %}" class="fix-left" alt="Machanents Tv">
+                <div class="logo-fixtv">
+                    <img src="{% static 'img/icons/fix-logo.svg' %}" alt="Machanents Tv">
+                </div>
+                <img src="{% static 'img/icons/fix-tv.svg' %}" class="fix-tvicon" alt="Machanents Tv">
+            </div>
+        </div>
+        <div class="fixedtv-content">
+            <div class="swiper-container main-slider fix-slider">
+                <div class="swiper-wrapper">
+                    {% for machanents_video in machanents_videos %}
+                    <div class="swiper-slide">
+                        <div class="fix-slider-cont">
+                           <iframe width="560"
+                                    height="315"
+                                    src="{% if machanents_video.video_url %}{{ machanents_video.video_url }}{% else %}{{ machanents_video.video_file.url }}{% endif %}"
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+
+                           </iframe>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+            <img src="{% static 'img/icons/fix-close.svg' %}" class="fix-close" alt="{% trans 'Փակել' %}">
+        </div>
+    </div>
+    <!-- Slider -->
+    <section class="section home-slider">
+        <div class="cnt">
+            <div class="row">
+                <div class="col">
+                    <div class="swiper-container main-slider">
+                        <div class="swiper-wrapper">
+                            {% for slide_item in slider_items %}
+                                {% if forloop.first %}
+                                    <div class="swiper-slide">
+                                        <div class="slide-desc-image">
+                                            <div class="slide-desc">
+                                                {{ slide_item.text|safe }}
+                                                <div class="slide-desc-button align-items-center">
+                                                    <a href="{{ slide_item.url }}"
+                                                       class="button normal dark">{% trans 'Անցնել Գնումների' %}
+                                                    </a>
+
+                                                </div>
+                                            </div>
+                                            <div class="slide-image">
+                                                <img class="main-slide-x xl-none" src="{{ slide_item.image_xl.url }}"
+                                                     alt="Machanents">
+                                                <img class="main-slide-xs ml-none" src="{{ slide_item.image_ml.url }}"
+                                                     alt="Machanents">
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="swiper-slide">
+                                        <div class="slide-desc-image">
+                                            <div class="slide-desc">
+                                                {{ slide_item.text|safe }}
+                                                <div class="slide-desc-button align-items-center">
+                                                    <a href="{{ slide_item.url }}"
+                                                       class="button normal dark">{% trans 'Անցնել Գնումների' %}
+                                                    </a>
+                                                    <a href="{% url 'contacts' %}"
+                                                       class="button normal trans">{% trans 'Կապ մեզ հետ' %}
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="slide-image">
+                                                <img class="main-slide-x xl-none" src="{{ slide_item.image_xl.url }}"
+                                                     alt="Machanents">
+                                                <img class="main-slide-xs ml-none" src="{{ slide_item.image_ml.url }}"
+                                                     alt="Machanents">
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Slider end-->
+
+    <!-- Seo pcs-->
+    {% if homepage_text %}
+        <section id="hseo" class="section seo-h1">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col text-center">
+                        {{ homepage_text.text|safe }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+    <!-- Seo pcs end-->
+
+
+    <!-- Main categories -->
+    <section class="section main-cats">
+        <div class="cnt">
+            <div class="row align-items-cnter">
+                <!--{% for cat_icon in category_icons %}
+                <div class="col col-4 no-padd">
+                    <div class="main-cats-block text-center">
+                        <a href="{{ cat_icon.get_absolute_url }}">
+                            <figure>
+                                <img src="{{cat_icon.icon.url}}" alt="Bouquets-and-Arrangements">
+                            </figure>
+                            <p class="flex-content-center"><span>{{cat_icon.title}}</span></p>
+                        </a>
+                    </div>
+                </div>
+                {% endfor %}-->
+                <div class="col">
+                    <div class="section-title">
+                        <h2 class="text-center">
+                            <a href="javascript:void(0);">
+                                {% trans 'Պահանջված Բաժիններ' %}<img src="{% static 'img/icons/c-arr.svg' %}"
+                                                                     alt="Machanents"></a>
+                        </h2>
+                    </div>
+                </div>
+                <div class="col">
+                    <ul class="banners-home">
+                        {% for ct in category_icons %}
+                            <li>
+                                <a href="{{ ct.get_absolute_url }}" class="pop-cats">
+                                    <figure class="pop-cat-img">
+                                        <img src="
+                                                {% if ct.image %}{{ ct.image.url }}{% else %}{% static 'img/m5.jpg' %}{% endif %}"
+                                             alt="Machanents">
+                                    </figure>
+                                    <div class="pop-cat-txt">
+                                        <h3>{{ ct.title }}</h3>
+                                    </div>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="see-all-cats">
+                        <a href="{% url 'catalog' %}" class="button normal dark s-all">Տեսնել Բոլոր Բաժինները</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Main categories end-->
+
+
+    <!-- About Us -->
+    {% if homepage_about %}
+        <section class="section about-mch">
+            <div class="main-about">
+                {% if homepage_about.text %}
+                    <div class="ab-one">
+                        <div class="main-about-txt">
+                            <div class="h-ab">{% trans 'Մեր Մասին' %}</div>
+                            {{ homepage_about.text|safe }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="ab-two">
+                    <div class="main-about-img">
+                        <img src="{% if homepage_about.image %}{{ homepage_about.image.url }}{% else %}{% static 'img/test-icons/1.png' %}{% endif %}"
+                             alt="About AemTMM">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div class="home-ab-slider">
+                            <div class="swiper-container hab-slider">
+                                <div class="swiper-wrapper">
+                                    {% for item in abouts_list %}
+                                        {% include 'includes/about_category_item.html' %}
+                                    {% endfor %}
+                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- About Us end -->
+    {% endif %}
+
+    {% if first_part.count or second_part.count %}
+        <!-- Poduct sections -->
+        <section class="bot-prods prod-section">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div class="section-title">
+                            <h2 class="text-center">
+                                <a href="{{ selected_category.first.get_absolute_url }}">Առաջարկվող ապրանքներ<img
+                                        src="{% static 'img/icons/c-arr.svg' %}" alt="Machanents"></a>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="swiper-container slider-4">
+                            <div class="swiper-wrapper">
+                                {% for product in first_part %}
+                                    <div class="swiper-slide">
+                                        {% include 'includes/product.html' %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% if second_part %}
+                            <div class="swiper-container slider-4">
+                                <div class="swiper-wrapper">
+                                    {% for product in second_part %}
+                                        <div class="swiper-slide">
+                                            {% include 'includes/product.html' %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if three_part %}
+                            <div class="swiper-container slider-4">
+                                <div class="swiper-wrapper">
+                                    {% for product in three_part %}
+                                        <div class="swiper-slide">
+                                            {% include 'includes/product.html' %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if four_part %}
+                            <div class="swiper-container slider-4">
+                                <div class="swiper-wrapper">
+                                    {% for product in four_part %}
+                                        <div class="swiper-slide">
+                                            {% include 'includes/product.html' %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="col">
+                        <div class="flex-content-center section-see-more">
+                            <a href="{% url 'products_all' %}"
+                               class="button normal dark s-all">{% trans 'Տեսնել Ավելին' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Poduct sections end -->
+    {% endif %}
+
+
+    {% if second_items %}
+        <!--Single Poduct sections -->
+        <section class="bot-prods prod-section single-flowers">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div class="section-title">
+                            <h2 class="text-center">
+                                <a href="{{ second_category.get_absolute_url }}">{{ second_category.title }}</a>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="swiper-container slider-4">
+                            <div class="swiper-wrapper">
+                                {% for product in second_items %}
+                                    <div class="swiper-slide">
+                                        {% include 'includes/product.html' %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="flex-content-center section-see-more">
+                            <a href="{{ second_category.get_absolute_url }}"
+                               class="button normal dark s-all">{% trans 'Տեսնել Ավելին' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Single  Poduct sections end -->
+    {% endif %}
+
+    {% if reviews %}
+    <!-- Reviews -->
+    <section class="bot-prods rev-section">
+        <div class="cnt">
+            <div class="row">
+                <div class="col">
+                    <div class="section-title">
+                        <h2 class="text-center">
+                            <a href="{% url 'reviews' %}">
+                                {% trans 'Կարծիքներ' %}
+                                <img
+                                    src="{% static 'img/icons/c-arr.svg' %}"
+                                    alt="Machanents">
+                            </a>
+                        </h2>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="swiper-container slider-4">
+
+                        <div class="swiper-wrapper">
+                            {% for review_item in reviews %}
+                                {% include 'includes/review_item.html' %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="flex-content-center section-see-more">
+                        <a href="{% url 'reviews' %}" class="button normal dark s-all">{% trans 'Տեսնել Բոլորը' %}</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <!-- Reviews end -->
+    {% endif %}
+    <section class="bot-prods donation">
+        <div class="cnt-fluid">
+            <div class="row no-margs">
+                <div class="col col-2 no-padd">
+                    {% if donation_homepage_content %}
+                    <div class="donate-text" style="background-image:url(
+                            {% if donation_homepage_content.background_image %}{{ donation_homepage_content.background_image.url }}{% else %}{% static 'img/donate.jpg' %}{% endif %})">
+                        {{ donation_homepage_content.text|safe }}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="col col-2 no-padd">
+                    <div class="donate-block">
+                        <div class="donate-block-header">
+                            <h2 class="text-center">{% trans 'Դու կարող ես փոխել հարյուրավոր երեխաների կյանքը' %}</h2>
+                        </div>
+                        <div class="donate-step-one">
+                            <div class="donate-block-body">
+                            {% if donation_currencies %}
+                            <div class="donate-body-blocks">
+                                <p class="d-tit">{% trans 'Ընտրեք արտարժույթի տեսակը' %}</p>
+                                <div class="radio-buttons-row align-items-center">
+                                    {% for don_currency in donation_currencies %}
+
+                                    <div class="radio-button align-items-center">
+                                        <input id="radio-{{ forloop.counter }}" name="radio" type="radio"
+                                               {% if forloop.first %}checked=""{% endif %} class="currNames"
+                                                value="{{ don_currency.id }}"
+                                        >
+                                        <label for="radio-{{ forloop.counter }}" class="radio-label">{{ don_currency.name }} {{ don_currency.icon }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if donation_amounts %}
+                            <div class="donate-body-blocks">
+                                <p class="d-tit">{% trans 'Ընտրեք կամ նշեք գումարի չափը' %}</p>
+                                <div class="anot-radio-buttons-row donate-amount">
+                                    <div class="fix-donate-prices flex-center-between" id="amountList">
+                                        {% for amount in donation_amounts %}
+                                        <div class="denomination {% if forloop.first %}selected{% endif %} amountVariants">
+                                            <input autocomplete="off" type="radio"
+                                                   onclick="this.classList.toggle('selected')"
+                                                   name="amount" id="amount{{ forloop.counter }}"
+                                                   class="{% if forloop.first %}selected{% endif %}"
+                                                   value="{{ amount.amount }}">
+                                            <label for="amount{{ forloop.counter }}">
+                                                <span id="amount-backend-{{ forloop.counter0 }}">{{ amount.amount }}</span>
+                                                <span class="valyuta">{{ amount.currency_name.name }}</span></label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="denomination-other  amountVariants">
+                                        <input autocomplete="off" type="tel"
+                                               name="amount" value=""
+                                               id="amountVal"
+                                               class=""
+                                               placeholder="{% trans 'Այլ գումար' %}">
+                                    </div>
+
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        </div>
+                        <div class="donate-step-two">
+                            <form action="" method="get" id="donation">
+                                <div class="donate-block-body">
+                                    <div class="donate-body-blocks">
+                                        <span id="backToHomeDonation">{% trans 'Հետ գնալ' %}</span>
+                                        <p class="d-tit">{% trans 'Ցանկանու՞մ եք հրապարակել Ձեր ինքնությունը' %}</p>
+                                        <div class="radio-buttons-row align-items-center">
+                                            <div class="radio-button align-items-center">
+                                                <input id="radio-yes" value="on" name="radio" type="radio" checked>
+                                                <label for="radio-yes" class="radio-label">{% trans 'Այո' %}</label>
+                                            </div>
+                                            <div class="radio-button align-items-center">
+                                                <input id="radio-no" value="off" name="radio" type="radio">
+                                                <label for="radio-no" class="radio-label">{% trans 'Ոչ' %}</label>
+                                            </div>
+                                        </div>
+                                        <div class="step-two-form">
+                                            <input
+                                                type="hidden"
+                                                name="amount"
+                                                id="amountVal"
+                                                value="">
+                                            <div id="only_form-fields">
+                                                <div class="input-fields">
+                                                    <input type="text"
+                                                           class="another-field valid donateField"
+                                                           id="username"
+                                                           name="first_name"
+                                                           value=""
+                                                           placeholder="{% trans 'Անուն Ազգանուն' %} *"
+                                                           required>
+                                                </div>
+                                                <div class="input-fields">
+                                                    <input type="email" class="another-field donateField"
+                                                           name="email" maxlength=""
+                                                           value="" id="email" placeholder="E-mail *" required>
+                                                </div>
+                                                <div class="input-fields">
+                                                    <input type="number"
+                                                           class="another-field donateField"
+                                                           name="phone"
+                                                           maxlength=""
+                                                           value="" id="phone" placeholder="{% trans 'Հեռախոսահամար' %} *" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button type="submit" id="sendForm" style="display: none;"></button>
+                                    </div>
+                                </div>
+                            </form>
+                    </div>
+                        <div class="donate-block-footer">
+
+                            <div class="donate-submit flex-content-center">
+                                <button type="submit" autocomplete="off"
+                                        id="donatebutt"
+                                        class="flex-content-center big button donate">
+                                    <img src="/static/img/icons/donation.svg" alt="{% trans 'Նվիրաբերել' %}">
+                                    {% trans 'Նվիրաբերել' %}
+                                    {% if donation_amounts %}
+                                    <span class="summ">{{ donation_amounts.first.amount }}</span>
+                                    {% else %}
+                                    <span class="summ">0</span>
+                                    {% endif %}
+                                    <span class="valyuta" id="donateCurrencyFooter">{{ donation_amounts.first.currency_name.name }}</span>
+                                </button>
+                            </div>
+                            <ul class="donate-pay-icons flex-content-center">
+                                <li><img src="{% static 'img/icons/f-visa.svg' %}" alt="visa"></li>
+                                <li><img src="{% static 'img/icons/f-master.svg' %}" alt="master"> </li>
+                                <li><img src="{% static 'img/icons/f-arca.svg' %}" alt="arca"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% if posts %}
+        <!--Blog -->
+        <section class="bot-prods blog-home">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div class="section-title">
+                            <h2 class="text-center">
+                                <a href="{% url 'blog_list' %}">{% trans 'Բլոգ' %}<img
+                                        src="{% static 'img/icons/c-arr.svg' %}" alt="Machanents"></a>
+                            </h2>
+                        </div>
+                    </div>
+                    {% for blog  in posts %}
+                        {% include 'includes/blog.html' %}
+                    {% endfor %}
+
+                    <div class="col">
+                        <div class="flex-content-center section-see-more">
+                            <a href="{% url 'blog_list' %}"
+                               class="button normal dark s-all">{% trans 'Տեսնել Ավելին' %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--Blog end -->
+    {% endif %}
+
+</main>
+{% include 'includes/footer.html' %}
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/swiper.min' %}.js"></script>
+<script src="{% static 'js/swiper-express' %}.js"></script>
+<script src="{% static 'js/wish.js' %}"></script>
+<script src="{% static 'js/addToCart.js' %}"></script>
+<script src="{% static 'js/donation.js' %}"></script>
+<script>
+    // hab slider   
+    const swipper = new Swiper('.hab-slider', {
+        slidesPerView: 1.3,
+        spaceBetween: 15,
+        navigation: {
+            nextEl: '.swiper-next',
+            prevEl: '.swiper-prev',
+        },
+        breakpoints: {
+            340: {
+                slidesPerView: 2.3,
+                spaceBetween: 15,
+            },
+            568: {
+                slidesPerView: 2.7,
+                spaceBetween: 20,
+            },
+            992: {
+                slidesPerView: 4,
+                spaceBetween: 20,
+            },
+            1200: {
+                slidesPerView: 5,
+                spaceBetween: 20,
+            },
+        }
+    });
+
+</script>
+
+</body>
+</html>

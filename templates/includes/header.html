@@ -1,0 +1,336 @@
+<!-- Google Tag Manager (noscript) -->
+
+<!-- End Google Tag Manager (noscript) -->
+{% load static %}{% load categories %}{% load i18n %}
+<header>
+    <div class="top-header m-none">
+        <div class="cnt">
+            <div class="row">
+                <div class="col-no-100 top-left align-items-center">
+                    <ul class="list-inline align-items-center">
+                        {% for header_link in header_links|slice:"2" %}
+                        <li>
+                            <a href="{% if header_link.url %}{{ header_link.url }}{% else %}javascript:void(0);{% endif %}">
+                                <img src="{% if header_link.icon %}{{ header_link.icon.url }}{% else %}{% static 'img/icons/place.svg' %}{% endif %}"
+                                     class="top-icon"
+                                     alt="{{ header_link.name }}"
+                                >{{ header_link.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="info-top-txt align-items-center">
+                        <ul class="align-items-center">
+                            {% for header_link in header_links|slice:'2:' %}
+                            <li>
+                                <a href="{% if header_link.url %}{{ header_link.url }}{% else %}javascript:void(0);{% endif %}">{{ header_link.name }}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="donate-header align-items-center">
+                            <a href="#">
+                                <img src="{% static 'img/icons/h-donate.svg' %}" alt="Donate"><span>Donate</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-no-100 top-right">
+                    <ul class="list-inline align-items-center">
+                        {% if request.LANGUAGE_CODE == 'ru' %}
+                            <li class="web_langs">
+                                <a href="javascript:void(0);" class="choose"> <span class="menus align-items-center">
+                                RUS<img src="{% static 'img/icons/down.svg' %}" class="down-icon" alt="">
+                            </span> </a>
+                                <ul class="choose_lang">
+                                    <li>
+                                        <a href="{{ breadcrumbs_home }}{{ request.get_full_path|cut:'/ru' }}">ARM</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ breadcrumbs_home }}/en{{ request.get_full_path|cut:'/ru' }}">ENG</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% elif  request.LANGUAGE_CODE == 'en' %}
+                            <li class="web_langs">
+                                <a href="javascript:void(0);" class="choose"> <span class="menus align-items-center">
+                                ENG<img src="{% static 'img/icons/down.svg' %}" class="down-icon" alt="">
+                            </span> </a>
+                                <ul class="choose_lang">
+                                    <li>
+                                        <a href="{{ breadcrumbs_home }}{{ request.get_full_path|cut:'/en' }}">ARM</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ breadcrumbs_home }}/ru{{ request.get_full_path|cut:'/en' }}">RUS</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% else %}
+                            <li class="web_langs">
+                                <a href="javascript:void(0);" class="choose"> <span class="menus align-items-center">
+                                ARM<img src="{% static 'img/icons/down.svg' %}" class="down-icon" alt="">
+                            </span> </a>
+                                <ul class="choose_lang">
+                                    <li>
+                                        <a href="{{ breadcrumbs_home }}/en{{ request.get_full_path }}">ENG</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ breadcrumbs_home }}/ru{{ request.get_full_path }}">RUS</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endif %}
+                        <li class="web_valyut">
+                            <form id="currency_switcher" method="POST" action="{% url 'setcurrency' %}"
+                                  onchange="submit()">
+                                <select name="currency" id="curr_sel">
+                                    {% for curr in CURRENCIES %}
+                                        <option value="{{ curr.code }}"
+                                                {% ifequal curr.code request.session.currency %}selected="selected" {% endifequal %}>
+                                            {{ curr.code }} {{ curr.symbol }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="middle-header">
+        <div class="cnt">
+            <div class="row flex-center-between">
+                <div class="col col-auto lg-none">
+                    <ul class="middle-cart-wish middle-cat-search align-items-center">
+                        <li class="text-center catalog-fully">
+                            <a href="{% url 'catalog' %}">
+                                <img src="{% static 'img/icons/mobile-menu.svg' %}" class="four-icons" alt="Catalog">
+                                <p>
+                                    <span>{% trans 'Մենյու' %}</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li id="search-show" class="text-center">
+                            <a href="#">
+                                <img src="{% static 'img/icons/serachmm.svg' %}" class="four-icons" alt="Search">
+                                <p>
+                                    <span>{% trans 'Որոնում' %}</span>
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col col-auto">
+                    <div class="logo-main">
+                        <a href="{% url 'home' %}" class="m-none">
+                            <img src="{% static 'img/logo.svg' %}" alt="Peri Flowers">
+                        </a>
+                        <a href="{% url 'home' %}" class="lg-none">
+                            <img src="{% static 'img/logo-md.svg' %}" alt="Peri Flowers">
+                        </a>
+                    </div>
+                </div>
+                <div class="col col-auto m-none fixed-seach-bl">
+                    <form class="search-bar" id="searching" action="{% url 'result' %}" data-url="{% url 'search' %}">
+                        <span id="search-close" class="d-none text-center">×<span
+                                class="close-search-txt">{% trans 'Փակել' %}</span>
+                        </span>
+
+                        <div class="serach-header">
+                            <div class="fast-search align-items-center">
+                                <input type="text" id="searchproduct" class="fast-search-input" name="q"
+                                       autocomplete="off" placeholder="{% trans 'Որոնում' %} ...">
+                                <button type="submit" id="" class="search-butt-fl">
+                                    <img src="{% static 'img/icons/search-middle.svg' %}"
+                                         alt="{% trans 'Որոնում' %} ...">
+                                </button>
+                                <!--  Search result-->
+                                <div class="all-lists" id="search-list-items">
+                                    <ul id="search_list">
+
+                                    </ul>
+                                </div>
+                                <!--  Search result end -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col col-auto">
+                    <ul class="middle-cart-wish align-items-center">
+                       <li class="m-none">
+                            <a href="{% url 'peri_tv' %}">
+                                <img src="{% static 'img/icons/tv-middle.svg' %}" class="four-icons" alt="MACHANENTS TV">
+                            </a>
+                        </li>
+                        <li class="text-center align-items-center signin_signup m-none">
+                            {% if request.user.is_authenticated %}
+                                <a href="{% url 'profile' %}">
+                                    <img src="{% static 'img/icons/sign-up.svg' %}" alt="Sign up">
+                                    <p>
+                                        <span>{% trans 'Իմ էջը' %}</span>
+                                    </p>
+                                </a>
+                                <a href="{% url 'logout' %}" style="margin-left: 20px;">
+                                    <img src="{% static 'img/icons/log-out.svg' %}" alt="Sign up">
+                                    <p>
+                                        <span>{% trans 'Ելք' %}</span>
+                                    </p>
+                                </a>
+
+                            {% else %}
+                                <a href="{% url 'login' %}">
+                                    <img src="{% static 'img/icons/sign-up.svg' %}" alt="Sign up">
+                                    <p>
+                                        <span>{% trans 'Մուտք' %}</span>
+                                    </p>
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="text-center wish-mb">
+                            <a href="{% url 'wishlist' %}">
+                                <img src="{% static 'img/icons/wish-middle.svg' %}" class="four-icons" alt="Wish list">
+                                <p>
+                                    <span class="in-cart-qty in-wish" id="wishQty">{{ wish_items.count }}</span>
+                                    <span>{% trans 'Ցանկալի' %}</span>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="text-center">
+                            <a href="{% url 'cart' %}">
+                                <img src="{% static 'img/icons/cart-middle.svg' %}" class="four-icons" alt="Cart">
+                                <p>
+                                    <span class="in-cart-qty" id="cartqtytotal">{{ cart_items.count }}</span>
+                                    <span>{% trans 'Զամբյուղ' %}</span>
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-menu m-none">
+        <div class="cnt">
+            <div class="row">
+                <div class="col">
+                    <ul class="static-links flex-center-between">
+                        <li>
+                            <a href="javascript:void(0)"
+                               class="main-button catalog-link catalog-fully align-items-center">
+                                <img src="{% static 'img/icons/catalog.svg' %}" alt="Catalog">{% trans 'Տեսականի' %}
+                            </a>
+                        </li>
+                        {% for ct in header_categories %}
+                        <li class="{% if ct.slug in request.get_full_path %}active{% endif %}"><a
+                                href="{{ ct.get_absolute_url }}">{{ ct.title }}</a></li>
+                        {% endfor %}
+                        <li class="{% if 'artist' in request.get_full_path %}active{% endif %}">
+                            <a href="{% url 'authors' %}">{% trans 'Արտիստներ' %}</a>
+                        </li>
+
+                        {#                        <li class="{% if 'service' in request.get_full_path %}active{% endif %}"><a href="{% url 'service_list' %}">{% trans 'Ծառայություններ' %}</a></li>#}
+                        {#                        <li class="{% if 'gallery' in request.get_full_path %}active{% endif %}"><a href="{% url 'gallery_list' %}">{% trans 'Տեսադարան' %}</a></li>#}
+                        {#                        <li class="{% if 'blog' in request.get_full_path %}active{% endif %}"><a href="{% url 'blog_list' %}">{% trans 'Բլոգ' %}</a></li>#}
+                        {#                        <li class="{% if 'contact-us' in request.get_full_path %}active{% endif %}"><a href="{% url 'contacts' %}">{% trans 'Կապ' %}</a></li>#}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="nav-offcanvas">
+    <div class="mob-menu-head">
+        <ul class="mob-top-header cutter flex-center-between">
+            <li class="catalog-first-name align-items-center">
+                <img src="{% static 'img/icons/mobile-menu.svg' %}" alt="Catalog">{% trans 'Տեսականի' %}
+            </li>
+            <li id="offCanvasClose">
+                <img src="{% static 'img/icons/catalog-close.svg' %}" class="catalog-fully-close" alt="Close">
+            </li>
+        </ul>
+        {% if request.LANGUAGE_CODE == 'ru' %}
+            <ul class="mob-langs align-items-center">
+                <li><a href="javascript:void(0);" class="active">Рус</a></li>
+                <li><a href="{{ prefix }}{{ request.get_full_path|cut:'/ru' }}">Հայ</a></li>
+                <li><a href="{{ prefix }}/en{{ request.get_full_path|cut:'/ru' }}">Eng</a></li>
+            </ul>
+        {% elif request.LANGUAGE_CODE == 'en' %}
+            <ul class="mob-langs align-items-center">
+                <li><a href="javascript:void(0);" class="active">Eng</a></li>
+                <li><a href="{{ prefix }}{{ request.get_full_path|cut:'/en' }}">Հայ</a></li>
+                <li><a href="{{ prefix }}/ru{{ request.get_full_path|cut:'/en' }}">Рус</a></li>
+            </ul>
+
+        {% else %}
+            <ul class="mob-langs align-items-center">
+                <li><a href="javascript:void(0);" class="active">Հայ</a></li>
+                <li><a href="{{ prefix }}/ru{{ request.get_full_path }}">Рус</a></li>
+                <li><a href="{{ prefix }}/en{{ request.get_full_path }}">Eng</a></li>
+            </ul>
+        {% endif %}
+        <ul class="cutter text-center sign-in-head-mob flex-center-evenly">
+            {% if not user.is_authenticated %}
+                <li>
+                    <a href="{% url 'register' %}" class="flex-content-center">
+                        <img src="{% static 'img/icons/sign-up.svg' %}" class="top-icon"
+                             alt="">{% trans 'Մուտք / Գրանցում' %}
+                    </a>
+                </li>
+
+            {% else %}
+
+                <li>
+                    <a href="{% url 'profile' %}" class="flex-content-center">
+                        <img src="{% static 'img/icons/sign-up.svg' %}" class="top-icon"
+                             alt="{% trans 'Իմ Էջը' %}">{% trans 'Իմ Էջը' %}
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'logout' %}" class="flex-content-center">
+                        <img src="{% static 'img/icons/log-out.svg' %}" class="top-icon"
+                             alt="{% trans 'Դուրս գալ' %}">{% trans 'Դուրս գալ' %}
+                    </a>
+                </li>
+            {% endif %}
+            <!--if user logged in end -->
+        </ul>
+
+    </div>
+    <div class="nav-offcanvas-menu">
+        <ul>
+            {% categories as get_categories %}
+            {% for cat in get_categories %}
+                <li class="uWithSubmenu">
+                    <a href="{{ cat.get_absolute_url }}">{{ cat.title }}</a>
+                    {% if cat.children.count %}
+                        <ul style="">
+                            {% for child in cat.children.all %}
+                                <li class="uWithSubmenu">
+                                    <a href="{{ child.get_absolute_url }}"
+                                       class="{% if child.get_absolute_url in request.get_full_path %}active{% endif %}">{{ child.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </li>
+            {% endfor %}
+
+            <ul class="another-links">
+                <li class="{% if 'blog' in request.get_full_path %}active{% endif %}">
+                   <a href="{% url 'blog_list' %}">{% trans 'Բլոգ' %}</a></li>
+                <li class="{% if 'artist' in request.get_full_path %}active{% endif %}">
+                   <a href="{% url 'authors' %}">{% trans 'Արտիստներ' %}</a></li>
+               
+                <li class="sale-link"><a href="{% url 'offers' %}?type=sale">{% trans 'Ակցիա' %}</a></li>
+                <li class="new-link decoration-link">
+                <a href="{% url 'offers' %}?type=new">{% trans 'Նոր տեսականի' %}</a></li>
+                <li class="offer-link decoration-link"><a href="{% url 'offers' %}?type=best_seller">{% trans 'Հատուկ առաջարկ' %}</a></li>
+            </ul>
+        </ul>
+    </div>
+</div>
+<div class="offcanvas-overlay"></div>

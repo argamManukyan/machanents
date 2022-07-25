@@ -1,0 +1,87 @@
+{% load i18n %}{% load static %}<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+<head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset='utf-8'/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>{% if category.meta_title %}{{ category.meta_title }}{% else %}{{ category.name }} | {{ request.get_host|capfirst }}{% endif %}</title>
+    <meta name="Description" content="{% if category.meta_description %}{{ category.meta_description }}{% endif %}">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/swiper.css' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+{% include 'includes/header.html' %}
+<main id="content">
+    <section class="main-top">
+
+        <!-- Breadcrumbs -->
+        <div class="bread-bg bot-prods" style="background-image:url({% if category.breadcrumb_image %}{{ category.breadcrumb_image.url }}
+           {% else %}{% static 'img/bread.jpg' %}{% endif %})">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div id="breadcrumbs" class="anothers-bread text-center">
+                            <div class="tit-page bread-page">
+                                <h1>{{ category.name|capfirst }}</h1>
+                                {% if category.breadcrumb_text %}<p>{{ category.breadcrumb_text|safe }}</p>{% endif %}
+                            </div>
+                            <ul class="breadcrumbs-list flex-content-center">
+                                <li class="b-list-item">
+                                    <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                </li>
+                                <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon" alt="Տեսականի">
+                                <li class="b-list-item">
+                                    <span>{% trans 'Բլոգ' %}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Blog -->
+        <div class="bot-prods blog-page">
+            <div class="cnt">
+
+                <div class="row flex-center-between">
+                    <div class="col">
+                        <div class="swiper-container slide-cats">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <a href="{% url 'blog_list' %}"
+                                       class="cat button normal gray">{% trans 'Բոլորը' %}</a>
+                                </div>
+                                {% for categ in categories %}
+                                <div class="swiper-slide">
+                                    <a href="{{ categ.get_absolute_url }}"
+                                       class="cat button normal {% if category.id == categ.id %}dark{% else %}gray{% endif %}"
+                                    >{{ categ.name }}</a>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                     {% for blog in page_obj %}
+                        {% include 'includes/blog.html' %}
+                    {% endfor %}
+                </div>
+                {% include 'includes/pagination.html' %}
+
+            </div>
+        </div>
+        <!-- Blog end-->
+
+    </section>
+</main>
+{% include 'includes/footer.html' %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="{% static 'js/swiper.min' %}.js"></script>
+<script src="{% static 'js/swiper-express' %}.js"></script>
+</body>
+</html>

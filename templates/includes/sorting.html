@@ -1,0 +1,45 @@
+{% load static %}
+{% load i18n %}
+<div class="br-shpage-right">
+    <div class="products-settings flex-center-between">
+        <div class="products-view-mode align-items-center">
+            <span class="m-none products-view-mode-grid products-view-mode-active">
+                <svg version="1.1" id="grid-view" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="22px" height="22px" viewBox="0 0 22 22" enable-background="new 0 0 22 22" xml:space="preserve">
+                    <rect width="5" height="5"></rect>
+                    <rect x="7" width="5" height="5"></rect>
+                    <rect x="14" width="5" height="5"></rect>
+                    <rect y="7" width="5" height="5"></rect>
+                    <rect x="7" y="7" width="5" height="5"></rect>
+                    <rect x="14" y="7" width="5" height="5"></rect>
+                    <rect y="14" width="5" height="5"></rect>
+                    <rect x="7" y="14" width="5" height="5"></rect>
+                    <rect x="14" y="14" width="5" height="5"></rect>
+                </svg>
+            </span>
+            <span class="m-none products-view-mode-list">
+                <svg version="1.1" id="list-view" xmlns="http://www.w3.org/2000/svg" 
+                xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="22px" height="22px" viewBox="0 0 22 22" 
+                enable-background="new 0 0 22 22" xml:space="preserve">
+                    <rect width="18" height="2"></rect>
+                    <rect y="16" width="18" height="2"></rect>
+                    <rect y="8" width="18" height="2"></rect>
+                </svg>
+            </span>
+            <div class="filter-bar d-none">
+                <img src="{% static 'img/icons/filter.svg' %}" alt="{% trans 'Ֆիլտրեր' %}">{% trans 'Ֆիլտրեր' %}
+            </div>
+        </div>
+        <div class="products-sorting">
+            <form method="get" id="select_form">
+                <select name="sorting" id="id_sorting" >
+                    <option value="-id" {% if '-id' == request.GET.sorting %}selected{% endif %}>{% trans 'Դասավորել' %}</option>
+                    <option value="-finally_price" {% if '-finally_price' == request.GET.sorting %}selected{% endif %}>{% trans 'Սկզբում թանկերը' %}</option>
+                    <option value="finally_price"  {% if 'finally_price' == request.GET.sorting %}selected{% endif %}>{% trans 'Սկզբում էժանները' %}</option>
+                    <option value="title"  {% if 'title' == request.GET.sorting %}selected{% endif %}>{% trans 'Ըստ անվանման' %}</option>
+                    <option value="created_at" {% if 'created_at' == request.GET.sorting %}selected{% endif %}>{% trans 'Հին ավելացվածները' %}</option>
+                    <option value="-created_at" {% if '-created_at' == request.GET.sorting %}selected{% endif %}>{% trans 'Նոր ավելացվածները' %}</option>
+                </select>
+            </form>
+        </div>
+    </div>
+</div>

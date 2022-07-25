@@ -1,0 +1,109 @@
+{% load static %}{% load i18n %}<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+<head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>{% if category.meta_title %}{{ category.meta_title }}{% else %}{{category.title}} | Machanents.com{% endif %}</title>
+    <meta name="Description" content="{% if category.meta_description %}{{ category.meta_description }}{% endif %}">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    {% include 'includes/header.html' %}
+    <!-- Main content -->
+    <main id="content">
+        <section class="main-top" id="shop-page-content">
+
+            <!-- Breadcrumbs -->
+            <div class="bread-bg bot-prods" style="background-image:url({% if category.breadcrumb_image %}{{category.breadcrumb_image.url}}{% else %}{% static 'img/bread.jpg' %}{% endif %})">
+                <div class="cnt">
+                    <div class="row">
+                        <div class="col">
+                            <div id="breadcrumbs" class="anothers-bread text-center">
+                                <div class="tit-page bread-page">
+                                    <h1>{{category.title|title}}</h1>
+                                    {{ category.breadcrumb_text|safe }}
+                                </div>
+                                <ul class="breadcrumbs-list flex-content-center">
+                                    <li class="b-list-item">
+                                        <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                    </li>
+                                    <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon" alt="{% trans 'Տեսականի' %}">
+                                    <li class="b-list-item">
+                                        <a href="{% url 'catalog' %}" class="b-list-link">{% trans 'Տեսականի' %}</a>
+                                    </li>
+                                    <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon" alt="{% trans 'Տեսականի' %}">
+                                    <li class="b-list-item">
+                                        <span>{{category.title|title}}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Breadcrumbs end-->
+
+            <!-- Shop -->
+            <div class="section all-shop-cnt">
+                <div class="cnt">
+                    <div class="row">
+                        <div class="col col-4 sh-pg">
+                            <div class="br-shpage">
+
+                                <div class="nav-offcanvas-content">
+                                    <div id="op-time" class="block-title">
+                                        <h3 class="align-items-center">
+                                            <img src="{% static 'img/icons/catalog-white.svg' %}" class="cat-name-mr" alt="{% trans 'Բաժիններ' %}">
+                                            <span>{% trans 'Բաժիններ' %}</span>
+                                            <img src="{% static 'img/icons/cat-down.svg' %}" class="border-icons ml-auto" alt="{% trans 'Բաժիններ' %}">
+                                        </h3>
+                                    </div>
+                                    <!-- Categories list -->
+                                    {% with source_cats as categories %}
+                                        {% include 'includes/categories_list.html' %}
+                                    {% endwith %}
+                                    <!-- Category list end -->
+                                </div>
+                            {% include 'includes/filter.html' %}
+                            </div>
+                        </div>
+                        <div class="col col-9">
+                            {% include 'includes/sorting.html' %}
+                            {% if not page_obj.paginator.count %}
+                                {% trans 'Որոնման արդյունքում ոչինչ չգտնվեց' %}
+                            {% else %}
+                                <div id="products-cont">
+                                    <div class="row full-ban">       
+                                        {% for product in page_obj %}    
+                                        <div class="col col-3">
+                                            {% include 'includes/product.html' %}
+                                        </div>         
+                                        {% endfor %}                           
+                                    </div>
+                                    {% if page_obj.paginator.num_pages > 1 %}
+                                        {% include 'includes/pagination.html' %}
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Shop end -->
+
+        </section>
+    </main>
+    {% include 'includes/footer.html' %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="{% static 'js/filter.js' %}"></script>
+    <script src="{% static 'js/addToCart.js' %}"></script>
+    <script src="{% static 'js/wish.js' %}"></script>
+</body>
+
+</html>

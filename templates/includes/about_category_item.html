@@ -1,0 +1,14 @@
+{% load static %}
+<div class="swiper-slide {% if item.id == about_us.id %}active{% endif %}">
+    <div class="hab-block text-center">
+        <a href="{% if item.is_main %}{% url 'about_us' %}{% else %}{{ item.get_absolute_url }}{% endif %}">
+            <figure>
+                <img src="{% if item.logo %}{{ item.logo.url }}{% else %}{% static 'img/test-icons/hab-1.png' %}{% endif %}"
+                     alt="">
+            </figure>
+            <div class="hab-name">
+                <h3>{{ item.title|safe }}</h3>
+            </div>
+        </a>
+    </div>
+</div>

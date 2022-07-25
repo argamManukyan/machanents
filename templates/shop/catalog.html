@@ -1,0 +1,90 @@
+{% load static %}{% load i18n %}<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+<head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>{% trans 'Տեսականի' %} | {{ request.get_host|title }}</title>
+    <meta name="Description" content="">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    {% include 'includes/header.html' %}
+    <!-- Main content -->
+    <main id="content">
+        <section class="main-top">
+            <!-- Breadcrumbs -->
+            <div class="bread-bg bot-prods"
+                 style="background-image:url({% if bread_content.breadcrumb_image %}{{ bread_content.breadcrumb_image.url }}
+                 {% else %}{% static 'img/bread.jpg' %}{% endif %})">
+                <div class="cnt">
+                    <div class="row">
+                        <div class="col">
+                            <div id="breadcrumbs" class="anothers-bread text-center">
+                                <div class="tit-page bread-page">
+                                    <h1>{% trans 'Տեսականի' %}</h1>
+                                    {% if bread_content.breadcrumbs_text %}
+                                    <p>{{ bread_content.breadcrumbs_text|safe }}</p>
+                                    {% endif %}
+                                </div>
+                                <ul class="breadcrumbs-list flex-content-center">
+                                    <li class="b-list-item">
+                                        <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                    </li>
+                                    <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon"
+                                        alt="{% trans 'Տեսականի' %}">
+                                    <li class="b-list-item">
+                                        <span>{% trans 'Տեսականի' %}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Breadcrumbs end-->
+
+            <!-- Catalog-->
+            <div class="catalog-page">
+                <div class="cnt">
+                    {% for category in categories %}
+                    <div class="row foreach-links">
+                        <div class="col">
+                            <div class="section-title">
+                                <h2>
+                                    <a href="{{category.get_absolute_url}}">{{ category.title }}</a>
+                                </h2>
+                            </div>
+                        </div>
+                        {% if category.children %}
+                            {% for child in category.children.all %}
+                                <div class="col col-4">
+                                    <a href="{{child.get_absolute_url}}">
+                                        <div class="pop-cat-block">
+                                            <figure class="pop-cat-img">
+                                                <img src="{% if child.image %}{{ child.image.url }}{% else %}{% static 'img/default.jpg' %}{% endif %}" alt="category name">
+                                            </figure>
+                                            <div class="pop-cat-desc text-center">
+                                                <h3><span>{{child.title}}</span></h3>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Catalog end-->
+        </section>
+    </main>
+    {% include 'includes/footer.html' %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

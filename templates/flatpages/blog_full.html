@@ -1,0 +1,120 @@
+{% load static %}{% load i18n %}<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+  <head>
+      {% include 'includes/tagmanager.html' %}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>{% if blog.meta_title %}{{ blog.meta_title }}{% else %}{{ blog.title }} | {{ request.get_host|title }}{% endif %}</title>
+    <meta name="Description" content="{% if blog.meta_description %}{{blog.meta_description}}{% endif %}" />
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+    <link rel="stylesheet" href="{% static 'css/color.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    {% include 'includes/header.html' %}
+    <!-- Main content -->
+    <main id="content">
+      <section class="main-top">
+        <!-- Breadcrumbs -->
+        <div class="bread-bg anot-breadcrumbs bot-prods">
+          <div class="cnt">
+            <div class="row">
+              <div class="col">
+                <div id="breadcrumbs">
+                  <ul class="breadcrumbs-list align-items-center">
+                    <li class="b-list-item">
+                      <a href="{% url 'home' %}" class="b-list-link">{% trans "Գլխավոր" %}</a>
+                    </li>
+                    <span class="bread-arrow">→</span>
+                    <li class="b-list-item">
+                      <a href="{% url 'blog_list' %}" class="b-list-link">{% trans "Բլոգ" %}</a>
+                    </li>
+                    <span class="bread-arrow">→</span>
+                    <li class="b-list-item">
+                      <span>{{blog.title}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Blog -->
+        <div class="cnt">
+          <div class="row">
+            <div class="col">
+              <div class="two-version-title">
+                <h1>{{ blog.title }}</h1>
+              </div>
+            </div>
+          </div>
+
+          <!-- Blog full -->
+          <div class="row">
+            <div class="col">
+              <div class="full-blog-desc">
+                <div class="post-details align-items-center">
+                  <div class="views-on align-items-center">
+                    <img
+                      src="{% static 'img/icons/eye.svg' %}"
+                      class="view-icon"
+                      alt="Просмотры"
+                    />
+                    <span>{{blog.views_count}}</span>
+                  </div>
+                  <div class="calendar-on align-items-center">
+                    <img
+                      src="{% static 'img/icons/calendar.svg' %}"
+                      class="view-icon calendar-icon"
+                      alt="Дата добавления"
+                    />
+                    <span>{{blog.created_at|date:"Y-m-d"}}</span>
+                  </div>
+                </div>
+                  {% if blog.large_description %}
+                <div class="all-paragraphs-styles">
+                  <article class="for-blogs">
+                   {{ blog.large_description|safe }}
+                  </article>
+                </div>
+                  {% endif %}
+              </div>
+            </div>
+          </div>
+          <!-- Blog full end -->
+          
+          
+     <!-- Recomended Blog --> 
+    <section class="bot-prods blog-home">
+        <div class="cnt">
+            <div class="row">
+                <div class="col">
+                    <div class="section-title">
+                        <h2 class="text-center">
+                            <a href="{% url 'blog_list' %}">{% trans 'Բլոգ' %}<img src="{% static 'img/icons/c-arr.svg' %}" alt="Machanents"></a>
+                        </h2>
+                    </div>
+                </div>
+                {% for blog  in posts %}
+                {% include 'includes/blog.html' %}
+                {% endfor %}
+
+            </div>
+        </div>
+    </section>
+   <!-- Recomended Blog end --> 
+  
+          
+        </div>
+        <!-- Blog end-->
+      </section>
+    </main>
+    {% include 'includes/footer.html' %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+  </body>
+</html>

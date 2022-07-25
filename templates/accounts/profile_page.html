@@ -1,0 +1,563 @@
+{% load static %}{% load i18n %}{% load currency %}{% currency_context %}<!DOCTYPE html>
+<html lang="{{LANGUAGE_CODE}}">
+  <head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>{{user.first_name}} | {{ request.get_host|title }}</title>
+    <meta name="Description" content="" />
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/color.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    {% include 'includes/header.html' %}
+    <main id="content">
+      <section class="main-top bot-prods">
+        <!-- Breadcrumbs -->
+        <div class="bread-bg anot-breadcrumbs bot-prods">
+          <div class="cnt">
+            <div class="row">
+              <div class="col">
+                <div id="breadcrumbs">
+                  <ul class="breadcrumbs-list align-items-center">
+                    <li class="b-list-item">
+                      <a href="{% url 'home' %}" class="b-list-link">{% trans "Գլխավոր" %}</a>
+                    </li>
+                    <span class="bread-arrow">→</span>
+                    <li class="b-list-item">
+                      <span>{% trans "Իմ հաշիվը" %}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Profile page -->
+        <div class="profile-page">
+          <div class="cnt">
+            <div class="row">
+              <div class="col">
+                <div class="two-version-title">
+                  <h1><span>{% trans "Բարի Գալուստ" %} {{user.first_name}}</span></h1>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="user-page" id="my-profile">
+            <div class="cnt">
+              <div class="row">
+                <div class="col col-4">
+                  <div class="tabs-head"><span>{% trans "Իմ հաշիվը" %}</span></div>
+                  <ul class="tabs personal-page">
+                    <li class="col-auto align-items-center active" rel="tab1">
+                      <img
+                        src="{% static 'img/icons/user-user.svg' %}"
+                        alt="{% trans 'Անձնական տվյալներ' %}"
+                      />
+                      <span>{% trans 'Անձնական տվյալներ' %}</span>
+                    </li>
+                    <li class="col-auto align-items-center tab_last" rel="tab2">
+                      <img src="{% static 'img/icons/order.svg' %}" alt="{% trans 'Իմ պատվերները' %}" />
+                      <span>{% trans 'Իմ պատվերները' %}</span>
+                    </li>
+                    <li class="col-auto align-items-center tab_last" rel="tab3">
+                      <img src="{% static 'img/icons/my-req.svg' %}" alt="{% trans 'Իմ հարցումները' %}" />
+                      <span>{% trans 'Իմ հարցումները' %}</span>
+                    </li>
+                    <li class="col-auto align-items-center tab_last" rel="tab4">
+                      <img src="{% static 'img/icons/lock.svg' %}" alt="{% trans 'Փոխել գաղտնաբառը' %}" />
+                      <span>{% trans "Փոխել գաղտնաբառը" %}</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col col-9">
+                  <div class="tab_container p-g">
+
+                    <!-- #tab1 -->
+                    <div id="tab1" class="tab_content">
+                      <div class="all-head-info">
+                        <div class="user-head-tit">
+                          <h2>{% trans "Անձնական տվյալներ" %}</h2>
+                        </div>
+                        {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %}">
+                                {{message|safe}}
+                            </div>
+                        {% endfor %}
+                        {% endif %}
+                        <div class="profile-info accountInfo">
+                          <div class="dis-fields">
+                            <p class="label-dis-in">{% trans "Անուն Ազգանուն" %}</p>
+                            <p class="info-dis-in">{{ user.first_name }}</p>
+                          </div>
+                          <div class="two-dis-fields flex-center-between">
+                            <div class="dis-fields">
+                              <p class="label-dis-in">E-mail</p>
+                              <p class="info-dis-in">{{user.email}}</p>
+                            </div>
+                            <div class="dis-fields">
+                              <p class="label-dis-in">{% trans "Հեռախոսահամար" %}</p>
+                              <p class="info-dis-in">{{user.profile.phone_number}}</p>
+                            </div>
+                          </div>
+                          <div class="dis-fields">
+                            <p class="label-dis-in">{% trans "Հասցե" %}</p>
+                            <p class="info-dis-in">{% if profile.country %}{{ profile.country.name }}, {% endif %}{% if profile.region %}{{ profile.region.name }}, {% endif %}{% if profile.address|length > 0 %}{{ profile.address }}{% else %}{% trans "Նշված չէ" %}{% endif %}</p>
+                          </div>
+                          <div class="two-dis-fields flex-center-between">
+                            <div class="dis-fields">
+                              <p class="label-dis-in">{% trans "Վերջին մուտք" %}</p>
+                              <p class="info-dis-in">{{user.last_login|date:"Y-m-d H:i"}}</p>
+                            </div>
+                            <div class="dis-fields">
+                              <p class="label-dis-in">{% trans "Գրանցման ամսաթիվ" %}</p>
+                              <p class="info-dis-in">{{user.date_joined|date:"Y-m-d H:i"}}</p>
+                            </div>
+                          </div>
+                          <div class="change-infos">
+                            <button
+                              type="button"
+                              id="changeInfo"
+                              class="button normal dark"
+                            >
+                              <img
+                                src="{% static 'img/icons/change-info.svg' %}"
+                                alt="{% trans 'Փոփոխել տվյալները' %}"
+                              />{% trans 'Փոփոխել տվյալները' %}
+                            </button>
+                          </div>
+                        </div>
+                        <!-- Change user data -->
+                        <div class="changeAccount" style="">
+                          <div class="head-changes flex-center-between">
+                            <h4><b>{% trans 'Փոփոխել տվյալները' %}</b></h4>
+                            <h4 class="closeChanges">
+                              <b>{% trans "Փակել" %}</b
+                              ><img
+                                src="{% static 'img/icons/catalog-close.svg' %}"
+                                alt="{% trans 'Փակել' %}"
+                              />
+                            </h4>
+                          </div>
+                          <form action="" id="change-info-user" method="POST">
+                            {% csrf_token %}
+                            <div>
+                              <div class="input-fields">
+                                <input
+                                  type="text"
+                                  class="another-field"
+                                  id="username"
+                                  name="first_name"
+                                  value="{{ user.first_name }}"
+                                  placeholder="{% trans 'Անուն Ազգանուն' %}"
+                                />
+                              </div>
+
+                              <!--Address-->
+                              <div
+                                class="two-inputs flex-center-between variant-2"
+                              >
+                                <div class="input-fields">
+                                  <select
+                                    id="id_country"
+                                    class="js-select2 another-field"
+                                    name="country"
+                                  >
+                                    <option value="">{% trans "Երկիր" %}</option>
+                                      {% for country in countries %}
+                                        <option data-id="{{country.id}}" {% if profile.country.id == country.id %}selected{% endif %} value="{{country.id}}">{{country.name}}</option>
+                                      {% endfor %}
+                                  </select>
+                                </div>
+                                <div class="input-fields" style="{% if profile.country.id != 1 %}display:none;{% endif %}">
+                                  <select
+                                    id="id_region"
+                                    class="js-select2 another-field"
+                                    name="region"
+
+                                  >
+                                      <option value="">{% trans "Մարզ / Բնակավայր" %}</option>
+                                      {% for region in regions %}
+                                          <option value="{{ region.id }}" class="city_list"
+                                                  {% if profile.region.id == region.id %}selected{% endif %}>{{ region.name }}</option>
+                                      {% endfor %}
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="input-fields">
+                                <textarea
+                                  name="address"
+                                  cols="20"
+                                  rows="2"
+                                  value=""
+                                  class="another-field"
+                                  id="id_address"
+                                  placeholder="{% trans 'Հասցե' %}"
+                                >{% if profile.address|length > 0 %}{{ profile.address }}{% endif %}</textarea>
+                              </div>
+                              <!--Address-->
+                              <div class="input-fields">
+                                <input
+                                  type="number"
+                                  class="another-field"
+                                  name="phone_number"
+                                  maxlength=""
+                                  value="{{ profile.phone_number }}"
+                                  id="recphoneNumber"
+                                  placeholder="{% trans 'Հեռախոսահամար' %}"
+                                />
+                              </div>
+                              <div class="change-infos">
+                                <button
+                                  type="submit"
+                                  id="changeInfo"
+                                  class="button normal dark cahnge_but"
+                                >
+                                  {% trans 'Հաստատել' %}
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <!-- Change user data end -->
+                      </div>
+                    </div>
+                    <!-- #tab1 end -->
+
+                    <!-- #tab2 end -->
+                    <div id="tab2" class="tab_content" style="">
+                        <div class="all-head-info">
+                            <div class="user-head-tit">
+                            <h2>
+                            <span>{% trans 'Իմ պատվերները' %}</span></h2>
+                            </div>
+                        </div>
+
+                        {% if not orders.count %}
+                            <h4 >{% trans "Պատվերների ցանկը դատարկ է" %}</h4>
+                        {% else %}
+                      <div id="order-table">
+                        <table class="orders-table">
+                          <thead>
+                            <tr class="order-head">
+                              <th class="order-item-nom" width="1%">№</th>
+                              <th class="order-head-code">{% trans 'Պատվերի կոդ' %}</th>
+                              <th class="order-head-cnt nowrap">{% trans 'Քանակ' %}</th>
+                              <th class="order-head-sum">{% trans 'Ընդհանուր' %}</th>
+                              <th class="order-head-day">{% trans 'Ամսաթիվ' %}</th>
+                              <th class="order-head-more">{% trans 'Մանրամասն' %}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for order in orders %}
+                            <tr id="" class="order-item">
+                              <td class="order-item-nom clr">
+                                <span class="order-name-mobile">№</span>
+                                <span class="right-orders"><b>{{ forloop.counter }}</b></span>
+                              </td>
+                              <td class="order-item-code clr">
+                                <span class="order-name-mobile"
+                                  >{% trans "Պատվերի կոդ" %}</span
+                                >
+                                <span class="right-orders"><b>{{order.id}}</b></span>
+                              </td>
+                              <td class="order-item-cnt clr">
+                                <span class="order-name-mobile">{% trans 'Քանակ' %}</span>
+                                <span class="right-orders"> <b>{{ order.orderitem_set.count }}</b></span>
+                              </td>
+                              <td class="order-item-sum nowrap clr">
+                                <span class="order-name-mobile">{% trans "Ընդհանուր" %}</span>
+                                <span class="right-orders">
+                                  <b
+                                    ><span class="wh-point">{{order.all_total|currency:request.session.currency|floatformat:0}}</span>
+                                    &nbsp; <span class="valyuta">{{request.session.currency}}</span></b
+                                  >
+                                </span>
+                              </td>
+                              <td class="order-item-day nowrap clr">
+                                <span class="order-name-mobile">{% trans "Ամսաթիվ" %}</span>
+                                <span class="right-orders"
+                                  ><b>{{ order.created_at|date:"Y-m-d H:i" }}</b></span
+                                >
+                              </td>
+                              <td class="order-item-more nowrap clr">
+                                <a href="{% url 'user_order' pk=order.pk  %}" class="button small dark"
+                                  >{% trans "Մանրամասն" %}</a
+                                >
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                      {% endif %}
+                    </div>
+                    <!-- #tab2 end -->
+
+                    <!-- #tab3 end -->
+                    <div id="tab3" class="tab_content" style="">
+                        <div class="all-head-info">
+                            <div class="user-head-tit">
+                            <h2>
+                            <span>{% trans 'Իմ հարցումները' %}</span></h2>
+                            </div>
+                        </div>
+
+                        {% if not requests_list.count %}
+                            <h4 >{% trans "Հարցումների ցանկը դատարկ է" %}</h4>
+                        {% else %}
+                      <div id="order-table">
+                        <table class="orders-table">
+                          <thead>
+                            <tr class="order-head">
+                              <th class="order-item-nom" width="1%">№</th>
+                              <th class="order-head-code">{% trans 'Պատվերի կոդ' %}</th>
+                              <th class="order-head-cnt nowrap">{% trans 'Քանակ' %}</th>
+                              <th class="order-head-sum">{% trans 'Ընդհանուր' %}</th>
+                              <th class="order-head-day">{% trans 'Ամսաթիվ' %}</th>
+                              <th class="order-head-more">{% trans 'Մանրամասն' %}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for order in requests_list %}
+                            <tr id="" class="order-item">
+                              <td class="order-item-nom clr">
+                                <span class="order-name-mobile">№</span>
+                                <span class="right-orders"><b>{{ forloop.counter }}</b></span>
+                              </td>
+                              <td class="order-item-code clr">
+                                <span class="order-name-mobile"
+                                  >{% trans "Պատվերի կոդ" %}</span
+                                >
+                                <span class="right-orders"><b>{{order.id}}</b></span>
+                              </td>
+                              <td class="order-item-cnt clr">
+                                <span class="order-name-mobile">{% trans 'Քանակ' %}</span>
+                                <span class="right-orders"> <b>{{ order.productrequestitem_set.all.count }}</b></span>
+                              </td>
+                              <td class="order-item-sum nowrap clr">
+                                <span class="order-name-mobile">{% trans "Ընդհանուր" %}</span>
+                                <span class="right-orders">
+                                  <b
+                                    ><span class="wh-point">{{order.all_total|currency:request.session.currency|floatformat:0}}</span>
+                                    &nbsp; <span class="valyuta">{{request.session.currency}}</span></b
+                                  >
+                                </span>
+                              </td>
+                              <td class="order-item-day nowrap clr">
+                                <span class="order-name-mobile">{% trans "Ամսաթիվ" %}</span>
+                                <span class="right-orders"
+                                  ><b>{{ order.created_at|date:"Y-m-d H:i" }}</b></span
+                                >
+                              </td>
+                              <td class="order-item-more nowrap clr">
+                                <a href="{% url 'user_order' pk=order.pk  %}" class="button small dark"
+                                  >{% trans "Մանրամասն" %}</a
+                                >
+                              </td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                      {% endif %}
+                    </div>
+                    <!-- #tab3 end -->
+
+                    <!-- #tab3 -->
+                    <div id="tab4" class="tab_content">
+                      <div class="all-head-info">
+                        <div class="user-head-tit">
+                          <h2>{% trans 'Փոխել գաղտնաբառը' %}</h2>
+                        </div>
+
+                        <!-- error + success end -->
+                        <div class="only_form_sr">
+                          <form action="{% url 'change_password' %}" id="reg-form%"% method="POST">
+                            {% csrf_token %}
+                            <div class="input-fields flex-content-center">
+                              <p class="forgot-info align-items-center">
+                                <img
+                                  src="{% static 'img/icons/info.svg' %}"
+                                  alt="{% trans 'Մոռացե՞լ եք գաղտնաբառը' %}"
+                                />
+                                <span
+                                  >{% blocktrans %}Խնդրում ենք մուտքագրել Ձեր նոր գաղտնաբառը
+                                  կրկնակի, որպեսզի համոզվենք տպագրման
+                                  ճշգրտության մեջ:{% endblocktrans %}</span
+                                >
+                              </p>
+                            </div>
+                            <!--  input fields -->
+                            <div class="input-fields">
+                              <img
+                                src="{% static 'img/icons/eye-sign.svg' %}"
+                                toggle="#password-field"
+                                class="toggle-password"
+                              />
+                              <input
+                                type="password"
+                                class="another-field"
+                                name="oldpassword"
+                                autocomplete="current-password"
+                                autofocus=""
+                                id="id_old_password"
+                                placeholder="{% trans 'Հին գաղտնաբառ' %} *"
+                              />
+                            </div>
+                            <div class="input-fields">
+                              <img
+                                src="{% static 'img/icons/eye-sign.svg' %}"
+                                toggle="#password-field"
+                                class="toggle-password"
+                              />
+                              <input
+                                type="password"
+                                class="another-field"
+                                id="new-password"
+                                name="newpassword"
+                                placeholder="{% trans 'Նոր գաղտնաբառ' %} *"
+                              />
+                            </div>
+                            <div class="input-fields">
+                              <img
+                                src="{% static 'img/icons/eye-sign.svg' %}"
+                                toggle="#password-field"
+                                class="toggle-password"
+                              />
+                              <input
+                                type="password"
+                                class="another-field"
+                                id="confirm-password"
+                                name="confirmpassword"
+                                placeholder="{% trans 'Հաստատել գաղտնաբառը' %} *"
+                              />
+                            </div>
+                            <div class="input-fields">
+                              <div class="change-infos">
+                                <input
+                                  type="submit"
+                                  class="button normal dark"
+                                  name="submit"
+                                  value="{% trans 'Հաստատել' %}"
+                                />
+                              </div>
+                            </div>
+                            <!--  inputfields end -->
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- #tab3 end -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Profile page end-->
+      </section>
+    </main>
+    {% include 'includes/footer.html' %}
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.full.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+
+    <script>
+      // select2
+      $(".js-select2").select2();
+
+      $("#changeInfo").click(function () {
+        $(".accountInfo").slideUp("fast");
+        $(".changeAccount").slideDown("fast");
+      });
+      $(".closeChanges").click(function () {
+        $(".accountInfo").slideDown("fast");
+        $(".changeAccount").slideUp("fast");
+      });
+    </script>
+
+    <script>
+      //Validate change info fields
+      $(function () {
+        $("#change-info-user").validate({
+          rules: {
+            first_name: "required",
+          },
+          messages: {
+            first_name: {
+              required: "{% trans 'Դաշտը պարտադիր է լրացման համար' %}",
+              minlength: 8,
+            },
+          },
+          submitHandler: function (form) {
+            form.submit();
+          },
+        });
+      });
+      //Validate change info fields end
+    </script>
+
+    <script>
+      //Validate change paswword
+      $(function () {
+        $("#reg-form").validate({
+          rules: {
+            oldpassword: {
+              required: true,
+            },
+            newpassword: {
+              required: true,
+              minlength: 8,
+            },
+            confirmpassword: {
+              required: true,
+              equalTo: "#new-password",
+            },
+          },
+
+          messages: {
+            oldpassword: {
+              required: "{% trans 'Դաշտը պարտադիր է լրացման համար' %}",
+            },
+            newpassword: {
+              required: "{% trans 'Դաշտը պարտադիր է լրացման համար' %}",
+              minlength: "{% trans 'Գաղտնաբառը պետք է լինի 8 նիշ կամ ավելի երկար' %}",
+            },
+            confirmpassword: {
+              required: "{% trans 'Դաշտը պարտադիր է լրացման համար' %}",
+              equalTo: "{% trans 'Գաղտնաբառը չի համընկնում' %}",
+            },
+          },
+
+          submitHandler: function (form) {
+            form.submit();
+          },
+        });
+      });
+      //Validate change password
+
+      $('#id_country').on('change', function (e){
+          if (e.target.value === '1') {
+                  document.querySelector('#id_region').parentElement.style.display = 'block'
+              } else {
+                  document.querySelector('#id_region').parentElement.style.display = 'none'
+              }
+      })
+
+    </script>
+  </body>
+</html>

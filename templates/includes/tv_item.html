@@ -1,0 +1,14 @@
+<div class="col col-2">
+    <div class="tv-block">
+        <div class="tv-block-img">
+            <iframe width="560"
+                    height="315"
+                    src="{% if video.video_url %}{{ video.video_url }}{% else %}{{ video.video_file.url }}{% endif %}"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+
+            </iframe>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,253 @@
+{% load static %}{% load i18n %}{% load unique %}{% load currency %}{% currency_context %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset='utf-8'/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>{% trans 'Զամբյուղ' %} | {{ request.get_host|title }}</title>
+    <meta name="Description" content="">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+{% include 'includes/header.html' %}
+<!-- Main content -->
+<main id="content">
+    <section class="main-top">
+
+        <!-- Breadcrumbs -->
+        <div class="bread-bg anot-breadcrumbs bot-prods">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div id="breadcrumbs">
+                            <ul class="breadcrumbs-list align-items-center">
+                                <li class="b-list-item">
+                                    <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                </li>
+                                <span class="bread-arrow">→</span>
+                                <li class="b-list-item">
+                                    <span>{% trans 'Իմ զամբյուղը' %}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Cart-->
+        <div class="catalog-page">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div class="two-version-title">
+                            <h1><span>{% trans 'Իմ զամբյուղը' %}</span></h1>
+                        </div>
+                    </div>
+                </div>
+                {% if not cart.item.count %}
+                    <!-- Cart is empty -->
+                    <div class="in-cart-no-items">
+                        <div class="row">
+                            <div class="col text-center">
+                                <div class="empt-c">
+                                    <h3>{% trans 'Ձեր զամբյուղը դատարկ է' %}</h3>
+                                    <div class="conts-or-check">
+                                        <a href="{% url 'catalog' %}"
+                                           class="button normal dark">← {% trans 'Շարունակել գնումները' %}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="full-cart-items">
+                        <div class="row">
+                            <div class="col">
+                                <div id="order-table">
+                                    <table id="cartTableALL">
+                                        <thead>
+                                        <tr class="order-head">
+                                            <th class="order-item-nom" width="1%">№</th>
+                                            <th class="order-head-img" width="2%">{% trans 'Նկար' %}</th>
+                                            <th class="order-head-name">{% trans 'Անվանում' %}</th>
+                                            <th class="order-head-price" width="3%">{% trans 'Գին' %}</th>
+                                            <th class="order-head-cnt nowrap">{% trans 'Քանակ' %}</th>
+                                            <th class="order-head-sum">{% trans 'Գումար' %}</th>
+                                            <th class="order-head-del" width="1%">{% trans 'Հեռացնել' %}</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in cart_items %}
+                                            <tr id="it-{{ item.id }}" class="order-item ">
+                                                <td class="order-item-nom"><b>{{ forloop.counter }}</b></td>
+                                                <td class="order-item-img" align="center">
+                                                    <img src="{{ item.product.main_photo.url }}">
+                                                </td>
+                                                <td class="order-item-name">
+                                                    <a href="{{ item.product.get_absolute_url }}">{{ item.product.title }}
+                                                        {% if item.features %}
+                                                            {% for it in item.features|return_values %}
+                                                                <div style="margin-top: 2px; font-style: italic; font-weight: normal;">
+                                                                    <span>{{ it.field.title }}</span> - <span>{{ it.value }}</span>
+                                                                </div>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                        </div>
+                                                    </a>
+
+                                                </td>
+                                                <td class="order-item-price nowrap" width="2%">
+                                                    <span class="wh-point">{{ item.item_price|currency:request.session.currency|floatformat:0 }}</span>
+                                                    <span class="valyuta">{{ request.session.currency }}</span>
+                                                </td>
+                                                <td class="order-item-cnt" width="4%">
+                                                    <div class="order-qty-mn">
+                                                        <div class="prod-qty">
+                                                            <div class="number flex-content-center">
+                                                                <img src="{% static 'img/icons/minus.svg' %}"
+                                                                     class="minus" alt="{% trans 'Նվազեցնել քանակը' %}">
+                                                                <input type="text" class="qty-input"
+                                                                       onchange="changeQty(this.value,{{ item.id }})"
+                                                                       value="{{ item.quantity }}" min="1"
+                                                                       max="{{ item.product.stored_quantity }}"
+                                                                       id="qtyItem-{{ item.id }}">
+                                                                <img src="{% static 'img/icons/plus.svg' %}"
+                                                                     class="plus" alt="{% trans 'Ավելացնել քանակը' %}">
+                                                                {% if item.product.stored_quantity %}
+                                                                    <div class="alert-min alert-danger" id="productNotify-{{ item.id }}">
+                                                                        <div class="align-items-center">
+                                                                            <img src=" {% static 'img/icons/alert-warning.svg' %}"
+                                                                                 class="alert-img"
+                                                                                 alt="{% trans 'Ծանուցում' %}">
+                                                                            <span>{% trans 'Պահեստում առկա է' %} <strong>{{ item.product.stored_quantity }}</strong> {% trans 'հատ' %}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                {% endif %}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="order-item-sum nowrap" width="2%">
+                                                    <span id="item-total_{{ item.id }}"
+                                                          class="wh-point">{{ item.item_total_price|currency:request.session.currency|floatformat:0 }}</span>
+                                                    <span class="valyuta">{{ request.session.currency }}</span>
+                                                </td>
+                                                <td class="order-item-del" align="center">
+                                                    <button type="button" id="RemoveIsTable"
+                                                            class="delete-product-item remove_from_cart"
+                                                            onclick="removeFromBasket({{ item.id }})">
+                                                        <img src="{% static 'img/icons/bin.svg' %}"
+                                                             alt="{% trans 'Հեռացնել զամբյուղից' %}">
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="buttons-carts-two">
+                                    <div class="totlacart-amount text-center">
+                                        <p>{% trans 'Գումար' %}: <span id="cart-total-price"
+                                                                       class="wh-point">{{ cart.cart_total|currency:request.session.currency|floatformat:0 }}</span>
+                                            <span class="valyuta">{{ request.session.currency }}</span></p>
+                                    </div>
+                                    <div class="flex-center-between res-no-flex">
+                                        <div class="backcart-butt ord_mobile">
+                                            <a href="{% url 'home' %}" class="button big transarent"
+                                               style="background:#EFEFEF;"><img
+                                                    src="{% static 'img/icons/back-to-shop.svg' %}"
+                                                    alt="{% trans 'Վերադառնալ խանութ' %}">{% trans 'Վերադառնալ խանութ' %}
+                                            </a>
+                                        </div>
+                                        <div class="ordercart-butt">
+                                            <a href="{% url 'checkout' %}"
+                                               class="button big dark">{% trans 'Ձևակերպել պատվերը' %} <img
+                                                    src="{% static 'img/icons/check-order-now.svg' %}"
+                                                    alt="{% trans 'Ձևակերպել պատվերը' %}"></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- if Cart is full end -->
+                {% endif %}
+            </div>
+        </div>
+        <!-- Cart end-->
+
+    </section>
+</main>
+{% include 'includes/footer.html' %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script>
+    async function changeQty(val, item_id) {
+        const notifyItem = document.getElementById(`productNotify-${item_id}`)
+        const maxElement = document.getElementById(`qtyItem-${item_id}`)
+        const maxValue = maxElement.getAttribute('max')
+        console.log(val)
+        if(+val > +maxValue){
+            notifyItem.style.display = 'block'
+            maxElement.setAttribute('disabled', 'true')
+            maxElement.value = maxValue
+            return
+        }else{
+            notifyItem.style.display = 'none'
+            maxElement.removeAttribute('disabled')
+        }
+
+        console.log()
+        if (+val < 1) {
+            document.getElementById(`item-${item_id}`).value = 1
+            val = 1
+        }
+
+        data = JSON.stringify({'id': item_id, "quantity": val})
+
+        const response = await fetch(`${window.location.origin}/change-qty/`, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            body: data
+        })
+        const {cart_total, item_total} = await response.json()
+        document.getElementById(`item-total_${item_id}`).innerText = item_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        document.getElementById('cart-total-price').innerText = cart_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+    async function removeFromBasket(item_id) {
+        data = JSON.stringify({'id': item_id})
+
+        try {
+            const resp = await fetch(`${window.location.origin}/remove-basket/`, {
+                method: 'POST',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                },
+                body: data
+            })
+            const dt = await resp.json()
+
+            dt.items_count === 0 ? window.location.reload() : ''
+            document.getElementById('cart-total-price').innerText = dt.cart_total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            document.getElementById(`it-${item_id}`).remove()
+
+        } catch (e) {
+            throw e
+        }
+
+    }
+</script>
+</body>
+</html>

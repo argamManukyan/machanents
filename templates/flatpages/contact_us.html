@@ -1,0 +1,196 @@
+{% load static %}{% load i18n %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    {% include 'includes/tagmanager.html' %}
+    <meta charset='utf-8'/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <title>{% trans 'Կապ' %} | {{ request.get_host|title }}</title>
+    <meta name="Description" content="">
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+{% include 'includes/header.html' %}
+<!-- Main content -->
+<main id="content">
+    <section class="main-top">
+        <!-- Breadcrumbs -->
+        <div class="bread-bg bot-prods" style="background-image:url(
+                {% if st_content.breadcrumbs_image %}{{ st_content.breadcrumbs_image.url }} {% else %}{% static 'img/bread.jpg' %}{% endif %})">
+            <div class="cnt">
+                <div class="row">
+                    <div class="col">
+                        <div id="breadcrumbs" class="anothers-bread text-center">
+                            <div class="tit-page bread-page">
+                                <h1>{% trans 'Կապ' %}</h1>
+                                {% if st_content.breadcrumbs_text %}<p>{{ st_content.breadcrumbs_text|safe }}</p>{% endif %}
+                            </div>
+                            <ul class="breadcrumbs-list flex-content-center">
+                                <li class="b-list-item">
+                                    <a href="{% url 'home' %}" class="b-list-link">{% trans 'Գլխավոր' %}</a>
+                                </li>
+                                <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon">
+                                <li class="b-list-item">
+                                    <span>{% trans 'Կապ' %}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Breadcrumbs end-->
+
+        <!-- Contact Us -->
+        <div class="bot-prods contact-us-page">
+            <div class="cnt">
+                <div class="row">
+
+                    <div class="col col-3">
+                        <div class="contacts-left">
+                            <h2>{% trans 'Կապ Մեզ Հետ' %}</h2>
+                            <div class="c-one-all">
+                                <ul class="c-one-first">
+                                    {% for i in contactuspage.contactusjoinusdata_set.all|slice:':3' %}
+                                        <li>
+                                            <a href="
+                                                    {% if i.link %}{{ i.link }}{% else %}javascript:void(0);{% endif %}">
+                                                <img src="
+                                                        {% if i.icon %}{{ i.icon.url }}{% else %}{% static 'img/icons/cm-location.svg' %}{% endif %}"
+                                                     class="top-icon"
+                                                     alt="Location">{{ i.text|safe }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                <ul class="c-one-second">
+                                    {% for i in contactuspage.contactusjoinusdata_set.all|slice:'3:' %}
+                                        <li>
+                                            <a href="{% if i.link %}{{ i.link }}{% else %}javascript:void(0);{% endif %}">
+                                                <img src="{% if i.icon %}{{ i.icon.url }}{% else %}{% static 'img/icons/cm-location.svg' %}{% endif %}"
+                                                     class="top-icon"
+                                                     alt="Location">{{ i.text|safe }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+
+
+                                <ul class="cont-soc-m soc-icons flex-content-center">
+                                    {% for i in contactuspage.followuscontactus_set.all %}
+                                    <li>
+                                        <a target="_blank" href="{% if i.link %}{{ i.link }}{% else %}javascript:void(0){% endif %}">
+                                            <img src="{% if i.icon %}{{ i.icon.url }}{% else %}{% static 'img/icons/f-linkedin.svg' %}{% endif %}" alt="{{ i.text }}">
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-93">
+                        <div class="contacts-right">
+                            <h2 class="text-center">{% trans 'Գրեք Ձեր Հարցը' %}</h2>
+                            <!-- error + success -->
+                            {% if messages %}
+                                {% for message in messages %}
+                                    {% if message.tags == 'success' %}
+                                        <div class="alert alert-success">
+                                            {{ message|safe }}
+                                        </div>
+                                    {% else %}
+                                        <div class="alert alert-danger">
+                                            {{ message|safe }}
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            <!-- error + success end -->
+                            <form action="" id="contact-form" method="post">
+                                {% csrf_token %}
+                                <div class="input-fields">
+                                    <label for="name">{% trans 'Անուն Ազգանուն' %} *</label>
+                                    <input type="text" id="first_name" name="name">
+                                </div>
+                                <div class="input-fields">
+                                    <label for="phone">email *</label>
+                                    <input type="email" id="email" name="email">
+                                </div>
+                                <div class="input-fields">
+                                    <label for="phone">{% trans 'Հեռախոսահամար' %}</label>
+                                    <input type="number" name="phone" value="" id="recphoneNumber">
+                                </div>
+                                <div class="input-fields">
+                                    <label for="message">{% trans 'Հաղորդագրություն' %} *</label>
+                                    <textarea name="message" id="message-type" rows="2"></textarea>
+                                </div>
+                                <div class="input-fields">
+                                    <div class="butt-sign">
+                                        <input type="submit" class="button big dark" name="submit"
+                                               value="{% trans 'Ուղարկել' %}">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Map -->
+        <div class="bot-prods c-map">
+            <div style="position:relative;overflow:hidden;">
+             {{ contactuspage.iframe|safe }}
+            </div>
+
+        </div>
+        <!-- Map end -->
+
+        <!-- Contact Us end-->
+
+    </section>
+</main>
+{% include 'includes/footer.html' %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+<script>
+
+    //input name
+    $("#cName").attr("value", $("#ContactName").text());
+
+    //Validate
+    $(function () {
+        $('#contact-form').validate({
+            rules: {
+                name: "required",
+                email: {
+                    required: true,
+                    email: true
+                },
+                message: {
+                    required: true
+                },
+            },
+            messages: {
+                name: "{% trans 'Դաշտը պարտադիր է լրացման համար' %}",
+                email: {
+                    required: "{% trans 'Դաշտը պարտադիր է լրացման համար' %}",
+                    email: "{% trans 'Մուտքագրեք Ձեր Էլ. Փոստի հասցեն' %}"
+                },
+                message: "{% trans 'Դաշտը պարտադիր է լրացման համար' %}"
+            },
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,1187 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-12-03 13:46+0300\n"
+"PO-Revision-Date: 2022-01-04 17:43+0258\n"
+"Last-Translator: David Poghosyan  <peri@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Translated-Using: django-rosetta 0.9.7\n"
+
+#: accounts/utils.py:51
+msgid "Активация профиля "
+msgstr ""
+
+#: accounts/utils.py:83
+msgid "Password reset link. "
+msgstr "Восстановление пароля"
+
+#: accounts/views.py:28
+msgid "Նշված էլ. փոստի հասցե ունեցող օգտատեր արդեն գոյություն ունի։"
+msgstr "Пользователь с таким Эл.адрес уже существует!"
+
+#: accounts/views.py:38
+msgid ""
+"Շնորհակալություն գրանցման համար:<br/> Խնդրում ենք հաստատեք Ձեր էլ. փոստի "
+"հասցեն գրանցումն ավարտելու համար:"
+msgstr ""
+"Спасибо за регистрацию.<br/>\n"
+"Пожалуйста, подтвердите свой адрес электронной почты, чтобы завершить регистрацию.!"
+
+#: accounts/views.py:44 accounts/views.py:158 accounts/views.py:234
+msgid "Տեղի է ունեցել սխալ։ Խնդրում ենք կրկին փորձել։"
+msgstr "Что то пошло не так. Попробуйте еще раз!"
+
+#: accounts/views.py:68
+msgid "Հղումն արդեն օգտագործվել է:"
+msgstr "Ссылка уже использована!"
+
+#: accounts/views.py:76
+msgid "Տեղի է ունեցել սխալ։ Խնդրում ենք նորից գրանցվել։"
+msgstr "Что то пошло не так. Попробуйте заново зарегистрироваться!"
+
+#: accounts/views.py:80
+msgid "Օգտատերը չի գտնվել։"
+msgstr "Пользовтель не найден!"
+
+#: accounts/views.py:82
+msgid "Շնորհակալություն, Ձեր էջը հաջղությամբ ակտիվացված է:"
+msgstr "Спасибо, Ваш профиль успешно активирован."
+
+#: accounts/views.py:102 accounts/views.py:131
+msgid "Նշված էլ. փոստի հասցե ունեցող օգտատեր չի գտնվել։"
+msgstr "Пользователь с таким Эл. адрес не найдено!"
+
+#: accounts/views.py:106
+msgid "Հաստատեք Ձեր էլ. փոստի հասցեն, որպեսզի կարողանաք շարունակել։"
+msgstr "Подтвердите ваш адрес электронной почты, чтобы продолжить."
+
+#: accounts/views.py:114
+msgid "Սխալ մուտքանուն կամ գաղտնաբառ։"
+msgstr "Неверный логин или пароль."
+
+#: accounts/views.py:136
+msgid "Գաղտնաբառի փոփոխման նամակը ուղարկվել է "
+msgstr "Письмо для изменения пароля отправлено на  "
+
+#: accounts/views.py:137
+msgid " էլ. փոստի հասցեին։"
+msgstr " электронную почту."
+
+#: accounts/views.py:169 accounts/views.py:247
+msgid "Գաղտնաբառը չի համընկնում։"
+msgstr "Пароли не совпадают."
+
+#: accounts/views.py:177
+msgid "Ձեր գաղտնաբառը հաջողությամբ վերականգնվել է։"
+msgstr "Ваш пароль успешно восстановлен."
+
+#: accounts/views.py:230
+msgid "Ձեր տվյալները հաջողությամբ թարմացվել են։"
+msgstr "Ваши данные успешно обновлены!"
+
+#: accounts/views.py:255
+msgid "Ձեր գաղտնաբառը հաջողությամբ թարմացվել է։"
+msgstr "Ваш пароль успешно обновлен!"
+
+#: accounts/views.py:259
+msgid "Ձեր հին գաղտնաբառը սխալ է մուտքագրված։ Խնդրում նեք մուտքագրել նորից։"
+msgstr "Ваш старый пароль введен неправильно. Пожалуйста, введите его снова."
+
+#: core/settings/settings.py:134
+msgid "Armenian"
+msgstr ""
+
+#: core/settings/settings.py:135
+msgid "Russian"
+msgstr ""
+
+#: core/settings/settings.py:136
+msgid "English"
+msgstr ""
+
+#: flatpages/views.py:41
+msgid ""
+"Ձեր Հաղորդագրությունը հաջողությամբ ուղարկված է:<br>Մեր մենեջերը շուտով կապ "
+"կհաստատի Ձեզ հետ:"
+msgstr ""
+"Ваше сообщение было успешно отправлено.<br>Наш менеджер свяжется с вами в "
+"ближайшее время."
+
+#: flatpages/views.py:44
+msgid "Տեղի է ունեցել սխալ:<br>Խնդրում ենք փորձել մի փոքր ուշ:"
+msgstr "Что то пошло не так, попробуйте позже!"
+
+#: flatpages/views.py:145
+msgid ""
+"Ձեր հայտը հաջողությամբ ուղարկված է:<br />Մեր մենեջերը շուտով կապ կհաստատի "
+"Ձեզ հետ:"
+msgstr ""
+"Ваша заявка успешно отправлена.<br /> Наш менеджер свяжется с вами в "
+"ближайшее время."
+
+#: flatpages/views.py:149
+msgid "Տեղի է ունեցել սխալ:<br />Խնդրում ենք փորձել մի փոքր ուշ:"
+msgstr "Что то пошло не так, попробуйте позже!"
+
+#: order/views.py:94
+msgid "Պատվերը հաջողությամբ ձևակերպվել է։"
+msgstr "Заказ успешно оформлен."
+
+#: shop/models.py:26
+msgid "Գլխավոր սլայդեր"
+msgstr ""
+
+#: shop/models.py:56
+msgid "Բաժին"
+msgstr "Категория"
+
+#: shop/models.py:57 templates/shop/sale.html:70 templates/shop/sale.html:72
+#: templates/shop/sale.html:76 templates/shop/search.html:66
+#: templates/shop/search.html:68 templates/shop/search.html:72
+#: templates/shop/shop.html:61 templates/shop/shop.html:62
+#: templates/shop/shop.html:63
+msgid "Բաժիններ"
+msgstr "Категории"
+
+#: shop/models.py:96
+msgid "Ֆիլտրացման դաշտ"
+msgstr ""
+
+#: shop/models.py:97
+msgid "Ֆիլըտրացման դաշտեր"
+msgstr ""
+
+#: shop/models.py:109
+msgid "Ֆիլտրվող արժեքներ"
+msgstr ""
+
+#: shop/models.py:110
+msgid "Ֆիլտրվեղ արժեքներ"
+msgstr ""
+
+#: shop/models.py:122 templates/includes/filter.html:44
+#: templates/shop/product_page.html:185
+msgid "Գույն"
+msgstr "Цвет"
+
+#: shop/models.py:123
+msgid "Գույներ"
+msgstr ""
+
+#: shop/models.py:185
+msgid "Ապրանք"
+msgstr ""
+
+#: shop/models.py:186
+msgid "Ապրանքներ"
+msgstr ""
+
+#: shop/models.py:201
+msgid "Ապրանքի նկար"
+msgstr ""
+
+#: shop/models.py:202
+msgid "Ապրանքի նկարներ"
+msgstr ""
+
+#: shop/models.py:218
+msgid "Ապրանքի չափորոշիչ"
+msgstr ""
+
+#: shop/models.py:219
+msgid "Ապրանքի չափորոշիչներ"
+msgstr ""
+
+#: templates/accounts/forgot_password.html:8
+#: templates/accounts/forgot_password.html:35
+msgid "Գաղտնաբառի վերականգնում"
+msgstr "Сброс пароля"
+
+#: templates/accounts/forgot_password.html:27
+#: templates/accounts/new_password.html:28
+#: templates/accounts/profile_page.html:27 templates/accounts/sign_in.html:28
+#: templates/accounts/sign_up.html:28 templates/cart/cart.html:28
+#: templates/flatpages/about_us.html:34 templates/flatpages/blog.html:32
+#: templates/flatpages/blog_full.html:27
+#: templates/flatpages/contact_us.html:35 templates/flatpages/faq.html:29
+#: templates/flatpages/gallery.html:37
+#: templates/flatpages/gallery_details.html:37
+#: templates/flatpages/services-full.html:28
+#: templates/flatpages/services.html:37 templates/includes/header.html:211
+#: templates/order/checkout.html:29 templates/order/order_more.html:28
+#: templates/shop/catalog.html:35 templates/shop/delivery_and_payment.html:27
+#: templates/shop/privacy_policy.html:26 templates/shop/product_page.html:31
+#: templates/shop/sale.html:36 templates/shop/search.html:34
+#: templates/shop/shop.html:33 templates/shop/terms_and_conditions.html:26
+#: templates/wish/wishlist.html:34
+msgid "Գլխավոր"
+msgstr "Главная"
+
+#: templates/accounts/forgot_password.html:32
+#: templates/accounts/new_password.html:33
+#: templates/accounts/profile_page.html:32 templates/accounts/sign_in.html:33
+#: templates/accounts/sign_up.html:33 templates/flatpages/services.html:42
+#: templates/includes/header.html:99 templates/includes/header.html:208
+#: templates/includes/header.html:227 templates/order/checkout.html:32
+#: templates/order/order_more.html:30 templates/shop/catalog.html:30
+#: templates/shop/catalog.html:38 templates/shop/catalog.html:40
+#: templates/shop/product_page.html:34 templates/shop/product_page.html:36
+#: templates/shop/product_page.html:39 templates/shop/product_page.html:45
+#: templates/shop/sale.html:42 templates/shop/shop.html:35
+#: templates/shop/shop.html:37 templates/shop/shop.html:39
+#: templates/wish/wishlist.html:38
+msgid "Տեսականի"
+msgstr "Каталог"
+
+#: templates/accounts/forgot_password.html:56
+#: templates/accounts/forgot_password.html:80
+#: templates/accounts/profile_page.html:318
+#: templates/accounts/sign_in.html:111
+msgid "Մոռացե՞լ եք գաղտնաբառը"
+msgstr "Забыли пароль?"
+
+#: templates/accounts/forgot_password.html:83
+msgid ""
+"Խնդրում ենք ստորև մուտքագրել Ձեր էլ.փոստի\n"
+"                                հասցեն, և մենք կուղարկենք նոր գազտնաբառ\n"
+"                                ստեղծելու կարգավորումները:"
+msgstr ""
+"Пожалуйста, введите свой адрес электронной почты ниже, и мы вышлем вам "
+"настройки для создания нового пароля."
+
+#: templates/accounts/forgot_password.html:104
+#: templates/flatpages/contact_us.html:159
+#: templates/flatpages/services-full.html:125
+msgid "Ուղարկել"
+msgstr "Отправить"
+
+#: templates/accounts/forgot_password.html:141
+#: templates/accounts/new_password.html:160
+#: templates/accounts/new_password.html:164
+#: templates/accounts/profile_page.html:430
+#: templates/accounts/profile_page.html:462
+#: templates/accounts/profile_page.html:465
+#: templates/accounts/profile_page.html:469
+#: templates/accounts/sign_in.html:166 templates/accounts/sign_in.html:170
+#: templates/accounts/sign_up.html:209 templates/accounts/sign_up.html:211
+#: templates/accounts/sign_up.html:215 templates/accounts/sign_up.html:219
+#: templates/flatpages/contact_us.html:202
+#: templates/flatpages/contact_us.html:204
+#: templates/flatpages/contact_us.html:207
+#: templates/flatpages/services-full.html:153
+#: templates/flatpages/services-full.html:154
+msgid "Դաշտը պարտադիր է լրացման համար"
+msgstr "Поле обязательно для заполнения"
+
+#: templates/accounts/forgot_password.html:142
+#: templates/accounts/sign_in.html:167 templates/accounts/sign_up.html:212
+#: templates/flatpages/contact_us.html:205
+msgid "Մուտքագրեք Ձեր Էլ. Փոստի հասցեն"
+msgstr "Введите свой Эл. адрес"
+
+#: templates/accounts/new_password.html:8
+#: templates/accounts/new_password.html:36
+#: templates/accounts/new_password.html:57
+msgid "Նոր Գաղտնաբառ"
+msgstr "Новый Пароль"
+
+#: templates/accounts/new_password.html:81
+#, fuzzy
+#| msgid ""
+#| "Խնդրում ենք մուտքագրել Ձեր նոր գաղտնաբառը\n"
+#| "                                կրկնակի, որպեսզի համոզվենք տպագրման ճշգրտության մեջ:\" "
+msgid ""
+"Խնդրում ենք մուտքագրել Ձեր նոր գաղտնաբառը\n"
+"                                կրկնակի, որպեսզի համոզվենք տպագրման ճշգրտության մեջ:"
+msgstr ""
+"Пожалуйста, введите ваш новый пароль дважды, чтобы убедиться в правильности "
+"печати."
+
+#: templates/accounts/new_password.html:99 templates/accounts/sign_in.html:94
+#: templates/accounts/sign_up.html:107
+msgid "Գաղտնաբառ"
+msgstr "Пароль"
+
+#: templates/accounts/new_password.html:114
+#: templates/accounts/profile_page.html:369
+#: templates/accounts/sign_up.html:122
+msgid "Հաստատել գաղտնաբառը"
+msgstr "Повторите пароль"
+
+#: templates/accounts/new_password.html:124
+#: templates/accounts/profile_page.html:222
+#: templates/accounts/profile_page.html:378
+msgid "Հաստատել"
+msgstr "Подтвердить"
+
+#: templates/accounts/new_password.html:161
+#: templates/accounts/profile_page.html:466
+#: templates/accounts/sign_up.html:216
+msgid "Գաղտնաբառը պետք է լինի 8 նիշ կամ ավելի երկար"
+msgstr "Пароль должен быть длиной не менее 8 символов"
+
+#: templates/accounts/new_password.html:165
+#: templates/accounts/profile_page.html:470
+#: templates/accounts/sign_up.html:220
+msgid "Գաղտնաբառը չի համընկնում"
+msgstr "Пароли не совпадают"
+
+#: templates/accounts/profile_page.html:35
+#: templates/accounts/profile_page.html:61 templates/includes/footer.html:23
+msgid "Իմ հաշիվը"
+msgstr "Мой профиль"
+
+#: templates/accounts/profile_page.html:51
+msgid "Բարի Գալուստ"
+msgstr "Добро пожаловать"
+
+#: templates/accounts/profile_page.html:66
+#: templates/accounts/profile_page.html:68
+#: templates/accounts/profile_page.html:87
+msgid "Անձնական տվյալներ"
+msgstr "Личная информация"
+
+#: templates/accounts/profile_page.html:71
+#: templates/accounts/profile_page.html:72
+#: templates/accounts/profile_page.html:238
+msgid "Իմ պատվերները"
+msgstr "Мои заказы"
+
+#: templates/accounts/profile_page.html:75
+#: templates/accounts/profile_page.html:76
+#: templates/accounts/profile_page.html:307
+msgid "Փոխել գաղտնաբառը"
+msgstr "Изменить пароль"
+
+#: templates/accounts/profile_page.html:98
+#: templates/accounts/profile_page.html:160 templates/accounts/sign_up.html:82
+#: templates/flatpages/contact_us.html:142
+#: templates/flatpages/services-full.html:105
+#: templates/order/checkout.html:188
+msgid "Անուն Ազգանուն"
+msgstr "Имя и Фамилия"
+
+#: templates/accounts/profile_page.html:107
+#: templates/accounts/profile_page.html:213 templates/email/new_order.html:29
+#: templates/email/new_order.html:159 templates/email/thanks.html:29
+#: templates/email/thanks.html:159 templates/flatpages/contact_us.html:150
+#: templates/flatpages/services-full.html:116
+#: templates/includes/footer.html:15 templates/order/checkout.html:199
+#: templates/order/order_more.html:165
+msgid "Հեռախոսահամար"
+msgstr "Номер телефона"
+
+#: templates/accounts/profile_page.html:112
+#: templates/accounts/profile_page.html:201 templates/order/checkout.html:238
+msgid "Հասցե"
+msgstr "Адрес"
+
+#: templates/accounts/profile_page.html:113
+msgid "Նշված չէ"
+msgstr "Не указано"
+
+#: templates/accounts/profile_page.html:117
+msgid "Վերջին մուտք"
+msgstr "Последний визит"
+
+#: templates/accounts/profile_page.html:121
+msgid "Գրանցման ամսաթիվ"
+msgstr "Дата регистрации"
+
+#: templates/accounts/profile_page.html:133
+#: templates/accounts/profile_page.html:134
+#: templates/accounts/profile_page.html:141
+msgid "Փոփոխել տվյալները"
+msgstr "Изменить Информацию"
+
+#: templates/accounts/profile_page.html:143
+#: templates/accounts/profile_page.html:146 templates/includes/header.html:126
+msgid "Փակել"
+msgstr "Закрыть"
+
+#: templates/accounts/profile_page.html:174 templates/order/checkout.html:213
+msgid "Մարզ"
+msgstr "Область"
+
+#: templates/accounts/profile_page.html:186 templates/order/checkout.html:223
+#: templates/order/checkout.html:227
+msgid "Բնակավայր"
+msgstr "Район"
+
+#: templates/accounts/profile_page.html:243
+msgid "Պատվերների ցանկը դատարկ է"
+msgstr "Список заказов пуст"
+
+#: templates/accounts/profile_page.html:250
+#: templates/accounts/profile_page.html:266 templates/email/new_order.html:67
+#: templates/email/thanks.html:67
+msgid "Պատվերի կոդ"
+msgstr "Код заказа"
+
+#: templates/accounts/profile_page.html:251
+#: templates/accounts/profile_page.html:271 templates/cart/cart.html:78
+#: templates/email/new_order.html:90 templates/email/thanks.html:90
+#: templates/order/order_more.html:80 templates/shop/product_page.html:278
+msgid "Քանակ"
+msgstr "Кол-во"
+
+#: templates/accounts/profile_page.html:252
+#: templates/accounts/profile_page.html:275
+#: templates/order/order_more.html:138
+msgid "Ընդհանուր"
+msgstr "Итого"
+
+#: templates/accounts/profile_page.html:253
+#: templates/accounts/profile_page.html:284
+msgid "Ամսաթիվ"
+msgstr "Дата"
+
+#: templates/accounts/profile_page.html:254
+#: templates/accounts/profile_page.html:291
+#: templates/flatpages/services.html:75 templates/includes/blog.html:24
+msgid "Մանրամասն"
+msgstr "Подробнее"
+
+#: templates/accounts/profile_page.html:321
+msgid ""
+"Խնդրում ենք մուտքագրել Ձեր նոր գաղտնաբառը\n"
+"                                  կրկնակի, որպեսզի համոզվենք տպագրման\n"
+"                                  ճշգրտության մեջ:"
+msgstr ""
+"Пожалуйста, введите ваш новый пароль дважды, чтобы убедиться в правильности "
+"печати."
+
+#: templates/accounts/profile_page.html:341
+msgid "Հին գաղտնաբառ"
+msgstr "Старый пароль"
+
+#: templates/accounts/profile_page.html:355
+msgid "Նոր գաղտնաբառ"
+msgstr "Новый пароль"
+
+#: templates/accounts/sign_in.html:8 templates/accounts/sign_in.html:36
+#: templates/accounts/sign_in.html:56 templates/accounts/sign_in.html:119
+#: templates/accounts/sign_up.html:56 templates/includes/footer.html:27
+#: templates/includes/header.html:170
+msgid "Մուտք"
+msgstr "Вход"
+
+#: templates/accounts/sign_in.html:59 templates/accounts/sign_up.html:8
+#: templates/accounts/sign_up.html:36 templates/accounts/sign_up.html:60
+#: templates/includes/footer.html:28
+msgid "Գրանցում"
+msgstr "Регистрация"
+
+#: templates/accounts/sign_in.html:108
+msgid "Հիշե՞լ ինձ"
+msgstr "Запомнить меня?"
+
+#: templates/accounts/sign_in.html:124
+msgid "Կամ Գրանցվել"
+msgstr "Или войти"
+
+#: templates/accounts/sign_in.html:128
+msgid "Գրանցվել հիմա"
+msgstr "Зарегистрируйтесь сейчас"
+
+#: templates/accounts/sign_up.html:144
+msgid "Ես համաձայն եմ Peri Flowers-ի Գաղտնիության Քաղաքականության հետ:"
+msgstr ""
+"Подтверждаю, что я ознакомлен с условиями Политики обработки персональных "
+"данных и даю согласие наобработку персональных данных"
+
+#: templates/accounts/sign_up.html:155
+msgid "Գրանցվել"
+msgstr "Регистрация"
+
+#: templates/accounts/sign_up.html:162
+msgid "Եթե արդեն ունեք հաշիվ, սեղմեք Մուտք գործել"
+msgstr "Вы уже зарегистрированы? Войти"
+
+#: templates/accounts/sign_up.html:167
+msgid "Մուտք գործել"
+msgstr "Войти"
+
+#: templates/cart/cart.html:8 templates/includes/footer.html:33
+#: templates/includes/header.html:190
+msgid "Զամբյուղ"
+msgstr "Корзина"
+
+#: templates/cart/cart.html:32 templates/cart/cart.html:48
+msgid "Իմ զամբյուղը"
+msgstr "Моя Корзина"
+
+#: templates/cart/cart.html:58
+msgid "Ձեր զամբյուղը դատարկ է"
+msgstr "Ваша Корзина Пуста"
+
+#: templates/cart/cart.html:60 templates/wish/wishlist.html:61
+msgid "Շարունակել գնումները"
+msgstr "Продолжить покупки"
+
+#: templates/cart/cart.html:75 templates/email/new_order.html:87
+#: templates/email/thanks.html:87 templates/order/order_more.html:77
+msgid "Նկար"
+msgstr "Фото"
+
+#: templates/cart/cart.html:76 templates/email/new_order.html:88
+#: templates/email/thanks.html:88 templates/order/order_more.html:78
+msgid "Անվանում"
+msgstr "Наименование"
+
+#: templates/cart/cart.html:77 templates/email/new_order.html:89
+#: templates/email/thanks.html:89 templates/includes/filter.html:25
+#: templates/order/order_more.html:79
+msgid "Գին"
+msgstr "Цена"
+
+#: templates/cart/cart.html:79 templates/cart/cart.html:130
+#: templates/email/new_order.html:91 templates/email/thanks.html:91
+#: templates/order/order_more.html:81 templates/order/order_more.html:124
+#: templates/order/order_more.html:128
+msgid "Գումար"
+msgstr "Сумма"
+
+#: templates/cart/cart.html:80
+msgid "Հեռացնել"
+msgstr "Удалить"
+
+#: templates/cart/cart.html:106
+msgid "Նվազեցնել քանակը"
+msgstr "Уменьшить сумму"
+
+#: templates/cart/cart.html:108
+msgid "Ավելացնել քանակը"
+msgstr "Увеличить сумму"
+
+#: templates/cart/cart.html:119
+msgid "Հեռացնել զամբյուղից"
+msgstr "Удалить из корзины"
+
+#: templates/cart/cart.html:134
+msgid "Վերադառնալ խանութ"
+msgstr "Вернуться в Магазин"
+
+#: templates/cart/cart.html:137 templates/order/checkout.html:302
+msgid "Ձևակերպել պատվերը"
+msgstr "Оформить заказ"
+
+#: templates/email/activation.html:4
+msgid "Ողջույն"
+msgstr "Добро Пожаловать"
+
+#: templates/email/activation.html:5
+msgid "Շնորհակալություն գրանցման համար:"
+msgstr "Спасибо за регистрацию."
+
+#: templates/email/activation.html:6
+msgid "Խնդրում ենք սեղմել հղման վրա, որպեսզի ակտիվանա Ձեր էջը:"
+msgstr "Пожалуйста, нажмите на ссылку, чтобы активировать ваш профиль:"
+
+#: templates/email/activation.html:7
+msgid "Հղումը ակտիվ է 24 ժամվա ընթացքում:"
+msgstr " Ссылка действительна в течение 24 часов."
+
+#: templates/email/activation.html:9
+msgid "Ակտիվացնել"
+msgstr "Активировать"
+
+#: templates/email/activation.html:11
+msgid "Շնորհակալություն մեզ ընտրելու համար:"
+msgstr "Спасибо, что выбрали нас!"
+
+#: templates/email/activation.html:12
+msgid "Սիրով՝ Peri Flowers"
+msgstr "Команда machanents.com"
+
+#: templates/email/new_order.html:22 templates/email/thanks.html:22
+msgid "Էլ․ Փոստ"
+msgstr "E-mail"
+
+#: templates/email/new_order.html:47
+msgid "Դուք ստացել եք պատվեր"
+msgstr "Вы получили заказ от"
+
+#: templates/email/new_order.html:47
+msgid "-ի կողմից"
+msgstr " "
+
+#: templates/email/new_order.html:78 templates/email/thanks.html:78
+#: templates/order/checkout.html:183
+msgid "Պատվերի մանրամասներ"
+msgstr "Детали заказа"
+
+#: templates/email/new_order.html:92 templates/email/thanks.html:92
+#: templates/shop/product_page.html:194
+msgid "Ապրանքի կոդ"
+msgstr "Артикул"
+
+#: templates/email/new_order.html:127 templates/email/thanks.html:127
+msgid "Առաքման վճար"
+msgstr "Стоимость доставки"
+
+#: templates/email/new_order.html:131 templates/email/thanks.html:131
+msgid "Ընդհանուր գումար"
+msgstr "Итого"
+
+#: templates/email/new_order.html:150 templates/email/thanks.html:150
+#: templates/includes/footer.html:59 templates/includes/footer.html:60
+#: templates/includes/footer.html:61 templates/order/checkout.html:88
+#: templates/order/checkout.html:135 templates/order/checkout.html:138
+#: templates/order/checkout.html:140 templates/order/order_more.html:161
+msgid "Վճարման եղանակ"
+msgstr "Способ оплаты"
+
+#: templates/email/new_order.html:155 templates/email/thanks.html:155
+#: templates/order/checkout.html:63 templates/order/checkout.html:84
+#: templates/order/order_more.html:156
+msgid "Առաքման եղանակ"
+msgstr "Способ доставки"
+
+#: templates/email/new_order.html:164 templates/email/thanks.html:164
+#: templates/order/checkout.html:205 templates/order/order_more.html:169
+msgid "Ստացողի հեռախոսահամար"
+msgstr "Номер телефона получателя"
+
+#: templates/email/new_order.html:177 templates/email/thanks.html:177
+#: templates/order/checkout.html:246 templates/order/order_more.html:180
+msgid "Առաքման օր"
+msgstr "Дата доставки"
+
+#: templates/email/new_order.html:177 templates/email/thanks.html:177
+#: templates/order/checkout.html:248 templates/order/order_more.html:186
+msgid "Ստացման օր"
+msgstr "День получения"
+
+#: templates/email/new_order.html:185 templates/email/thanks.html:185
+#: templates/order/checkout.html:254 templates/order/order_more.html:181
+msgid "Առաքման ժամ"
+msgstr "Время доставки"
+
+#: templates/email/new_order.html:185 templates/email/thanks.html:185
+#: templates/order/checkout.html:256 templates/order/order_more.html:187
+msgid "Ստացման ժամ"
+msgstr "Время получения"
+
+#: templates/email/new_order.html:192 templates/email/thanks.html:192
+#: templates/order/order_more.html:173
+msgid "Առաքման հասցե"
+msgstr "Адрес доставки"
+
+#: templates/email/new_order.html:201 templates/email/thanks.html:201
+#: templates/order/checkout.html:267 templates/order/order_more.html:197
+msgid "Նշումներ"
+msgstr "Примечание к заказу"
+
+#: templates/email/password-reset.html:3
+msgid ""
+"Դուք ստացել եք այս նամակը, քանի որ Ձեր (կամ մեկ ուրիշի) կողմից կատարվել է "
+"գաղտնաբառի վերականգնման հարցում՝ machanents.com կայքում"
+msgstr ""
+"Вы получили это письмо, потому что Вы (или кто-то другой) запросили "
+"восстановление пароля от учетной записи на сайте: machanents.com"
+
+#: templates/email/password-reset.html:4
+msgid "Խնդրում ենք`անցնել այս հղումով և մուտքագրել նոր գաղտնաբառ:"
+msgstr "Пожалуйста, перейдите на эту страницу и введите новый пароль."
+
+#: templates/email/password-reset.html:6
+msgid "Վերականգնել գաղտնաբառը"
+msgstr "Сбросить пароль"
+
+#: templates/email/password-reset.html:8
+msgid ""
+"Եթե դուք չեք կատարել գաղտնաբառի վերականգման հարցում, ապա խնդրում ենք անտեսել"
+" այս նամակը:"
+msgstr ""
+"Если вы не просили нас восстановить Ваш пароль, пожалуйста, проигнорируйте "
+"это письмо."
+
+#: templates/email/thanks.html:47
+msgid "Շնորհակալություն վստահության համար"
+msgstr "Спасибо за доверие"
+
+#: templates/flatpages/404.html:31
+#| msgid "Օգտատերը չի գտնվել։"
+msgid "Էջը չի գտնվել"
+msgstr "Страница не найдено!"
+
+#: templates/flatpages/404.html:32
+msgid ""
+"Ստուգեք URL-ի ճշգրտությունը:<br>Եթե վստահ եք ձեր գործողություններում, կապվեք"
+" մեզ հետ."
+msgstr ""
+"Проверьте правильность URL: <br> Если вы уверены в своих действиях, "
+"свяжитесь с нами."
+
+#: templates/flatpages/404.html:33
+#| msgid "Գլխավոր"
+msgid "Դեպի Գլխավոր էջ"
+msgstr "Главная Страница"
+
+#: templates/flatpages/about_us.html:29 templates/includes/header.html:297
+msgid "Մեր մասին"
+msgstr "О нас"
+
+#: templates/flatpages/about_us.html:38
+msgid "Մեր մասին "
+msgstr "О нас"
+
+#: templates/flatpages/about_us.html:59 templates/flatpages/contact_us.html:62
+#: templates/includes/header.html:15
+msgid "Հայաստան, 0033, Երևան Հրաչյա Քոչար 1"
+msgstr "Армения, 0033, Ереван Грачья Кочари ул., 1 дом"
+
+#: templates/flatpages/about_us.html:87 templates/shop/index.html:154
+msgid "Առաքումով ծաղիկներ"
+msgstr "Доставка цветов"
+
+#: templates/flatpages/about_us.html:134
+msgid "Կարծիքներ"
+msgstr "Комментарии"
+
+#: templates/flatpages/about_us.html:184 templates/flatpages/blog.html:36
+#: templates/flatpages/blog_full.html:35 templates/includes/header.html:215
+#: templates/includes/header.html:300 templates/shop/index.html:280
+msgid "Բլոգ"
+msgstr "Блог"
+
+#: templates/flatpages/about_us.html:193 templates/shop/index.html:138
+#: templates/shop/index.html:198 templates/shop/index.html:264
+#: templates/shop/index.html:290
+msgid "Տեսնել Ավելին"
+msgstr "Показать Больше"
+
+#: templates/flatpages/blog.html:27
+msgid "Փաստեր և խորհուրդներ ծաղիկների մասին"
+msgstr "Факты и советы о цветах"
+
+#: templates/flatpages/contact_us.html:30
+#: templates/flatpages/contact_us.html:39 templates/includes/footer.html:9
+#: templates/includes/header.html:216 templates/includes/header.html:301
+msgid "Կապ"
+msgstr "Контакты"
+
+#: templates/flatpages/contact_us.html:56
+msgid "Կապ Մեզ Հետ"
+msgstr "Связаться с нами"
+
+#: templates/flatpages/contact_us.html:68 templates/order/order_more.html:131
+#: templates/order/order_more.html:135
+msgid "Առաքում"
+msgstr "Доставка"
+
+#: templates/flatpages/contact_us.html:101
+msgid "Հետևեք մեզ"
+msgstr "Подписывайтесь на нас!"
+
+#: templates/flatpages/contact_us.html:122
+msgid "Գրեք Ձեր Հարցը"
+msgstr "Напишите Свой Вопрос"
+
+#: templates/flatpages/contact_us.html:154
+msgid "Հաղորդագրություն"
+msgstr "Сообщение"
+
+#: templates/flatpages/faq.html:33 templates/flatpages/faq.html:49
+#: templates/includes/footer.html:44
+msgid "Հաճախակի Տրվող Հարցեր"
+msgstr "Часто Задаваемые Вопросы"
+
+#: templates/flatpages/gallery.html:32 templates/flatpages/gallery.html:39
+#: templates/flatpages/gallery.html:41
+#: templates/flatpages/gallery_details.html:39
+#: templates/flatpages/gallery_details.html:41
+#: templates/flatpages/gallery_details.html:43
+#: templates/includes/header.html:214 templates/includes/header.html:299
+msgid "Տեսադարան"
+msgstr "Галерея"
+
+#: templates/flatpages/gallery.html:62
+#: templates/flatpages/gallery_details.html:66
+msgid "Բոլորը"
+msgstr "Все"
+
+#: templates/flatpages/gallery.html:91
+#: templates/flatpages/gallery_details.html:94
+msgid "Տեսադարանում նկարներ չկան"
+msgstr "В галерее нет фото"
+
+#: templates/flatpages/services-full.html:33
+#: templates/flatpages/services-full.html:36
+#: templates/flatpages/services-full.html:41
+#: templates/flatpages/services.html:32 templates/flatpages/services.html:45
+#: templates/includes/header.html:213 templates/includes/header.html:298
+msgid "Ծառայություններ"
+msgstr "Услуги"
+
+#: templates/flatpages/services-full.html:91
+msgid "Գրեք Ձեր անունը և հեռախոսահամարը և մեր մասնագետը կկապվի Ձեզ հետ:"
+msgstr ""
+"Запишите свой номер телефона и наш\n"
+"специалист свяжется с вами."
+
+#: templates/includes/filter.html:11 templates/includes/filter.html:18
+#: templates/includes/filter.html:19 templates/includes/sorting.html:29
+msgid "Ֆիլտրեր"
+msgstr "Фильтры"
+
+#: templates/includes/filter.html:31
+msgid "Մին"
+msgstr "от"
+
+#: templates/includes/filter.html:34
+msgid "Մաքս"
+msgstr "до"
+
+#: templates/includes/filtered_item.html:15 templates/shop/sale.html:106
+#: templates/shop/search.html:102 templates/shop/shop.html:78
+msgid "Որոնման արդյունքում ոչինչ չգտնվեց"
+msgstr "Нет результата попробуйте заново"
+
+#: templates/includes/footer.html:13
+msgid "Հասցե<br>ՀՀ, ք․ Երեւան, <br> Հրաչյա Քոչար 1"
+msgstr "Адрес<br>Армения, Ереван <br> Грачья Кочари ул., 1 дом"
+
+#: templates/includes/footer.html:30 templates/includes/header.html:156
+msgid "Իմ էջը"
+msgstr "Мой профиль"
+
+#: templates/includes/footer.html:31 templates/includes/header.html:270
+msgid "Դուրս գալ"
+msgstr "Выйти"
+
+#: templates/includes/footer.html:34
+msgid "Ցանկությունների ցուցակ"
+msgstr "Список желаний"
+
+#: templates/includes/footer.html:41
+msgid "Ինֆորմացիոն"
+msgstr "Информационный"
+
+#: templates/includes/footer.html:45
+msgid "Գաղտնիության Քաղաքականություն"
+msgstr "Политика Конфиденциальности"
+
+#: templates/includes/footer.html:46
+msgid "Վճարում և Առաքում"
+msgstr "Оплата и Доставка"
+
+#: templates/includes/footer.html:47
+msgid "Ընդհանուր Դրույթներ և Պայմաններ"
+msgstr "Правила и Условия"
+
+#: templates/includes/footer.html:54
+msgid "Վճարման եղանակներ"
+msgstr "Способы оплаты"
+
+#: templates/includes/footer.html:64
+msgid "Հետևեք Մեզ"
+msgstr "Подписывайтесь на нас!"
+
+#: templates/includes/footer.html:88
+msgid "Բոլոր իրավունքները պաշտպանված են:"
+msgstr "Все Права Защищены."
+
+#: templates/includes/footer.html:89
+msgid "Նախագծում և Պատրաստում:"
+msgstr "Дизайн и Разработка"
+
+#: templates/includes/footer.html:89
+msgid "«ԳԻՈՍ» ՍՊԸ"
+msgstr "ООО \"ГИОС\""
+
+#: templates/includes/footer.html:97
+msgid "Ընտրված ապրանքը զամբյուղում է"
+msgstr "Товар добавлен в корзину"
+
+#: templates/includes/header.html:26
+msgid "Ծաղիկների լայն տեսականի I 24/7 առաքում"
+msgstr "Широкий ассортимент цветов | 24/7 доставка"
+
+#: templates/includes/header.html:107 templates/includes/header.html:132
+#: templates/includes/header.html:135 templates/shop/search.html:29
+msgid "Որոնում"
+msgstr "Поиск"
+
+#: templates/includes/header.html:162
+msgid "Ելք"
+msgstr "Выйти"
+
+#: templates/includes/header.html:180
+msgid "Ցանկալի"
+msgstr "Желаемых"
+
+#: templates/includes/header.html:212
+msgid "Մեր Մասին"
+msgstr "О Нас"
+
+#: templates/includes/header.html:257
+msgid "Մուտք / Գրանցում"
+msgstr " Вход / Регистрация"
+
+#: templates/includes/header.html:265
+msgid "Իմ Էջը"
+msgstr "Мой профиль"
+
+#: templates/includes/header.html:302 templates/shop/sale.html:28
+#: templates/shop/sale.html:45
+msgid "Ակցիա"
+msgstr "Акции"
+
+#: templates/includes/header.html:303 templates/shop/sale.html:29
+#: templates/shop/sale.html:31 templates/shop/sale.html:46
+#: templates/shop/sale.html:48
+msgid "Նոր տեսականի"
+msgstr "Новинки"
+
+#: templates/includes/header.html:304 templates/shop/index.html:222
+#: templates/shop/sale.html:47
+msgid "Հատուկ առաջարկ"
+msgstr "Специальное предложение"
+
+#: templates/includes/pagination.html:5
+msgid "էջ"
+msgstr "Страница"
+
+#: templates/includes/pagination.html:5
+msgid "ից"
+msgstr "из"
+
+#: templates/includes/product.html:65
+msgid "Ավելացնել զամբյուղը"
+msgstr "В корзину"
+
+#: templates/includes/product.html:65 templates/shop/product_page.html:288
+msgid "Ավելացնել"
+msgstr "В корзину"
+
+#: templates/includes/product.html:69 templates/shop/product_page.html:255
+msgid "Ընտրել"
+msgstr "Выберите"
+
+#: templates/includes/sorting.html:35
+msgid "Դասավորել"
+msgstr "Сортировка"
+
+#: templates/includes/sorting.html:36
+msgid "Սկզբում թանկերը"
+msgstr "Цена: дороже"
+
+#: templates/includes/sorting.html:37
+msgid "Սկզբում էժանները"
+msgstr "Цена: дешевле"
+
+#: templates/includes/sorting.html:38
+msgid "Ըստ անվանման"
+msgstr "По имени"
+
+#: templates/includes/sorting.html:39
+msgid "Հին ավելացվածները"
+msgstr "Дата: старые"
+
+#: templates/includes/sorting.html:40
+msgid "Նոր ավելացվածները"
+msgstr "Дата: новые"
+
+#: templates/order/checkout.html:9 templates/order/checkout.html:50
+msgid "Պատվերի ձևակերպում"
+msgstr "Оформление заказа"
+
+#: templates/order/checkout.html:34
+msgid "Պատվերի Ձևակերպում"
+msgstr "Оформление Заказа"
+
+#: templates/order/checkout.html:99
+msgid "Կանխիկ տեղում"
+msgstr "Наличными"
+
+#: templates/order/checkout.html:102
+msgid "Վճարումը իրականացվում է Peri Flowers խանութ սրահում:"
+msgstr "Оплата в магазине Peri FLowers"
+
+#: templates/order/checkout.html:113
+msgid "Կանխիկ առաքման պահին"
+msgstr "Наличными при получении"
+
+#: templates/order/checkout.html:115
+msgid "Կարող եք վճարել առաքչին հենց առաքման ժամանակ:"
+msgstr "Рассчитаться можно с курьером наличными при получении товара."
+
+#: templates/order/checkout.html:129
+msgid "Անկանխիկ (ARCA/ VISA/ MASTERCARD)"
+msgstr "Безналичный (ARCA/ VISA/ MASTERCARD)"
+
+#: templates/order/checkout.html:132
+msgid "Կարող եք վճարել բանկային քարտի միջոցով (ARCA/VISA/MASTERCARD)"
+msgstr "Вы можете оплатить через банковскую карту (ARCA/VISA/MASTERCARD)"
+
+#: templates/order/checkout.html:153 templates/order/checkout.html:273
+msgid "Ընդհանուր վճարման ենթակա գումար"
+msgstr "Сумма к оплате выбранным способом"
+
+#: templates/order/checkout.html:155 templates/order/checkout.html:275
+msgid "Գումար:"
+msgstr "Сумма:"
+
+#: templates/order/checkout.html:163 templates/order/checkout.html:283
+msgid "Առաքում:"
+msgstr "Доставка:"
+
+#: templates/order/checkout.html:171 templates/order/checkout.html:291
+msgid "Ընդհանուր:"
+msgstr "Итого:"
+
+#: templates/order/checkout.html:193
+msgid "էլ․հասցե"
+msgstr "E-mail"
+
+#: templates/order/checkout.html:250
+msgid "Ընտրեք օրը"
+msgstr "Выберите день доставки"
+
+#: templates/order/checkout.html:258
+msgid "Ընտրեք ժամը"
+msgstr "Выберите время доставки"
+
+#: templates/order/checkout.html:391 templates/order/checkout.html:392
+#: templates/order/checkout.html:393 templates/order/checkout.html:394
+#: templates/order/checkout.html:396 templates/order/checkout.html:399
+#: templates/order/checkout.html:401 templates/order/checkout.html:402
+msgid "Դաշտը պարտադիր է"
+msgstr "Поле обязательно для заполнения"
+
+#: templates/order/order_more.html:8 templates/order/order_more.html:32
+#: templates/order/order_more.html:64
+msgid "Պատվեր"
+msgstr "Заказ"
+
+#: templates/order/order_more.html:151
+msgid "Պատվիրման ամսաթիվ"
+msgstr "Дата заказа"
+
+#: templates/order/order_more.html:178
+msgid "Առաքման օր և ժամ"
+msgstr "День и время доставки"
+
+#: templates/order/order_more.html:184
+msgid "Ստացման օր և ժամ"
+msgstr "День и час получения"
+
+#: templates/order/order_more.html:192
+msgid "Պատվերի Կարգավիճակ"
+msgstr "Статус заказа"
+
+#: templates/shop/delivery_and_payment.html:8
+#: templates/shop/delivery_and_payment.html:31
+#: templates/shop/delivery_and_payment.html:46
+msgid "Առաքում և վճարում"
+msgstr "Оплата и доставка"
+
+#: templates/shop/index.html:39 templates/shop/index.html:57
+msgid "Անցնել Գնումների"
+msgstr "Перейти к Покупкам"
+
+#: templates/shop/index.html:41 templates/shop/index.html:59
+msgid "Կապ մեզ հետ"
+msgstr "Связь с нами"
+
+#: templates/shop/index.html:221
+msgid "Տեսնել Հիմա"
+msgstr "Смотреть Сейчас"
+
+#: templates/shop/privacy_policy.html:8 templates/shop/privacy_policy.html:45
+msgid "Գաղտնիության քաղաքականություն"
+msgstr "Политика конфиденциальности"
+
+#: templates/shop/privacy_policy.html:30
+msgid "գաղտնիության քաղաքականություն"
+msgstr "Политика конфиденциальности"
+
+#: templates/shop/product_page.html:138
+msgid "Գնահատական"
+msgstr "Рейтинг"
+
+#: templates/shop/product_page.html:189
+msgid "Բաժնի անվանում"
+msgstr "Категория"
+
+#: templates/shop/product_page.html:198
+msgid "Նախընտրածներ"
+msgstr "Избранное"
+
+#: templates/shop/product_page.html:231
+msgid "Ավելացնել ցուցակին"
+msgstr "Добавить в список"
+
+#: templates/shop/product_page.html:281
+msgid "Նվազեցնել"
+msgstr "Уменьшать"
+
+#: templates/shop/product_page.html:297
+msgid "Գցել զամբկուղը"
+msgstr "В корзину"
+
+#: templates/shop/product_page.html:304 templates/shop/product_page.html:305
+msgid "Պատվիրել հիմա"
+msgstr "Заказать сейчас"
+
+#: templates/shop/product_page.html:311
+msgid "Բարձր որակ"
+msgstr "Высокое качество"
+
+#: templates/shop/product_page.html:315
+msgid "Առաքման պայմաններ"
+msgstr "Условия доставки"
+
+#: templates/shop/product_page.html:327
+msgid "Նկարագրություն"
+msgstr "Описание"
+
+#: templates/shop/product_page.html:332
+msgid "Բնութագիր"
+msgstr "Характеристики"
+
+#: templates/shop/product_page.html:383
+msgid "Առաջարկվող ապրանքներ"
+msgstr "Похожие товары"
+
+#: templates/shop/product_page.html:415
+msgid "Նախկինում դիտվածներ"
+msgstr "Вы недавно смотрели"
+
+#: templates/shop/sale.html:30
+msgid "Հաատուկ առաջառկ"
+msgstr "Специальное предложение"
+
+#: templates/shop/terms_and_conditions.html:8
+#: templates/shop/terms_and_conditions.html:30
+#: templates/shop/terms_and_conditions.html:45
+msgid "Ընդհանուր պայմաններ և դրույթներ"
+msgstr "Общие положения и условия"
+
+#: templates/wish/wishlist.html:29 templates/wish/wishlist.html:40
+msgid "Ցանկությունների Ցուցակ"
+msgstr "Список Желаний"
+
+#: templates/wish/wishlist.html:59
+msgid "ՁԵՐ ՑԱՆԿՈՒԹՅՈՒՆՆԵՐԻ ՑՈՒՑԱԿԸ ԴԱՏԱՐԿ Է"
+msgstr "ВАШ СПИСОК ЖЕЛАНИЙ ПУСТ"
+
+#~ msgid "Sale"
+#~ msgstr "Акции"
+
+#~ msgid "Best seller"
+#~ msgstr "Специальное предложение"
