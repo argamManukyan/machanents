@@ -475,7 +475,38 @@
             </div>
         </div>
         <!-- Product page end -->
+        {% if obj.productreviews_set.count %}
+        <section class="bot-prods rev-section">
+                <div class="cnt">
+                    <div class="row">
+                        <div class="col">
+                            <div class="swiper-container slider-4 swiper-container-initialized swiper-container-horizontal">
 
+                                <div class="section-title pr-sec-tit">
+                                    <h3 class="text-center">
+                                        <a href="javascript:void(0)">{% trans 'Կարծիքներ' %}</a>
+                                    </h3>
+                                    <div class="swiper-button-next swiper-next swiper-button-disabled" tabindex="0" role="button" aria-label="Next slide" aria-disabled="true"></div>
+                                    <div class="swiper-button-prev swiper-prev" tabindex="0" role="button" aria-label="Previous slide" aria-disabled="false"></div>
+                                </div>
+
+                                <div class="swiper-wrapper" style="transform: translate3d(-207.879px, 0px, 0px); transition-duration: 0ms;">
+                                    {% for review_item in obj.productreviews_set.all %}
+                                    <div class="swiper-slide swiper-slide-active"
+                                         style="width: 276.97px; margin-right: 20px;">
+                                        {% include 'includes/review_item.html' %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+
+                            <span class="swiper-notification" aria-live="assertive" aria-atomic="true"></span></div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        {% endif %}
         {% if related_items %}
             <!-- Related products -->
             <div class="section related-prods">

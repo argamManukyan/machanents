@@ -350,7 +350,9 @@
 
                         <div class="swiper-wrapper">
                             {% for review_item in reviews %}
-                                {% include 'includes/review_item.html' %}
+                                <div class="swiper-slide">
+                                    {% include 'includes/review_item.html' %}
+                                </div>
                             {% endfor %}
                         </div>
                     </div>
