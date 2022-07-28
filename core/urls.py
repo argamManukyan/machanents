@@ -38,14 +38,16 @@ if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# urlpatterns += i18n_patterns(
-#     path('', include('shop.urls')),
-#     path('', include('cart.urls')),
-#     path('', include('wish.urls')),
-#     path('', include('order.urls')),
-#     path('', include('accounts.urls')),
-#     path('', include('flatpages.urls')),
-#     path('', include('videos.urls')),
-#     prefix_default_language=False
-# )
+urlpatterns += i18n_patterns(
+    path('', include('shop.urls')),
+    path('', include('cart.urls')),
+    path('', include('wish.urls')),
+    path('', include('order.urls')),
+    path('', include('accounts.urls')),
+    path('', include('flatpages.urls')),
+    path('', include('videos.urls')),
+    path('', include('contactus.urls')),
+    path('', include('staticpages.urls')),
+    prefix_default_language=False
+)
 
