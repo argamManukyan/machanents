@@ -37,6 +37,7 @@ class DonationRanges(CustomModel):
 class DonationHomepageText(CustomModel):
     text = RichTextUploadingField(verbose_name='Տեքստ', blank=True)
     background_image = models.FileField(verbose_name='Ֆոնային նկար', blank=True, null=True)
+    title = models.CharField(max_length=400, blank=True, null=True)
 
     class Meta:
         verbose_name = 'Նվիրատվության տեքստ և նկար'

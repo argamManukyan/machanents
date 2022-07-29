@@ -15,6 +15,6 @@ def header_links(request):
 
     return {
         "header_links": Header.objects.all(),
-        'header_categories': Category.objects.filter(parent=None),
+        'header_categories': Category.objects.filter(show_in_header=True),
         'check_collection': check_collection
     }

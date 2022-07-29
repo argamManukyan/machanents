@@ -45,7 +45,7 @@ class CategoryModelAdmin(DraggableMPTTAdmin, TabbedDjangoJqueryTranslationAdmin)
 
 admin.site.register(Category, CategoryModelAdmin)
 
-admin.site.register(Slider, TabbedDjangoJqueryTranslationAdmin)
+# admin.site.register(Slider, TabbedDjangoJqueryTranslationAdmin)
 admin.site.register(FilterField, TabbedDjangoJqueryTranslationAdmin)
 admin.site.register(FilterValue, TabbedDjangoJqueryTranslationAdmin)
 admin.site.register(Color, TabbedDjangoJqueryTranslationAdmin)

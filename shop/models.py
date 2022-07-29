@@ -1,4 +1,3 @@
-import datetime
 import uuid
 
 from django.db import models
@@ -38,19 +37,21 @@ class Slider(CustomModel):
 
 class Category(MPTTModel):
     """ Category table """
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True, blank=True)
+
     meta_title = models.CharField(max_length=200, blank=True)
     meta_description = models.TextField(blank=True, max_length=300)
-    breadcrumb_image = models.ImageField(upload_to='category/', blank=True, null=True)
+    title = models.CharField(max_length=255, verbose_name='Բաժնի անուն')
+    slug = models.SlugField(unique=True, blank=True, verbose_name='Հղում')
+    breadcrumb_image = models.ImageField(upload_to='category/', blank=True,
+                                         null=True)
     breadcrumb_text = RichTextUploadingField(blank=True)
-    parent = TreeForeignKey('self', on_delete=models.CASCADE,
+    parent = TreeForeignKey('self', on_delete=models.CASCADE,verbose_name='Հայրական բաժին',
                             null=True, blank=True, related_name='children')
-    my_order = models.PositiveIntegerField(default=0, editable=False)
-    show_in_homepage = models.BooleanField(default=False)
-    image = models.FileField(upload_to='category_image/', blank=True, default='category_image/default.jpg')
-    icon = models.FileField(upload_to='category_icon/', blank=True, null=True)
-    show_in_header = models.BooleanField(default=False)
+    my_order = models.PositiveIntegerField(default=0, editable=False, verbose_name='Դասավորել')
+    show_in_homepage = models.BooleanField(default=False, verbose_name='Ցուցադրել գլխավոր էջում')
+    image = models.FileField(upload_to='category_image/', verbose_name='Նկար',
+                             blank=True, default='category_image/default.jpg')
+    show_in_header = models.BooleanField(default=False, verbose_name='Ցուցադրել header -ում')
 
     class MPTTMeta:
         order_insertion_by = ['title']

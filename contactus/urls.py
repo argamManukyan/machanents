@@ -4,5 +4,5 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 urlpatterns = [
-    path('contactus/', csrf_exempt(contact_us), name='contact_us')
+    path('contact-us/', csrf_exempt(contact_us), name='contact_us')
 ]

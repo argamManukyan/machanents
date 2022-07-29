@@ -17,9 +17,10 @@ from django.views.generic.list import ListView
 
 from donation.models import DonationCurrencies, DonationRanges, DonationHomepageText
 from flatpages.models import Blog, AboutUs
+from header.models import Slider
 from videos.models import Video
 from .models import Category, Color, FilterField, Product, FilterValue, ProductFeature, Rating, RatingProduct, \
-    ViewedProducts, Slider, \
+    ViewedProducts, \
     OurAdvantages, SpecialOfferBanner, TermsAndConditions, PrivacyPolicy, DeliveryAndPayMent, HomepageUnderSliderText, \
     AboutUsHomePageText, Authors, AuthorCategories, ProductReviews
 
@@ -48,7 +49,7 @@ def get_donation_amounts(request, obj_id):
 
 class HomeView(View):
     """ Home page, there is logic for shown category items, so which category will
-        first in admin panel that is will shown with 8 items , others will shown with 4 items
+        first in admin panel that is will show with 8 items , others will show with 4 items
     """
 
     @never_cache

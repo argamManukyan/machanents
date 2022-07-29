@@ -4,7 +4,7 @@ from core.utils import CustomModel, CustomLogoField
 
 
 class Slider(CustomModel):
-    image = CustomLogoField(blank=False)
+    image = CustomLogoField(blank=False,  verbose_name="Մեծ նկար")
     image_small = CustomLogoField(blank=False, verbose_name="Փոքր նկար")
     text = RichTextUploadingField(blank=True, null=True)
     url = models.URLField(blank=True, null=True, verbose_name="Ամբողջական հղում")
@@ -24,7 +24,7 @@ class Header(CustomModel):
 
     name = models.CharField(max_length=255, verbose_name='Անուն')
     icon = CustomLogoField(verbose_name='Լոգո', blank=True, null=True)
-    url = models.URLField(verbose_name="Ամբողջական հղում")
+    url = models.CharField(max_length=300, blank=True, null=True, verbose_name="Ամբողջական հղում")
     my_order = models.PositiveIntegerField(default=0, verbose_name="Դասավորել")
 
     def __str__(self):

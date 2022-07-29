@@ -4,7 +4,7 @@ from core.utils import CustomLogoField, CustomModel
 
 
 class CompanyInformation(models.Model):
-    icon = CustomLogoField(blank=True)
+    # icon = CustomLogoField(blank=True)
     text = models.CharField(max_length=255, verbose_name="Տեքստ")
     name = models.CharField(max_length=255,  verbose_name='Դաշտի անուն')
     url = models.CharField(max_length=1000,  blank=True, null=True, verbose_name="Հղում")
@@ -83,18 +83,24 @@ class FooterMessengers(CustomModel):
         verbose_name = 'Messenger'
         verbose_name_plural = 'Messenger -ներ'
 
+    def __str__(self):
+        return f'{self.id}'
+
 
 class FooterInformationText(CustomModel):
-    text = models.TextField()
+    text = models.TextField(verbose_name='Տեքստ')
 
     class Meta:
         verbose_name = 'Ինֆորմացիոն տեքստ'
         verbose_name_plural = 'Ինֆորմացիոն տեքստ'
 
+    def __str__(self):
+        return 'Ինֆորմացիոն տեքստ'
 
 class FooterPartners(CustomModel):
-    icon = CustomLogoField(blank=False, null=False)
-    my_order = models.PositiveIntegerField(default=0)
+    icon = CustomLogoField(blank=False, null=False, verbose_name='Լոգո')
+    my_order = models.PositiveIntegerField(default=0, verbose_name='Դասավորել')
+    alt_title = models.CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
         return f'{self.id}'
@@ -107,10 +113,12 @@ class FooterPartners(CustomModel):
 
 class CardIcons(CustomModel):
     icon = CustomLogoField()
+    my_order = models.PositiveIntegerField(default=0, verbose_name='Դասավորել')
 
     def __str__(self):
         return f'{self.id}'
 
     class Meta:
+        ordering = ['my_order']
         verbose_name = 'Վճարային քարտի լոգո'
         verbose_name_plural = 'Վճարային քարտերի լոգոներ'

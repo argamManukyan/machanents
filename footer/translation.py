@@ -24,3 +24,8 @@ class FooterItemsTrans(TranslationOptions):
     fields = ['text']
 
 
+@register(FooterPartners)
+class FooterPartnersTrans(TranslationOptions):
+    fields = ['alt_title']
+
+

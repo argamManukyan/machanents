@@ -4,8 +4,7 @@
     {% include 'includes/tagmanager.html' %}
     <meta charset='utf-8'/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name='viewport'
-          content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
     <title>{{ request.get_host|title }}</title>
     <meta name="Description" content="Machanents.com">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
@@ -62,17 +61,22 @@
                                         <div class="slide-desc-image">
                                             <div class="slide-desc">
                                                 {{ slide_item.text|safe }}
+                                                
                                                 <div class="slide-desc-button align-items-center">
+                                                    {% if slide_item.url %}
                                                     <a href="{{ slide_item.url }}"
                                                        class="button normal dark">{% trans 'Անցնել Գնումների' %}
                                                     </a>
-
+                                                    {% endif %}
+                                                    <a href="{% url 'contact_us' %}"
+                                                       class="button normal trans">{% trans 'Կապ մեզ հետ' %}
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="slide-image">
-                                                <img class="main-slide-x xl-none" src="{{ slide_item.image_xl.url }}"
+                                                <img class="main-slide-x xl-none" src="{{ slide_item.image.url }}"
                                                      alt="Machanents">
-                                                <img class="main-slide-xs ml-none" src="{{ slide_item.image_ml.url }}"
+                                                <img class="main-slide-xs ml-none" src="{{ slide_item.image_small.url }}"
                                                      alt="Machanents">
                                             </div>
                                         </div>
@@ -83,18 +87,20 @@
                                             <div class="slide-desc">
                                                 {{ slide_item.text|safe }}
                                                 <div class="slide-desc-button align-items-center">
+                                                    {% if slide_item.url %}
                                                     <a href="{{ slide_item.url }}"
                                                        class="button normal dark">{% trans 'Անցնել Գնումների' %}
                                                     </a>
-                                                    <a href="{% url 'contacts' %}"
+                                                    {% endif %}
+                                                    <a href="{% url 'contact_us' %}"
                                                        class="button normal trans">{% trans 'Կապ մեզ հետ' %}
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="slide-image">
-                                                <img class="main-slide-x xl-none" src="{{ slide_item.image_xl.url }}"
+                                                <img class="main-slide-x xl-none" src="{{ slide_item.image.url }}"
                                                      alt="Machanents">
-                                                <img class="main-slide-xs ml-none" src="{{ slide_item.image_ml.url }}"
+                                                <img class="main-slide-xs ml-none" src="{{ slide_item.image_small.url }}"
                                                      alt="Machanents">
                                             </div>
                                         </div>
@@ -131,24 +137,11 @@
     <section class="section main-cats">
         <div class="cnt">
             <div class="row align-items-cnter">
-                <!--{% for cat_icon in category_icons %}
-                <div class="col col-4 no-padd">
-                    <div class="main-cats-block text-center">
-                        <a href="{{ cat_icon.get_absolute_url }}">
-                            <figure>
-                                <img src="{{cat_icon.icon.url}}" alt="Bouquets-and-Arrangements">
-                            </figure>
-                            <p class="flex-content-center"><span>{{cat_icon.title}}</span></p>
-                        </a>
-                    </div>
-                </div>
-                {% endfor %}-->
+               
                 <div class="col">
                     <div class="section-title">
                         <h2 class="text-center">
-                            <a href="javascript:void(0);">
-                                {% trans 'Պահանջված Բաժիններ' %}<img src="{% static 'img/icons/c-arr.svg' %}"
-                                                                     alt="Machanents"></a>
+                            <a href="{% url 'catalog' %}">{% trans 'Պահանջված Բաժիններ' %}<img src="{% static 'img/icons/c-arr.svg' %}" alt="Machanents"></a>
                         </h2>
                     </div>
                 </div>
@@ -170,7 +163,7 @@
                         {% endfor %}
                     </ul>
                     <div class="see-all-cats">
-                        <a href="{% url 'catalog' %}" class="button normal dark s-all">Տեսնել Բոլոր Բաժինները</a>
+                        <a href="{% url 'catalog' %}" class="button normal dark s-all">{% trans 'Տեսնել Բոլոր Բաժինները' %}</a>
                     </div>
                 </div>
             </div>
@@ -230,7 +223,7 @@
                     <div class="col">
                         <div class="section-title">
                             <h2 class="text-center">
-                                <a href="{{ selected_category.first.get_absolute_url }}">Առաջարկվող ապրանքներ<img
+                                <a href="{{ selected_category.first.get_absolute_url }}">{% trans 'Առաջարկվող ապրանքներ' %}<img
                                         src="{% static 'img/icons/c-arr.svg' %}" alt="Machanents"></a>
                             </h2>
                         </div>
@@ -369,7 +362,7 @@
     </section>
     <!-- Reviews end -->
     {% endif %}
-    <section class="bot-prods donation">
+    <section id="Donation-machanents" class="bot-prods donation">
         <div class="cnt-fluid">
             <div class="row no-margs">
                 <div class="col col-2 no-padd">

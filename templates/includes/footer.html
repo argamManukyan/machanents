@@ -1,24 +1,21 @@
-{% load static %}
-{% load linkfilter %}
-{% load i18n %}
+{% load static %}{% load linkfilter %}{% load i18n %}
 <footer>
     <div class="only-footer">
         <div class="cnt">
             <div class="row foot-flex">
                 <div class="col col-auto">
                     <div class="footer-item">
-                        <h4>{% trans 'Contacts' %}</h4>
+                        <h4>{% trans 'Կապ' %}</h4>
                         <div class="items-all">
                             {% if footer_messengers %}
                                 <ul class="social_footer align-items-center">
-                                    <li>
                                         {% for i in footer_messengers %}
+                                        <li>
                                             <a href="{% if i.url %}{{ i.url }}{% else %}javascript:void(0);{% endif %}"
-                                               target="_blank">
-                                                <img src="{{ i.icon.url }}">
+                                               target="_blank"> <img src="{{ i.icon.url }}" alt="{% trans 'Կապ' %}">
                                             </a>
+                                        </li>
                                         {% endfor %}
-                                    </li>
                                 </ul>
                             {% endif %}
                             {% if company_information %}
@@ -27,7 +24,7 @@
                                         <li>
                                             <span class="cf_name">{{ i.name }}</span>
                                             <a href="{% if i.url %}{{ i.url }}{% else %}javascript:void(0);{% endif %}">
-                                                {{ i.text }}
+                                                {{ i.text|safe}}
                                             </a>
                                         </li>
                                     {% endfor %}
@@ -43,7 +40,7 @@
                             <div class="items-all">
                                 <ul>
                                     {% for link in categ.footeritems_set.all|filter_links:trigger %}
-                                        <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+                                        <li><a href="{{ link.url }}">{{ link.name|safe }}</a></li>
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -52,15 +49,15 @@
                 {% endfor %}
                 <div class="col col-auto">
                     <div class="footer-item">
-                        <h4>{% trans 'Payment methods' %}</h4>
+                        <h4>{% trans 'Վճարման Եղանակներ' %}</h4>
                         <div class="items-all">
                             <ul class="f-pay-icons align-items-center">
                                 {% for card_icon in card_icons %}
-                                    <li><img src="{{ card_icon.icon.url }}" alt="visa"></li>
+                                    <li><img src="{{ card_icon.icon.url }}" alt="{% trans 'Վճարման Եղանակներ' %}"></li>
                                 {% endfor %}
                             </ul>
-                            <p class="foot_p-one">Machanents.com {% trans 'website represents Armenia' %}</p>
-                            <h5>{% trans 'Follow us' %}</h5>
+                            <p class="foot_p-one"><!-- Machanents.com {% trans 'website represents Armenia' %}--></p> 
+                            <h5>{% trans 'Հետևեք Մեզ' %}</h5>
                             {% if footer_follow_icons %}
                                 <ul class="soc-icons d-flex">
                                     {% for ff in footer_follow_icons %}
@@ -93,8 +90,8 @@
                 <div class="d-none footer-logo">
                     <img src="{% static 'img/f-logo.svg' %}" alt="Machanents.com">
                 </div>
-                <p>© {{ year }} Machanents Worldwide Shopping| {% trans ' All Rights Reserved' %}
-                    <br>{% trans 'Design and Development by' %} <a href="javascript:void(0);">{% trans '"GIOS" LLC' %}</a>
+                <p>© {{ year }} Machanents Worldwide Shopping || {% trans 'Բոլոր իրավունքները պաշտպանված են' %}
+                    <br>{% trans 'Design and Development by ' %} <a href="https://gios.am/" target="_blank">{% trans '"GIOS" LLC' %}</a>
                 </p>
             </div>
         </div>
@@ -102,6 +99,6 @@
 </footer>
 <div class="message-container">
     <div class="message success hidden" id="Messagebasket">
-        <p>{% trans "Selected products added into cart" %}</p>
+        <p>{% trans "Ընտրված ապրանքը զամբյուղում է" %}</p>
     </div>
 </div>
