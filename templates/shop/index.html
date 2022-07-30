@@ -31,16 +31,16 @@
                     {% for machanents_video in machanents_videos %}
                     <div class="swiper-slide">
                         <div class="fix-slider-cont">
-                           {% if video.video_file and not video.video_iframe %}
+                           {% if machanents_video.video_file and not machanents_video.video_iframe %}
                             <iframe width="560"
                                     height="315"
-                                    src="{{ video.video_file.url }}"
+                                    src="{{ machanents_video.video_file.url }}"
                                     title="YouTube video player" frameborder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                     allowfullscreen>
                             </iframe>
                             {% else %}
-                                {{ video.video_iframe|safe }}
+                                {{ machanents_video.video_iframe|safe }}
                             {% endif %}
                         </div>
                     </div>
