@@ -143,8 +143,9 @@ class BlogDetailView(DetailView):
             request.session[post.slug] = post.slug
             post.views_count += 1
             post.save()
-        kwargs['posts'] = posts
-        return super().get(request, *args, **kwargs)
+        context = self.get_context_data(object=self.object)
+        context['posts'] = posts
+        return self.render_to_response(context)
 
 
 class ServiceListView(ListView):
