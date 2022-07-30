@@ -134,10 +134,9 @@ class BlogDetailView(DetailView):
                                     .exclude(id=post.id).order_by('-id')[:3])
         related_items = []
         if len(blog_l) < 3:
-            pass
-            # related_items = sorted(Blog.objects.exclude(Q(id=post.id) |
-            #                                             Q(id__in=[i.id for i in blog_l])
-            #                                      ).order_by('-id'))[:3-len(blog_l)]
+            related_items = list(Blog.objects.exclude(Q(id=post.id) |
+                                                        Q(id__in=[i.id for i in blog_l])
+                                                 ).order_by('-id')[:3-len(blog_l)])
         posts = [i for i in blog_l]
         posts.extend(related_items)
 
