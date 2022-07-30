@@ -131,7 +131,7 @@ class BlogDetailView(DetailView):
         # getting related posts length off same category
 
         blog_l = list(Blog.objects.filter(category_id=post.category_id)\
-                                    .exclude(id=post.id).order_by('-id'))[:3]
+                                    .exclude(id=post.id).order_by('-id')[:3])
         related_items = []
         if len(blog_l) < 3:
             pass
