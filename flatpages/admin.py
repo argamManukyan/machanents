@@ -6,13 +6,14 @@ from singlemodeladmin import SingleModelAdmin
 from modeltranslation.admin import TabbedDjangoJqueryTranslationAdmin, TranslationInlineModelAdmin
 from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
 
+
 class AboutUsSocialIconsAdmin(SortableInlineAdminMixin, TranslationInlineModelAdmin, admin.StackedInline):
     model = AboutUsSocialIcons
     extra = 0
 
 
 @admin.register(AboutUs)
-class AboutUsAdmin(TabbedDjangoJqueryTranslationAdmin):
+class AboutUsAdmin(SortableAdminMixin, TabbedDjangoJqueryTranslationAdmin):
     inlines = [AboutUsSocialIconsAdmin]
 
 

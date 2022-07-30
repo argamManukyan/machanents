@@ -18,7 +18,7 @@ class AboutUs(CustomMetaModel):
                                   help_text='Ակտիվ լինելու դեպքում այս նյութը կցուցադրվի «Մեր մասին» էջում '
                                             'որպես գլխավոր նյութ'
                                   )
-
+    my_order = models.PositiveIntegerField(default=0)
     def save(self, *args, **kwargs):
         if not self.slug:
             slug_id = AboutUs.objects.last().id + 1 if AboutUs.objects.count() else 1
@@ -39,6 +39,7 @@ class AboutUs(CustomMetaModel):
     class Meta:
         verbose_name = 'Մեր մասին'
         verbose_name_plural = 'Մեր մասին'
+        ordering = ['my_order']
 
 
 class ContactUs(CustomModel):
