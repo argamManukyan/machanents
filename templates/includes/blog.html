@@ -5,8 +5,7 @@
         <div class="blog-article-header">
             <figure>
                 <a href="{{ blog.get_absolute_url }}">
-                    <img src="{% if blog.image %}{{blog.image.url}}
-                                {% else %}{% static 'defaults/blog_default.jpg' %}{% endif %}"
+                    <img src="{% if blog.image %}{{blog.image.url}}{% else %}{% static 'defaults/blog_default.jpg' %}{% endif %}"
                          alt="{{ blog.title }}"></a>
             </figure>
             <div class="blog-views calendars align-items-center">

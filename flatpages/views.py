@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect, render, get_object_or_404
 from django.views import View
@@ -126,13 +127,23 @@ class BlogDetailView(DetailView):
     context_object_name = 'blog'
 
     def get(self, request, *args, **kwargs):
-        post = self.get_object()
+        post: Blog = self.get_object()
+        # getting related posts length off same category
+
+        blog_l = Blog.objects.filter(category_id=post.category_id)\
+                                    .exclude(id=post.id).order_by('-id')[:3]
+
+        if blog_l.count() < 3:
+            related_items = Blog.objects.exclude(Q(id=post.id) |
+                                                 Q(id__in=blog_l.values_list('id', flat=True))
+                                                 ).order_by('-id')[:3-blog_l.count()]
+        posts = [*blog_l, *related_items]
 
         if post.slug not in request.session:
             request.session[post.slug] = post.slug
             post.views_count += 1
             post.save()
-
+        kwargs['posts'] = posts
         return super().get(request, *args, **kwargs)
 
 
