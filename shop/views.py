@@ -1,5 +1,7 @@
 import json
 import random
+
+from django.core.files.storage import FileSystemStorage
 from django.urls import reverse
 from django.db.models.aggregates import Avg, Max, Min
 from django.db.models.query_utils import Q
@@ -19,6 +21,7 @@ from donation.models import DonationCurrencies, DonationRanges, DonationHomepage
 from flatpages.models import Blog, AboutUs
 from header.models import Slider
 from videos.models import Video
+from .forms import ProductReviewsForm
 from .models import Category, Color, FilterField, Product, FilterValue, ProductFeature, Rating, RatingProduct, \
     ViewedProducts, \
     OurAdvantages, SpecialOfferBanner, TermsAndConditions, PrivacyPolicy, DeliveryAndPayMent, HomepageUnderSliderText, \
@@ -345,7 +348,25 @@ class ProductView(DetailView):
         return super().get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
+        form = ProductReviewsForm(request.POST, request.FILES)
+        if form.is_valid():
+            loc_ctr = request.user.profile.country.name or ''
+            loc_reg = request.user.profile.region.name or ''
+            full_loc = ''
+            if loc_reg and loc_ctr:
+                full_loc = f'{loc_ctr}, {loc_reg}'
+            elif loc_ctr and not loc_reg:
+                full_loc = loc_ctr
+
+            f:ProductReviews = form.save()
+            f.sender = request.user
+            f.image = request.FILES.get('avatar', None)
+            f.location = full_loc
+            f.hide = True
+            f.save()
+        print(form.errors)
+        return HttpResponse(status=200)
+
 
 @csrf_exempt
 def create_rating(request):

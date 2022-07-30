@@ -264,7 +264,7 @@ class ProductReviews(CustomModel):
                                null=True, blank=True, verbose_name='ՈՒղարկող')
     product = models.ForeignKey(Product, on_delete=models.CASCADE,
                                 null=True, blank=True, verbose_name='Ապրանք')
-    text = models.TextField(verbose_name='Տեքստ')
+    review = models.TextField(verbose_name='Տեքստ')
     location = models.CharField(max_length=200,
                                 blank=True,
                                 null=True, verbose_name='Ուղարկողի Հասցե')
