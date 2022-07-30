@@ -132,12 +132,12 @@ class BlogDetailView(DetailView):
 
         blog_l = Blog.objects.filter(category_id=post.category_id)\
                                     .exclude(id=post.id).order_by('-id')[:3]
-
+        related_items = []
         if blog_l.count() < 3:
             related_items = Blog.objects.exclude(Q(id=post.id) |
                                                  Q(id__in=blog_l.values_list('id', flat=True))
                                                  ).order_by('-id')[:3-blog_l.count()]
-        posts = [*blog_l, *related_items]
+        posts = (blog_l | related_items).distinct()
 
         if post.slug not in request.session:
             request.session[post.slug] = post.slug
