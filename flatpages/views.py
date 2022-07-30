@@ -130,13 +130,13 @@ class BlogDetailView(DetailView):
         post: Blog = self.get_object()
         # getting related posts length off same category
 
-        blog_l = Blog.objects.filter(category_id=post.category_id)\
-                                    .exclude(id=post.id).order_by('-id')[:3]
+        blog_l = sorted(Blog.objects.filter(category_id=post.category_id)\
+                                    .exclude(id=post.id), key=lambda x: x.id,reverse=True)
         related_items = []
-        if blog_l.count() < 3:
+        if len(blog_l) < 3:
             related_items = Blog.objects.exclude(Q(id=post.id) |
-                                                 Q(id__in=blog_l.values_list('id', flat=True))
-                                                 ).order_by('-id')[:3-blog_l.count()]
+                                                 Q(id__in=[i.id for i in blog_l])
+                                                 ).order_by('-id')[:3-len(blog_l)]
         posts = [i for i in blog_l]
         posts.extend(related_items)
 

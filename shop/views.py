@@ -390,7 +390,7 @@ class TermsAndConditionsView(generic.TemplateView):
 
 
 class PrivacyPolicyView(generic.TemplateView):
-    template_name = 'shop/privacy_policy.html'
+    template_name = 'shop/../templates/flatpages/staticpages.html'
 
     def get_context_data(self, **kwargs):
         context = super(PrivacyPolicyView, self).get_context_data(**kwargs)
