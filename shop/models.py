@@ -138,6 +138,7 @@ class AuthorCategories(CustomMetaModel):
     slug = models.SlugField(blank=True, null=True, verbose_name='Հղում')
     breadcrumbs_text = models.TextField(blank=True, null=True, verbose_name='breadcrumb -ի տեքստ')
     breadcrumbs_image = CustomLogoField(blank=True, null=True, verbose_name='breadcrumb -ի նկար')
+    my_order = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -149,6 +150,7 @@ class AuthorCategories(CustomMetaModel):
     class Meta:
         verbose_name = 'Բաժին'
         verbose_name_plural = 'Արտիստների բաժիններ'
+        ordering = ['my_order']
 
     def get_absolute_url(self):
         return reverse('author_categories', kwargs={'slug': self.slug})
@@ -163,10 +165,12 @@ class Authors(CustomMetaModel):
     slug = models.SlugField(blank=True, null=True, verbose_name='Հղում')
     image = CustomLogoField(blank=True, null=True)
     text = RichTextUploadingField(verbose_name='Հեղինակի մասին', blank=True, null=True)
+    my_order = models.PositiveIntegerField(default=0)
 
     class Meta:
         verbose_name = _('Արտիստ')
         verbose_name_plural = _('Արտիստներ')
+        ordering = ['my_order']
 
     def __str__(self):
         return self.name
