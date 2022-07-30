@@ -53,6 +53,6 @@ class CategoryGalleryImagesAdmin(SortableAdminMixin, TabbedDjangoJqueryTranslati
 
 admin.site.register(GalleryCategory, CategoryGalleryImagesAdmin)
 
-@admin.register([BlogCategory, Blog])
+@admin.register(BlogCategory, Blog)
 class SortableElementAdmin(SortableInlineAdminMixin, TabbedDjangoJqueryTranslationAdmin):
     pass
