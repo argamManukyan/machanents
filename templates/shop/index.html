@@ -151,8 +151,7 @@
                             <li>
                                 <a href="{{ ct.get_absolute_url }}" class="pop-cats">
                                     <figure class="pop-cat-img">
-                                        <img src="
-                                                {% if ct.image %}{{ ct.image.url }}{% else %}{% static 'img/m5.jpg' %}{% endif %}"
+                                        <img src="{% if ct.image %}{{ ct.image.url }}{% else %}{% static 'img/m5.jpg' %}{% endif %}"
                                              alt="Machanents">
                                     </figure>
                                     <div class="pop-cat-txt">
