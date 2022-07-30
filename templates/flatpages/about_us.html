@@ -112,11 +112,12 @@
                     </div>
                     <!-- Active category title end -->
 
-
+                    {% if about_us.text %}
                     <!-- CK editor -->
                     <div class="col">
                         <div class="all-paragraphs-styles">{{ about_us.text|safe }}</div>
                     </div>
+                    {% endif %}
                     <!-- CK editor end -->
                     {% if about_us.aboutussocialicons_set.count %}
                         <!-- social links -->
