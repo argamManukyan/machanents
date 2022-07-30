@@ -134,7 +134,7 @@ class BlogDetailView(DetailView):
             latest_visited_cat = self.request.META.get('HTTP_REFERER').split('/')[-2]
             bred_category = BlogCategory.objects.get(slug=latest_visited_cat)
         except:
-            pass
+            bred_category = None
 
         blog_l = list(Blog.objects.filter(category_id=post.category_id)\
                                     .exclude(id=post.id).order_by('-id')[:3])
