@@ -6,7 +6,7 @@ from .models import GalleryCategory, \
 @register(AboutUs)
 class AboutUsTranslationOptions(TranslationOptions):
     fields = (
-        'meta_description', 'meta_title', 'title', 'breadcrumbs_text'
+        'meta_description', 'meta_title', 'title', 'breadcrumbs_text', 'text'
     )
 
 

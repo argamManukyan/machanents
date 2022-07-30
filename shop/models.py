@@ -47,7 +47,6 @@ class Category(MPTTModel):
     breadcrumb_text = RichTextUploadingField(blank=True)
     parent = TreeForeignKey('self', on_delete=models.CASCADE,verbose_name='Հայրական բաժին',
                             null=True, blank=True, related_name='children')
-    my_order = models.PositiveIntegerField(default=0, editable=False, verbose_name='Դասավորել')
     show_in_homepage = models.BooleanField(default=False, verbose_name='Ցուցադրել գլխավոր էջում')
     image = models.FileField(upload_to='category_image/', verbose_name='Նկար',
                              blank=True, default='category_image/default.jpg')
@@ -367,7 +366,7 @@ class SpecialOfferBanner(CustomModel):
 
 
 class AboutUsHomePageText(CustomModel):
-    text = RichTextUploadingField(blank=True, null=True)
+    text = RichTextUploadingField(blank=True, null=True, verbose_name='Տեքստ')
     image = CustomLogoField(blank=True, null=True)
 
     def __str__(self):

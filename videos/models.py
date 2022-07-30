@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
 
@@ -34,8 +35,8 @@ class VideoCategory(CustomMetaModel):
 class Video(models.Model):
 
     category = models.ForeignKey(VideoCategory, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Բաժին')
-    video_url = models.URLField(verbose_name='Տեսահոլովակի հղում', blank=True)
-    video_file = models.FileField(verbose_name='Տեսահոլովակ', blank=True)
+    video_iframe = models.TextField(verbose_name='Տեսահոլովակի Iframe', blank=True)
+    video_file = models.FileField(verbose_name='Տեսահոլովակ (ֆայլ)', blank=True)
     my_order = models.PositiveIntegerField(default=0, blank=False, null=False, verbose_name='Դասավորել')
     show_on_homepage = models.BooleanField(default=False, verbose_name='Ցուցադրել գլխավոր էջում՝ «Machanents TV» սլայդերում')
 
@@ -46,3 +47,8 @@ class Video(models.Model):
         verbose_name = 'Տեսահոլովակ'
         verbose_name_plural = 'Machanents TV'
         ordering = ['my_order']
+
+    def clean(self):
+        if all([not self.video_file, not self.video_iframe]):
+            raise ValidationError({'video_iframe': "Պարտադիր է լրացնել «Տեսահոլովակի Iframe»/«Տեսահոլովակ (ֆայլ)»"
+                                              " դաշտերից որևէ մեկը"})

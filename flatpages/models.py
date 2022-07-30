@@ -109,7 +109,7 @@ class BlogCategory(CustomModel):
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True,verbose_name='Հղում')
     breadcrumb_text = models.TextField(blank=True, null=True, verbose_name='breadcrumb -ի տեքստ')
     breadcrumb_image = CustomLogoField(blank=True, null=True, verbose_name='breadcrumb -ի նկար')
-    my_order = models.PositiveIntegerField(default=0, editable=False, verbose_name='Դասավորել')
+    my_order = models.PositiveIntegerField(default=0, verbose_name='Դասավորել')
 
     def __str__(self):
         return self.name
@@ -141,7 +141,7 @@ class Blog(CustomModel):
     meta_title = models.CharField(max_length=500, blank=True)
     meta_description = models.TextField(blank=True, null=True)
     views_count = models.PositiveIntegerField(default=0, editable=False)
-    my_order = models.PositiveIntegerField(default=0, editable=False, verbose_name='Դասավորել')
+    my_order = models.PositiveIntegerField(default=0, verbose_name='Դասավորել')
 
     def __str__(self):
         return self.title
