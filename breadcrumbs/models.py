@@ -11,7 +11,7 @@ TEXT_LOCATION = [
     # ('brands', 'Բրենդների էջ'),
     ('blog', 'Բլոգ'),
     ('gallery', 'Տեսադարան'),
-    ('contacts', 'Կապ'),
+    # ('contacts', 'Կապ'),
     ('authors', 'Արտիստներ'),
     # ('faq', "Հաճախակի տրվող հարցեր"),
     ('machanents_tv', 'Machanents TV')

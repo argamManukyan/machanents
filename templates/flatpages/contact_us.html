@@ -6,8 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name='viewport'
           content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no'>
-    <title>{% trans 'Կապ' %} | {{ request.get_host|title }}</title>
-    <meta name="Description" content="">
+    <title>{% if contactuspage.meta_title %}{{ contactuspage.meta_title|safe }}{% else %}{% trans 'Կապ' %}{% endif %} | {{ request.get_host|title }}</title>
+    <meta name="Description" content="{% if contactuspage.meta_description %}{{ contactuspage.meta_description|safe }}{% endif %}">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
     <link rel="stylesheet" href="{% static 'css/color.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
