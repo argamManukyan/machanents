@@ -25,7 +25,7 @@
                     <div class="col">
                         <div id="breadcrumbs" class="anothers-bread text-center">
                             <div class="tit-page bread-page">
-                                <h1>{% trans 'Ցանկությունների Ցուցակ' %}</h1>
+                                <h1>{% trans 'Նախընտրածներ' %}</h1>
                                 {% if bread_content.breadcrumbs_text %}
                                     {{ bread_content.breadcrumbs_text|safe }}
                                 {% endif %}
@@ -37,7 +37,7 @@
 
                                 <img src="{% static 'img/icons/bread-right.svg' %}" class="right-icon">
                                 <li class="b-list-item">
-                                    <span>{% trans 'Ցանկությունների Ցուցակ' %}</span>
+                                    <span>{% trans 'Նախընտրածներ' %}</span>
                                 </li>
                             </ul>
                         </div>
@@ -56,7 +56,8 @@
                     <div class="row">
                         <div class="col text-center">
                             <div class="empt-c">
-                                <h3>{% trans 'ՁԵՐ ՑԱՆԿՈՒԹՅՈՒՆՆԵՐԻ ՑՈՒՑԱԿԸ ԴԱՏԱՐԿ Է' %}</h3>
+                                <h3>{% trans 'Նախընտրածներ բաժինը դեռ դատարկ է' %}</h3>
+                                <p>{% trans 'Ապրանքը որպես նախընտրած ավելացնելու համար սեղմեք ❤ նշանի վրա:' %}</p>
                                 <div class="conts-or-check">
                                     <a href="{% url 'catalog' %}" class="button dark normal">← {% trans 'Շարունակել գնումները' %}</a>
                                 </div>

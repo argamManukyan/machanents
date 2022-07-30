@@ -103,17 +103,19 @@ class Gallery(CustomModel):
 
 
 class BlogCategory(CustomModel):
-    name = models.CharField(max_length=255, unique=True, db_index=True)
-    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
-    breadcrumb_text = models.TextField(blank=True, null=True)
-    breadcrumb_image = CustomLogoField(blank=True, null=True)
     meta_title = models.CharField(max_length=300, blank=True, null=True)
     meta_description = models.TextField(max_length=500, blank=True, null=True)
+    name = models.CharField(max_length=255, unique=True, db_index=True, verbose_name='Բաժնի անուն')
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True,verbose_name='Հղում')
+    breadcrumb_text = models.TextField(blank=True, null=True, verbose_name='breadcrumb -ի տեքստ')
+    breadcrumb_image = CustomLogoField(blank=True, null=True, verbose_name='breadcrumb -ի նկար')
+    my_order = models.PositiveIntegerField(default=0, editable=False, verbose_name='Դասավորել')
 
     def __str__(self):
         return self.name
 
     class Meta:
+        ordering = ['my_order']
         verbose_name = 'Բլոգի բաժին'
         verbose_name_plural = 'Բլոգի բաժիններ'
 
@@ -139,6 +141,7 @@ class Blog(CustomModel):
     meta_title = models.CharField(max_length=500, blank=True)
     meta_description = models.TextField(blank=True, null=True)
     views_count = models.PositiveIntegerField(default=0, editable=False)
+    my_order = models.PositiveIntegerField(default=0, editable=False, verbose_name='Դասավորել')
 
     def __str__(self):
         return self.title
@@ -153,6 +156,7 @@ class Blog(CustomModel):
         super().save(*args, **kwargs)
 
     class Meta:
+        ordering = ['my_order']
         verbose_name = 'Բլոգ'
         verbose_name_plural = 'Բլոգ'
 
