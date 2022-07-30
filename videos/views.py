@@ -13,7 +13,7 @@ def video_category(request, slug):
 
     videos = Video.objects.filter(category=category)
     page = request.GET.get('page', 1)
-    paginator = Paginator(videos, 8)
+    paginator = Paginator(videos, 12)
     page_obj = paginator.get_page(page)
 
     context = {
@@ -32,7 +32,7 @@ def video_list(request):
 
     video_categories = VideoCategory.objects.all()
     page = request.GET.get('page', 1)
-    paginator = Paginator(videos, 8)
+    paginator = Paginator(videos, 12)
     page_obj: Video = paginator.get_page(page)
 
     context = {
