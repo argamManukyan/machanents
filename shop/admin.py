@@ -61,8 +61,13 @@ admin.site.register(HomepageUnderSliderText, SingleModelAdminMixin)
 admin.site.register(AboutUsHomePageText, SingleModelAdminMixin)
 
 admin.site.register(ProductReviews)
-admin.site.register(Authors, TabbedDjangoJqueryTranslationAdmin)
-admin.site.register(AuthorCategories, TabbedDjangoJqueryTranslationAdmin)
+
+
+class SortableMixin(SortableAdminMixin, TabbedDjangoJqueryTranslationAdmin):
+    pass
+
+admin.site.register(Authors, SortableMixin)
+admin.site.register(AuthorCategories, SortableMixin)
 # admin.site.register(PrivacyPolicy, SingleModelAdminMixin)
 # admin.site.register(DeliveryAndPayMent, SingleModelAdminMixin)
 # admin.site.register(SpecialOfferBanner, TabbedDjangoJqueryTranslationAdmin)
