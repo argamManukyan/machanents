@@ -17,7 +17,7 @@ class AboutUsSocialIconsAdmin(SortableAdminMixin, TabbedDjangoJqueryTranslationA
     pass
 
 
-admin.site.register(Blog, TabbedDjangoJqueryTranslationAdmin)
+# admin.site.register(Blog, TabbedDjangoJqueryTranslationAdmin)
 admin.site.register(FAQ, TabbedDjangoJqueryTranslationAdmin)
 admin.site.register(Service, TabbedDjangoJqueryTranslationAdmin)
 
@@ -52,4 +52,7 @@ class CategoryGalleryImagesAdmin(SortableAdminMixin, TabbedDjangoJqueryTranslati
 
 
 admin.site.register(GalleryCategory, CategoryGalleryImagesAdmin)
-admin.site.register(BlogCategory, TabbedDjangoJqueryTranslationAdmin)
+
+@admin.register([BlogCategory, Blog])
+class SortableElementAdmin(SortableInlineAdminMixin, TabbedDjangoJqueryTranslationAdmin):
+    pass
