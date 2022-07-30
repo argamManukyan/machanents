@@ -98,9 +98,10 @@
                         </h2>
                     </div>
                 </div>
-                {% for blog  in posts %}
-                    {% include 'includes/blog.html' %}
-                {% endfor %}
+                {{ posts }}
+{#                {% for blog  in posts %}#}
+{#                    {% include 'includes/blog.html' %}#}
+{#                {% endfor %}#}
 
             </div>
         </div>
