@@ -130,6 +130,12 @@ class BlogDetailView(DetailView):
         post: Blog = self.get_object()
         # getting related posts length off same category
 
+        try:
+            latest_visited_cat = self.request.META.get('HTTP_REFERER').split('/')[-2]
+            bred_category = BlogCategory.objects.get(slug=latest_visited_cat)
+        except:
+            pass
+
         blog_l = list(Blog.objects.filter(category_id=post.category_id)\
                                     .exclude(id=post.id).order_by('-id')[:3])
         related_items = []
@@ -147,7 +153,8 @@ class BlogDetailView(DetailView):
 
         context = {
             'blog': post,
-            'posts': posts
+            'posts': posts,
+            'bred_category': bred_category
         }
 
         return render(request, self.template_name, context)
