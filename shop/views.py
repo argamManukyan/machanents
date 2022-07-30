@@ -349,9 +349,12 @@ class ProductView(DetailView):
 
     def post(self, request, *args, **kwargs):
         form = ProductReviewsForm(request.POST, request.FILES)
+
+        f = request.META.get('HTTP_REFERER')
+
         if form.is_valid():
-            loc_ctr = request.user.profile.country.name or ''
-            loc_reg = request.user.profile.region.name or ''
+            loc_ctr = request.user.profile.country.name  if request.user.profile.country else ''
+            loc_reg = request.user.profile.region.name if request.user.profile.region else ''
             full_loc = ''
             if loc_reg and loc_ctr:
                 full_loc = f'{loc_ctr}, {loc_reg}'
@@ -364,8 +367,8 @@ class ProductView(DetailView):
             f.location = full_loc
             f.hide = True
             f.save()
-        print(form.errors)
-        return HttpResponse(status=200)
+
+        return redirect('product_details', **kwargs)
 
 
 @csrf_exempt
