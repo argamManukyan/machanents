@@ -185,9 +185,10 @@ class Service(CustomModel):
 
 
 class AboutUsSocialIcons(models.Model):
-    icon = CustomLogoField(blank=True, null=True)
+    about_us = models.ForeignKey(AboutUs, on_delete=models.CASCADE, blank=True, null=True)
+    icon = CustomLogoField()
     text = models.CharField(max_length=255, verbose_name='Տեքստ', blank=True, null=True)
-    url = models.URLField(verbose_name='Հղում')
+    url = models.CharField(verbose_name='Հղում', max_length=400)
     my_order = models.PositiveIntegerField(verbose_name='Դասավորել')
 
     def __str__(self):

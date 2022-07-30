@@ -3,18 +3,17 @@ from django.utils.html import format_html
 from flatpages.forms import GalleryUploadForm
 from .models import FAQ, AboutUs, Blog, Gallery, GalleryCategory, Service, BlogCategory, AboutUsSocialIcons
 from singlemodeladmin import SingleModelAdmin
-from modeltranslation.admin import TabbedDjangoJqueryTranslationAdmin
+from modeltranslation.admin import TabbedDjangoJqueryTranslationAdmin, TranslationInlineModelAdmin
 from adminsortable2.admin import SortableInlineAdminMixin, SortableAdminMixin
+
+class AboutUsSocialIconsAdmin(SortableInlineAdminMixin, TranslationInlineModelAdmin, admin.StackedInline):
+    model = AboutUsSocialIcons
+    extra = 0
 
 
 @admin.register(AboutUs)
 class AboutUsAdmin(TabbedDjangoJqueryTranslationAdmin):
-    pass
-
-
-@admin.register(AboutUsSocialIcons)
-class AboutUsSocialIconsAdmin(SortableAdminMixin, TabbedDjangoJqueryTranslationAdmin):
-    pass
+    inlines = [AboutUsSocialIconsAdmin]
 
 
 # admin.site.register(Blog, TabbedDjangoJqueryTranslationAdmin)

@@ -118,17 +118,15 @@
                         <div class="all-paragraphs-styles">{{ about_us.text|safe }}</div>
                     </div>
                     <!-- CK editor end -->
-                    {% if about_us_social_icons %}
+                    {% if about_us.aboutussocialicons_set.count %}
                         <!-- social links -->
                         <div class="col">
                             <ul class="align-items-center ab-page-social">
-                                {% for ab_icon in about_us_social_icons %}
+                                {% for ab_icon in about_us.aboutussocialicons_set.all %}
                                     <li>
-                                        <a href="
-                                                {% if ab_icon.url %}{{ ab_icon.url }}{% else %}javascript: void(0){% endif %}"
+                                        <a href="{% if ab_icon.url %}{{ ab_icon.url }}{% else %}javascript: void(0){% endif %}"
                                            class="align-items-center" target="_blank">
-                                            <img src="
-                                                    {% if ab_icon.icon %}{{ ab_icon.icon.url }}{% else %}https://armtmm.com/media/c-fb.svg{% endif %}"
+                                            <img src="{% if ab_icon.icon %}{{ ab_icon.icon.url }}{% else %}https://armtmm.com/media/c-fb.svg{% endif %}"
                                                  alt="Machanents">
                                             {% if ab_icon.text %}<span>{{ ab_icon.text|safe }}</span>{% endif %}
                                         </a>

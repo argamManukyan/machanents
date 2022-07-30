@@ -18,12 +18,13 @@ class AboutUsView(View):
 
     def get(self, request, **kwargs):
         about_us: AboutUs = AboutUs.objects.filter(is_main=True).first()
-        about_us_items = AboutUs.objects.exclude(id=about_us.id)
-        about_us_social_icons = AboutUsSocialIcons.objects.all()
+        about_us_items = AboutUs.objects.all()
+        if about_us:
+            about_us_items = about_us_items.exclude(id=about_us.id)
+
         context = {
             'about_us': about_us,
             'about_us_items': about_us_items,
-            'about_us_social_icons': about_us_social_icons,
         }
         return render(request, 'flatpages/about_us.html', context)
 
