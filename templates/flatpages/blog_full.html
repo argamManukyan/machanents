@@ -85,30 +85,27 @@
             </div>
           </div>
           <!-- Blog full end -->
-          
-          
-     <!-- Recomended Blog --> 
-    <section class="bot-prods blog-home">
-        <div class="cnt">
-            <div class="row">
-                <div class="col">
-                    <div class="section-title">
-                        <h2 class="text-center">
-                            <a href="{% url 'blog_list' %}">{% trans 'Բլոգ' %}<img src="{% static 'img/icons/c-arr.svg' %}" alt="Machanents"></a>
-                        </h2>
+          {% if posts %}
+             <!-- Recomended Blog -->
+            <section class="bot-prods blog-home">
+                <div class="cnt">
+                    <div class="row">
+                        <div class="col">
+                            <div class="section-title">
+                                <h2 class="text-center">
+                                    <a href="{% url 'blog_list' %}">{% trans 'Բլոգ' %}<img src="{% static 'img/icons/c-arr.svg' %}" alt="Machanents"></a>
+                                </h2>
+                            </div>
+                        </div>
+                        {% for blog  in posts %}
+                            {% include 'includes/blog.html' %}
+                        {% endfor %}
+
                     </div>
                 </div>
-                {{ posts }}
-{#                {% for blog  in posts %}#}
-{#                    {% include 'includes/blog.html' %}#}
-{#                {% endfor %}#}
-
-            </div>
-        </div>
-    </section>
-   <!-- Recomended Blog end --> 
-  
-          
+            </section>
+           <!-- Recomended Blog end -->
+            {% endif %}
         </div>
         <!-- Blog end-->
       </section>
