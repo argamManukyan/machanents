@@ -21,7 +21,7 @@ class SliderAdmin(SortableAdminMixin, TabbedDjangoJqueryTranslationAdmin):
 
     def get_text(self, obj):
         if obj.text:
-            return mark_safe(obj.txt)
+            return mark_safe(obj.text)
 
     get_text.short_description = 'Տեքստ'
     list_display = ['get_xl_image', 'get_text']

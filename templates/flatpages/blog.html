@@ -29,7 +29,7 @@
                             <div class="tit-page bread-page">
                                 <h1>{% trans 'Բլոգ' %}</h1>
                                 {% if bread_content.breadcrumbs_text %}
-                                    {{ bread_content.breadcrumbs_text|safe }}
+                                    <p>{{ bread_content.breadcrumbs_text|safe }}</p>
                                 {% endif %}
                             </div>
                             <ul class="breadcrumbs-list flex-content-center">
@@ -51,7 +51,7 @@
         <!-- Blog -->
         <div class="bot-prods blog-page">
             <div class="cnt">
-                <div class="row flex-center-between">
+                <div class="row align-items-center">
                     <div class="col">
                         <div class="swiper-container slide-cats">
                             <div class="swiper-wrapper">
