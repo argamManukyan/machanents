@@ -60,7 +60,26 @@ class SingleModelAdminMixin(SingleModelAdmin, TabbedDjangoJqueryTranslationAdmin
 admin.site.register(HomepageUnderSliderText, SingleModelAdminMixin)
 admin.site.register(AboutUsHomePageText, SingleModelAdminMixin)
 
-admin.site.register(ProductReviews)
+
+class ProductReviewsAdmin(admin.ModelAdmin):
+    list_display = ['sender', 'product', 'location']
+
+    def get_image(self, obj):
+        if obj.image:
+            return mark_safe(f'<img src="{obj.image.url}" height="100px" width="100px" />')
+        return ''
+
+    def get_review(self, obj):
+        if obj.review:
+            return obj.review
+        return ''
+
+    get_image.short_description = 'Նկար'
+    get_review.short_description = 'Կարծիք'
+    list_display.extend(['get_image', 'get_review', 'hide'])
+
+
+admin.site.register(ProductReviews, ProductReviewsAdmin)
 
 
 class SortableMixin(SortableAdminMixin, TabbedDjangoJqueryTranslationAdmin):
