@@ -4,8 +4,7 @@
 <div class="rev-block">
         <div class="rev-block-header text-center">
             <figure>
-                <img src="{% if not review_item.image %}{% static 'img/test-icons/rev.jpg' %}{% else %}
-                            {{ review_item.image.url }}{% endif %}" alt="Name Surname">
+                <img src="{% if not review_item.image %}{% static 'img/test-icons/rev.jpg' %}{% else %}{{ review_item.image.url }}{% endif %}" alt="Name Surname">
             </figure>
             <div class="rev-stars">
                 {% for i in review_item.rating|range %}★{% endfor %}
@@ -20,9 +19,12 @@
             </div>
             {% endif %}
             <div class="rev-short-desc">
-                <p>{{ review_item.text }}</p>
+                <p>{{ review_item.review }}</p>
             </div>
+
+            {% if request.resolver_match.url_name != 'product_details' %}
             <a href="{{ review_item.product.get_absolute_url }}" class="button normal trans">{% trans 'Տեսնել ավելին' %}</a>
+            {% endif %}
         </div>
     </div>
 

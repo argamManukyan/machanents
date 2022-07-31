@@ -150,23 +150,29 @@
                             <div class="pr-page-price">
                                 {% if obj.sale > 0 %}
                                     <span class="pr-pice">
-                                 <span id="salePrice"
-                                       class="wh-point">{{ obj.sale|currency:request.session.currency|floatformat:0 }}</span>
-                                    <span class="vlyuta">{{ request.session.currency }}</span>
+                                     <span id="salePrice" class="wh-point">{{ obj.sale|currency:request.session.currency|floatformat:0 }}</span>
+                                     <span class="vlyuta">{{ request.session.currency }}</span>
+                                    {% if request.session.currency != 'USD' %}
+                                        <span class="valyuta-dollar wh-point">($ {{ obj.sale|usdconverter }})</span>
+                                    {% endif %}
                               </span>
 
-                                    <span class="pr-old-pice">
+                              <span class="pr-old-pice">
                                  <s>
-                                    <span id="natPrice"
-                                          class="wh-point">{{ obj.price|currency:request.session.currency|floatformat:0 }}</span>
+                                    <span id="natPrice" class="wh-point">{{ obj.price|currency:request.session.currency|floatformat:0 }}</span>
                                     <span class="vlyuta">{{ request.session.currency }}</span>
+                                     {% if request.session.currency != 'USD' %}
+                                        <span class="valyuta-dollar wh-point">($ {{ obj.price|usdconverter }})</span>
+                                    {% endif %}
                                  </s>
                               </span>
                                 {% else %}
-                                    <span class="pr-pice">
-                                 <span id="natPrice"
-                                       class="wh-point">{{ obj.price|currency:request.session.currency|floatformat:0 }}</span>
-                                    <span class="vlyuta">{{ request.session.currency }}</span>
+                              <span class="pr-pice">
+                                 <span id="natPrice" class="wh-point">{{ obj.price|currency:request.session.currency|floatformat:0 }}</span>
+                                 <span class="vlyuta">{{ request.session.currency }}</span>
+                                {% if request.session.currency != 'USD' %}
+                                    <span class="valyuta-dollar wh-point">($ {{ obj.sale|usdconverter }})</span>
+                                {% endif %}
                               </span>
                                 {% endif %}
                             </div>
@@ -177,6 +183,10 @@
                             {% endif %}
                             <div class="pr-page-details">
                                 <ul class="shop-options">
+                                    <li>
+                                        <span class="opt"><b>{% trans 'Քաշ' %}:</b></span>
+                                        <span class="val">{{ obj.weight }} {% trans 'կգ' %}</span>
+                                    </li>
                                     {% if obj.allowed_buying %}
                                     <li>
                                         <span class="opt"><b>{% trans 'Առկայություն' %}:</b></span>
@@ -365,11 +375,11 @@
                                         {% endif %}
                                         {% if features %}
                                             <li class="col-auto" rel="tab2">
-                                                <span>{% trans 'Բնութագիր' %}</span>
+                                                <span>{% trans 'Բնութագրիչներ' %}</span>
                                             </li>
                                         {% endif %}
                                     <li class="col-auto" rel="tab3">
-                                            <span>{% trans 'Կարծիքներ' %}</span>
+                                            <span>{% trans 'Թողնել կարծիք' %}</span>
                                     </li>
                                     </ul>
 
@@ -403,6 +413,33 @@
                                         <div id="tab3" class="tab_content">
                                             <div class="prod-desc-large reviews-prod">
                                                 <div class="product-reviews">
+                                                {% if not request.user.is_authenticated %}
+                                                <!-- When the user is not registered -->
+                                                <div class="alert-min alert-danger">
+                                                    <div class="align-items-center">
+                                                        <img src="{% static 'img/icons/alert-warning.svg' %}"
+                                                             class="alert-img" alt="{% trans 'Ծանուցում' %}">
+                                                        <span>{% trans 'Կարծիք թողնելու համար խնդրում ենք մուտք գործել:' %}
+                                                            <a href="{% url 'login' %}"
+                                                               style="text-decoration: underline;margin-left: 10px;"
+                                                            >{% trans "Մուտք" %}</a>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <!-- When the user is not registered end -->
+                                                {% endif %}
+                                                {% if request.user.is_authenticated and request.user|filter_order:obj.id %}
+                                                <!-- When a user is registered but hasn't bought this product -->
+                                                <div class="alert-min alert-danger">
+                                                    <div class="align-items-center">
+                                                        <img src="{% static 'img/icons/alert-warning.svg' %}" class="alert-img" alt="{% trans 'Ծանուցում' %}">
+                                                        <span>{% trans 'Դուք չեք կարող կարծիք թողնել, քանի որ չեք պատվիրել այս ապրանքը կամ հրաժարվել եք այն առաքելուց:' %}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                <!-- When a user is registered but hasn't bought this product end -->
+
                                                     <form
                                                             method="post"
                                                             id="only_review"
@@ -413,7 +450,9 @@
                                                             <div class="image-previewer user_img-all">
                                                                 <div class="image-wrapper img_only_div">
                                                                     <span class="preview-loader"></span>
-                                                                    <img src="{% static 'img/logo-md.svg' %}" class="default-user-img" alt="Username">
+                                                                    <img src="{% static 'img/logo-md.svg' %}"
+                                                                         class="default-user-img"
+                                                                         alt="Username">
                                                                     <a class="delete-btn delete-avatar" href="javascript:void(0);">
                                                                         <img src="{% static 'img/icons/delete-avatar.svg' %}"
                                                                              alt="{% trans 'Հեռացնել նկարը' %}">
@@ -451,7 +490,7 @@
                                                             <div class="review-textarea">
                                                                 <div class="input-fields">
                                                                     <label for="review">{% trans 'Գրեք Ձեր Կարծիքը' %} *</label>
-                                                                    <textarea name="review" id="review" rows="4" required></textarea>
+                                                                    <textarea name="review" id="review" rows="4" oninput="checkLength(this)" required></textarea>
                                                                     <div class="butt-sign">
                                                                         <input type="submit"
                                                                                class="button big dark"
@@ -476,7 +515,7 @@
             </div>
         </div>
         <!-- Product page end -->
-        {% if obj.productreviews_set.count %}
+        {% if reviews %}
         <section class="bot-prods rev-section">
                 <div class="cnt">
                     <div class="row">
@@ -492,7 +531,7 @@
                                 </div>
 
                                 <div class="swiper-wrapper" style="transform: translate3d(-207.879px, 0px, 0px); transition-duration: 0ms;">
-                                    {% for review_item in obj.productreviews_set.all %}
+                                    {% for review_item in reviews %}
                                     <div class="swiper-slide swiper-slide-active"
                                          style="width: 276.97px; margin-right: 20px;">
                                         {% include 'includes/review_item.html' %}

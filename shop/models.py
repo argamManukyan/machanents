@@ -1,5 +1,6 @@
 import uuid
 
+from colorfield.fields import ColorField
 from django.db import models
 from django.urls import reverse
 from datetime import timedelta
@@ -110,7 +111,7 @@ class FilterField(CustomModel):
 class FilterValue(CustomModel):
     """ Filter value table """
 
-    title = models.CharField(max_length=255, unique=True)
+    title = models.CharField(max_length=255, unique=True, verbose_name='Անուն')
 
     def __str__(self):
         return self.title
@@ -122,8 +123,8 @@ class FilterValue(CustomModel):
 
 class Color(CustomModel):
     """ Color table """
-    title = models.CharField(max_length=255)
-    color_code = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=255, verbose_name='Անուն')
+    color_code = ColorField(verbose_name='Կոդ')
 
     def __str__(self):
         return self.title
@@ -205,7 +206,7 @@ class Product(CustomModel):
     price = models.PositiveIntegerField(default=0, verbose_name='Գին')
     sale = models.PositiveIntegerField(default=0, verbose_name='Զեղչված գին')
     main_photo = models.FileField(upload_to='product/', verbose_name='Հիմնական նկար')
-    my_order = models.PositiveIntegerField(default=0)
+    my_order = models.PositiveIntegerField(default=0, verbose_name='Դասավորել')
     finally_price = models.PositiveIntegerField(default=0, editable=False)
     best_seller = models.BooleanField(default=False, verbose_name='Բեսթ սելլեր')
     show_in_homepage = models.BooleanField(default=False, verbose_name='Ցուցադրել գլխավոր էջում')
@@ -228,8 +229,8 @@ class Product(CustomModel):
         self.finally_price = self.sale if self.sale > 1 else self.price
         if self.stored_quantity == 0:
             self.allowed_buying = False
-
-        self.product_id = uuid.uuid4().hex[:8]
+        if not self.product_id:
+            self.product_id = uuid.uuid4().hex[:8]
 
         return super().save(*args, **kwargs)
 
@@ -283,9 +284,9 @@ class ProductReviews(CustomModel):
 class ProductImage(CustomModel):
     """ Product images table """
 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    image = models.FileField(upload_to='product/')
-    my_order = models.PositiveIntegerField(default=0, )
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Ապրանք')
+    image = models.FileField(upload_to='product/', verbose_name='Նկար')
+    my_order = models.PositiveIntegerField(default=0, verbose_name='Դասավորել')
     
     def __str__(self):
         return self.product.title
@@ -299,11 +300,11 @@ class ProductImage(CustomModel):
 class ProductFeature(CustomModel):
     """ Product feature table """
 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    field = models.ForeignKey(FilterField, on_delete=models.SET_NULL, null=True)
-    value = models.ForeignKey(FilterValue, on_delete=models.SET_NULL, null=True)
-    price = models.IntegerField(default=0)
-    my_order = models.PositiveIntegerField(default=0, blank=False, null=False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Ապրանք')
+    field = models.ForeignKey(FilterField, on_delete=models.SET_NULL, null=True, verbose_name='Դաշտի անուն')
+    value = models.ForeignKey(FilterValue, on_delete=models.SET_NULL, null=True, verbose_name='Դաշտի արժեք')
+    price = models.IntegerField(default=0, verbose_name='Գին')
+    my_order = models.PositiveIntegerField(default=0, blank=False, null=False, verbose_name='Դասավորել')
 
     def __str__(self):
         return f'{self.product.title} - {self.value}'
@@ -406,7 +407,7 @@ class DeliveryAndPayMent(CustomModel):
 
 
 class HomepageUnderSliderText(models.Model):
-    text = RichTextUploadingField()
+    text = RichTextUploadingField(verbose_name='Տեքստ')
 
     def __str__(self):
         return 'Գլխավոր էջի տեքստ'

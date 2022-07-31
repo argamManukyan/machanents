@@ -181,8 +181,7 @@ class ProfileView(LoginRequiredMixin, View):
         if not user.profile:
             Profile.objects.create(user_id=user.id)
         profile = Profile.objects.get(user_id=user.id)
-        orders = Order.objects.filter(user_id=user.id, bank_order_status__isnull=False,
-                                      request_id__isnull=False)
+        orders = Order.objects.filter(user_id=user.id)
         requests_list = ProductRequest.objects.filter(is_expired=False)
         product_requests = ProductRequest.objects.all()
         countries = Countries.objects.order_by('name')

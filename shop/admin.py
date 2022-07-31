@@ -10,6 +10,7 @@ from shop.models import Category, Color, FilterField, FilterValue, Product, Prod
 from singlemodeladmin import SingleModelAdmin
 
 ProductAutocompleteForm = select2_modelform(Product, attrs={'fields': ['id', 'title']})
+FilterFieldAutocompleteForm = select2_modelform(FilterField, attrs={'fields': ['id', 'title']})
 ProductFeatureForm = select2_modelform(ProductFeature, attrs={'fields': ['id', 'field__title', 'value__title']})
 
 
@@ -27,14 +28,14 @@ class ProductFeatureTabularInline(SortableInlineAdminMixin,admin.TabularInline,)
 class ProductModelAdmin(SortableAdminMixin, TabbedDjangoJqueryTranslationAdmin):
     inlines = [ProductImageTabularInline, ProductFeatureTabularInline]
     form = ProductAutocompleteForm
-    list_display = ['product_image', 'title', 'price', 'sale', 'product_code']
+    list_display = ['product_image', 'title', 'price', 'sale', 'product_id']
     search_fields = ['title', 'product_code']
     list_filter = ['category']
-    readonly_fields = ['product_image']
 
     def product_image(self, obj):
         return mark_safe('<img src="{}" height="80px" width="90px" />'.format(obj.main_photo.url))
-    product_image.short_description = 'Image'
+    product_image.short_description = 'Նկար'
+
 
 admin.site.register(Product, ProductModelAdmin)
 
@@ -46,7 +47,13 @@ class CategoryModelAdmin(DraggableMPTTAdmin, TabbedDjangoJqueryTranslationAdmin)
 admin.site.register(Category, CategoryModelAdmin)
 
 # admin.site.register(Slider, TabbedDjangoJqueryTranslationAdmin)
-admin.site.register(FilterField, TabbedDjangoJqueryTranslationAdmin)
+
+
+@admin.register(FilterField)
+class FilterFieldAutocompleteFormAdmin(TabbedDjangoJqueryTranslationAdmin):
+    form = FilterFieldAutocompleteForm
+
+
 admin.site.register(FilterValue, TabbedDjangoJqueryTranslationAdmin)
 admin.site.register(Color, TabbedDjangoJqueryTranslationAdmin)
 # admin.site.register(OurAdvantages, TabbedDjangoJqueryTranslationAdmin)
@@ -63,7 +70,7 @@ admin.site.register(AboutUsHomePageText, SingleModelAdminMixin)
 
 class ProductReviewsAdmin(admin.ModelAdmin):
     list_display = ['sender', 'product', 'location']
-
+    list_editable = ['hide']
     def get_image(self, obj):
         if obj.image:
             return mark_safe(f'<img src="{obj.image.url}" height="100px" width="100px" />')

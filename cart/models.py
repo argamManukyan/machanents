@@ -1,10 +1,5 @@
-import ast
-import json
-import re
-
 from django.db import models
 from shop.utils import CustomModel
-from django.db.models.signals import post_save
 from shop.models import Product, ProductFeature
 from django.db.models import Sum
 
@@ -56,7 +51,3 @@ class Cart(CustomModel):
 
     def __str__(self):
         return str(self.pk)
-
-
-
-

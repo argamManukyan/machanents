@@ -67,7 +67,7 @@ class HomeView(View):
         category_icons = Category.objects.filter(show_in_homepage=True)
 
         # DONATION
-        reviews = ProductReviews.objects.order_by('-id')
+        reviews = ProductReviews.objects.filter(hide=False).order_by('-id')
         donation_currencies = DonationCurrencies.objects.all()
         donation_amounts = None
         if donation_currencies:
@@ -341,6 +341,7 @@ class ProductView(DetailView):
                                                                product_id=product.id).rating
         # Rating
         context['bred_category'] = bred_category
+        context['reviews'] = ProductReviews.objects.filter(hide=False, product=product)
         return context
 
     @never_cache

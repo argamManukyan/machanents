@@ -367,14 +367,17 @@
     <section id="Donation-machanents" class="bot-prods donation">
         <div class="cnt-fluid">
             <div class="row no-margs">
-                <div class="col col-2 no-padd">
+                <div class="col col-2 no-padd" style="background-image:url(
+                {% if donation_homepage_content.background_image %}{{ donation_homepage_content.background_image.url }}
+                {% else %}{% static 'img/donate.jpg' %}{% endif %})">
                     {% if donation_homepage_content %}
-                    <div class="donate-text" style="background-image:url(
-                            {% if donation_homepage_content.background_image %}{{ donation_homepage_content.background_image.url }}{% else %}{% static 'img/donate.jpg' %}{% endif %})">
+                    <div class="donate-text">
                         {{ donation_homepage_content.text|safe }}
                     </div>
+
                     {% endif %}
                 </div>
+
                 <div class="col col-2 no-padd">
                     <div class="donate-block">
                         <div class="donate-block-header">
@@ -505,6 +508,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>

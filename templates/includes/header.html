@@ -161,7 +161,7 @@
 
                 <div class="col col-auto">
                     <ul class="middle-cart-wish align-items-center">
-                       <li class="m-none">
+                       <li class="m-none {% if request.resolver_match.url_name == 'peri_tv' %}active{% endif %}">
                             <a href="{% url 'peri_tv' %}">
                                 <img src="{% static 'img/icons/tv-middle.svg' %}" class="four-icons" alt="MACHANENTS TV">
                             </a>
@@ -320,10 +320,28 @@
             {% endfor %}
 
             <ul class="another-links">
+
+                <li class="{% if 'about' in request.get_full_path %}active{% endif %}">
+                    <a href="{% url 'about_us' %}">{% trans 'Մեր Մասին' %}</a>
+                </li>
+
+                <li class="{% if 'contact-us' in request.get_full_path %}active{% endif %}">
+                    <a href="{% url 'contact_us' %}">{% trans 'Կապ' %}</a>
+                </li>
+
                 <li class="{% if 'blog' in request.get_full_path %}active{% endif %}">
-                   <a href="{% url 'blog_list' %}">{% trans 'Բլոգ' %}</a></li>
+                   <a href="{% url 'blog_list' %}">{% trans 'Բլոգ' %}</a>
+                </li>
                 <li class="{% if 'artist' in request.get_full_path %}active{% endif %}">
-                   <a href="{% url 'authors' %}">{% trans 'Արտիստներ' %}</a></li>
+                   <a href="{% url 'authors' %}">{% trans 'Արտիստներ' %}</a>
+                </li>
+
+                <li class="{% if request.resolver_match.url_name == 'peri_tv' %}active{% endif %} mtv">
+                    <a href="{% url 'peri_tv' %}" class="align-items-center">
+                        <img src="{% static 'img/icons/tv-middle.svg' %}" alt="{% trans 'Machanents TV' %}">
+                        <span>{% trans 'Machanents TV' %}</span>
+                    </a>
+                </li>
                
                 <li class="sale-link"><a href="{% url 'offers' %}?type=sale">{% trans 'Ակցիա' %}</a></li>
                 <li class="new-link decoration-link">

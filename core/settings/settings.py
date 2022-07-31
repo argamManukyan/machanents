@@ -60,7 +60,8 @@ INSTALLED_APPS = [
     'breadcrumbs',
     'contactus',
     'donation',
-    'staticpages'
+    'staticpages',
+    'colorfield',
 ]
 
 SITE_ID = 1

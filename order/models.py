@@ -196,10 +196,6 @@ class ProductRequest(CustomModel):
     def expired_order(self):
         return self.created_at > timezone.now() - datetime.timedelta(days=1)
 
-    @property
-    def updates_allowed(self):
-        return not self.is_exists
-
     def __str__(self):
         return f'{self.first_name} - {self.all_total}'
 
@@ -250,12 +246,9 @@ class ProductRequestItem(models.Model):
             av_qty = ProductRequestItem.objects.get(id=self.id)
             order_item = OrderItem.objects.filter(uuid_field__iexact=self.uuid_field)
             # modifying order total price=
-
-            if order_item and self.request.updates_allowed:
+            if order_item:
                 order_item = order_item.first()
                 order_id = order_item.order_id
-
-
                 order_item.tracking_number = self.tracking_number or ''
                 order_item.qty = self.available_quantity
                 order_item.save()
@@ -284,18 +277,17 @@ class ProductRequestItem(models.Model):
 def post_save_requested_items_total_price(sender, instance: ProductRequestItem, created, *args, **kwargs):
 
     if req_obj := ProductRequest.objects.filter(productrequestitem=instance).first():
-        if req_obj.updates_allowed:
-            for item in req_obj.productrequestitem_set.filter(available_quantity__isnull=False):
-                if order_item := OrderItem.objects.filter(uuid_field__iexact=item.uuid_field) :
-                    order_item = order_item.first()
-                    order_item.qty = item.available_quantity
-                    order_item.save()
+        for item in req_obj.productrequestitem_set.filter(available_quantity__isnull=False):
+            if order_item := OrderItem.objects.filter(uuid_field__iexact=item.uuid_field):
+                order_item = order_item.first()
+                order_item.qty = item.available_quantity
+                order_item.save()
 
-    req_obj.total_price = req_obj.productrequestitem_set.aggregate(
-        total=models.Sum('item_total_price'))['total'] or 0
+        req_obj.total_price = req_obj.productrequestitem_set.aggregate(
+            total=models.Sum('item_total_price'))['total'] or 0
 
-    req_obj.all_total = req_obj.total_price + req_obj.delivery_price
-    req_obj.save()
+        req_obj.all_total = req_obj.total_price + req_obj.delivery_price
+        req_obj.save()
 
 
 post_save.connect(post_save_requested_items_total_price, sender=ProductRequestItem)

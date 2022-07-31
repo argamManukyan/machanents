@@ -59,10 +59,12 @@
                                     <div class="range_slid flex-center-evenly">
                                         <span>
                                             <span class="field-labels">{% trans 'Մին' %}.</span><br>
-                                            <input type="number" value="{{ two_input_field|get_min_val:category }}" min="" max="" id="" name="min_{{ two_input_field.filter_key }}">
+                                            <input type="number" value="{{ two_input_field|get_min_val:category }}"
+                                                   min="" max="" id="" name="min_{{ two_input_field.filter_key }}">
                                         </span>
                                         <span><span class="field-labels">{% trans 'Մաքս' %}.</span><br>
-                                            <input type="number" value="{{ two_input_field|get_max_val:category }}" min="" max="" id="" name="max_{{ two_input_field.filter_key }}">
+                                            <input type="number" value="{{ two_input_field|get_max_val:category }}"
+                                                   min="" max="" id="" name="max_{{ two_input_field.filter_key }}">
                                         </span>
                                     </div>
                                 </div>

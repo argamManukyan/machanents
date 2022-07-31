@@ -2,7 +2,7 @@ from django.db.models import Q, Min, Max
 from django.template import Library
 
 from cart.models import Cart
-from order.models import ProductRequest
+from order.models import ProductRequest, Order
 from shop.models import ProductFeature, FilterValue
 
 register = Library()
@@ -90,3 +90,8 @@ def get_max_val(item, category):
                                           Q(productfeature__value__isnull=False)).distinct()
 
     return f_values.aggregate(max_val=Max('productfeature__value__title'))['max_val'] or 0
+
+
+@register.filter
+def filter_order(user, product_id):
+    return Order.objects.filter(user_id=user.id, orderitem__product__in=[product_id], is_paid=True).exists()
